@@ -76,8 +76,11 @@ export const HomePage = () => {
     <div className="space-y-16 pb-16">
       {/* Hero Section with Kyrgyz Cultural & Store Highlights */}
       <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-16 bg-gradient-to-b from-emerald-50/60 via-amber-50/30 to-transparent dark:from-emerald-950/20 dark:via-darkBg dark:to-transparent border-b border-gray-100 dark:border-darkBorder">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto space-y-6">
+        {/* Ambient Entrance Glow Orbs */}
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[34rem] h-96 bg-gradient-to-tr from-emerald-500/15 via-teal-500/10 to-amber-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-6 animate-entrance">
             <div className="flex flex-wrap items-center justify-center gap-2">
               <KyrgyzCultureBadge text="Кыргызстандын окуу китептер дүкөнү • 7 облус" />
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/80 dark:bg-emerald-950/60 text-brand-800 dark:text-brand-300 text-xs font-bold shadow-xs">

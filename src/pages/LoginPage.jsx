@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Lock, Mail, BookOpen, ShieldCheck, UserCheck, Globe } from 'lucide-react';
+import { Lock, Mail, ShieldCheck, UserCheck, Globe, CheckCircle2, Sparkles } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import { Input } from '../components/common/Input';
 import { Button } from '../components/common/Button';
-import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
+import { BrandLogo, BrandLogoIcon } from '../components/common/BrandLogo';
 import { setCredentials } from '../features/auth/authSlice';
 
 export const LoginPage = () => {
@@ -21,6 +21,17 @@ export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isEntering, setIsEntering] = useState(false);
+  const [enteringUser, setEnteringUser] = useState(null);
+
+  const triggerLoginEffect = (userObj, token, redirectPath) => {
+    setEnteringUser(userObj);
+    setIsEntering(true);
+    setTimeout(() => {
+      dispatch(setCredentials({ user: userObj, token }));
+      navigate(redirectPath, { replace: true });
+    }, 850);
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -37,8 +48,7 @@ export const LoginPage = () => {
       phone: '+996 700 123 456',
     };
 
-    dispatch(setCredentials({ user: mockUser, token: 'mock_jwt_token_123' }));
-    navigate(mockUser.role === 'ADMIN' ? '/admin' : from, { replace: true });
+    triggerLoginEffect(mockUser, 'mock_jwt_token_123', mockUser.role === 'ADMIN' ? '/admin' : from);
   };
 
   // Google OAuth Success Handler
@@ -59,8 +69,7 @@ export const LoginPage = () => {
         emailVerified: !!decoded.email_verified,
       };
 
-      dispatch(setCredentials({ user: googleUser, token: credentialResponse.credential }));
-      navigate(from, { replace: true });
+      triggerLoginEffect(googleUser, credentialResponse.credential, from);
     } catch (err) {
       console.error('Google decode error:', err);
       setError(t('googleAuthFailed'));
@@ -81,8 +90,7 @@ export const LoginPage = () => {
         role: 'ADMIN',
         phone: '+996 555 999 000',
       };
-      dispatch(setCredentials({ user: adminUser, token: 'mock_jwt_admin_token' }));
-      navigate('/admin', { replace: true });
+      triggerLoginEffect(adminUser, 'mock_jwt_admin_token', '/admin');
     } else if (role === 'GOOGLE') {
       const googleDemoUser = {
         id: 'u_google_demo_101',
@@ -94,8 +102,7 @@ export const LoginPage = () => {
         authProvider: 'GOOGLE',
         city: 'Бишкек',
       };
-      dispatch(setCredentials({ user: googleDemoUser, token: 'mock_jwt_google_token' }));
-      navigate('/profile', { replace: true });
+      triggerLoginEffect(googleDemoUser, 'mock_jwt_google_token', '/profile');
     } else {
       const standardUser = {
         id: 'u_502',
@@ -105,43 +112,77 @@ export const LoginPage = () => {
         phone: '+996 700 123 456',
         city: 'Бишкек',
       };
-      dispatch(setCredentials({ user: standardUser, token: 'mock_jwt_user_token' }));
-      navigate('/profile', { replace: true });
+      triggerLoginEffect(standardUser, 'mock_jwt_user_token', '/profile');
     }
   };
 
   return (
-    <div className="min-h-[75vh] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder shadow-xl space-y-6 overflow-hidden">
+    <div className="relative min-h-[75vh] flex items-center justify-center px-4 py-12 overflow-hidden">
+      {/* Background Ambient Glowing Orbs for Entry Atmospheric Effect */}
+      <div className="absolute top-1/4 -left-16 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
+      <div className="absolute bottom-1/4 -right-16 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
+
+      {/* Celebratory Login Entrance Overlay Effect */}
+      {isEntering && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-entrance">
+          <div className="relative w-full max-w-sm p-8 bg-white dark:bg-darkCard rounded-3xl border border-brand-300 dark:border-brand-700 text-center space-y-5 shadow-2xl animate-scale-in">
+            {/* National Tricolor Top Ribbon */}
+            <div className="h-1.5 w-full -mt-8 -mx-8 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600 rounded-t-3xl" style={{ width: 'calc(100% + 4rem)' }} />
+
+            <div className="relative mx-auto w-20 h-20 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-3xl bg-emerald-500/20 blur-xl animate-ping" />
+              <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-amber-500 p-0.5 shadow-xl">
+                <div className="w-full h-full bg-white dark:bg-darkCard rounded-2xl flex items-center justify-center">
+                  <BrandLogoIcon size={38} />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 text-xs font-bold border border-emerald-300/40">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <span>Ийгиликтүү кирүү!</span>
+              </div>
+              <h3 className="text-xl font-black text-gray-900 dark:text-gray-100">
+                Кош келиңиз, {enteringUser?.name}!
+              </h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                {enteringUser?.role === 'ADMIN'
+                  ? 'КР Администратор панелине өтүүдө...'
+                  : 'БилимКитеп платформасына өтүүдө...'}
+              </p>
+            </div>
+
+            {/* Progress line */}
+            <div className="w-full bg-gray-100 dark:bg-darkBorder h-2 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-red-500 w-full animate-pulse rounded-full" />
+            </div>
+
+            <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold italic">
+              «Билим — түгөнгүс кенч» 🇰🇬
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Main Login Card with smooth entrance effect */}
+      <div className="relative z-10 w-full max-w-md bg-white/95 dark:bg-darkCard/95 backdrop-blur-md rounded-3xl border border-gray-100 dark:border-darkBorder shadow-2xl space-y-6 overflow-hidden animate-scale-in">
         {/* Kyrgyz National Tricolor Ribbon */}
         <div className="h-2 w-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
 
         <div className="p-8 pt-2 space-y-6">
-          <div className="text-center space-y-2">
-            <Link to="/" className="inline-flex items-center gap-2.5 mb-1 group">
-              <div className="relative">
-                <div className="w-11 h-11 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
-                  <BookOpen className="w-5 h-5" />
-                </div>
-                <div className="absolute -bottom-1 -right-1 bg-white dark:bg-darkCard rounded-full p-0.5 shadow-xs">
-                  <TyndykEmblem size={14} className="text-amber-500" />
-                </div>
-              </div>
-              <div className="text-left">
-                <span className="font-extrabold text-xl text-gray-900 dark:text-gray-100 tracking-tight block leading-tight">
-                  Bilim<span className="text-brand-500">Kitep</span>
-                </span>
-                <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest block">
-                  Кыргызстан • Дүкөн
-                </span>
-              </div>
-            </Link>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-              {t('loginTitle')}
-            </h2>
-            <p className="text-xs text-gray-500">
-              {t('loginSubtitle')}
-            </p>
+          <div className="text-center space-y-3">
+            <div className="flex justify-center">
+              <BrandLogo size="lg" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                {t('loginTitle')}
+              </h2>
+              <p className="text-xs text-gray-500">
+                {t('loginSubtitle')}
+              </p>
+            </div>
           </div>
 
         {/* Quick Demo Login Box */}

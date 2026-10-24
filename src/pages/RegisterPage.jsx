@@ -8,7 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Input } from '../components/common/Input';
 import { Select } from '../components/common/Select';
 import { Button } from '../components/common/Button';
-import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
+import { BrandLogo } from '../components/common/BrandLogo';
 import { registerUser } from '../features/auth/authSlice';
 
 export const RegisterPage = () => {
@@ -74,37 +74,28 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-[75vh] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder shadow-xl space-y-6 overflow-hidden">
+    <div className="relative min-h-[75vh] flex items-center justify-center px-4 py-12 overflow-hidden">
+      {/* Background Ambient Glow Orbs */}
+      <div className="absolute top-1/4 -left-16 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
+      <div className="absolute bottom-1/4 -right-16 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
+
+      <div className="relative z-10 w-full max-w-md bg-white/95 dark:bg-darkCard/95 backdrop-blur-md rounded-3xl border border-gray-100 dark:border-darkBorder shadow-2xl space-y-6 overflow-hidden animate-scale-in">
         {/* Kyrgyz National Tricolor Ribbon */}
         <div className="h-2 w-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
 
         <div className="p-8 pt-2 space-y-6">
-          <div className="text-center space-y-2">
-            <Link to="/" className="inline-flex items-center gap-2.5 mb-1 group">
-              <div className="relative">
-                <div className="w-11 h-11 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
-                  <BookOpen className="w-5 h-5" />
-                </div>
-                <div className="absolute -bottom-1 -right-1 bg-white dark:bg-darkCard rounded-full p-0.5 shadow-xs">
-                  <TyndykEmblem size={14} className="text-amber-500" />
-                </div>
-              </div>
-              <div className="text-left">
-                <span className="font-extrabold text-xl text-gray-900 dark:text-gray-100 tracking-tight block leading-tight">
-                  Bilim<span className="text-brand-500">Kitep</span>
-                </span>
-                <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest block">
-                  Кыргызстан • Дүкөн
-                </span>
-              </div>
-            </Link>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-              {t('registerTitle')}
-            </h2>
-            <p className="text-xs text-gray-500">
-              {t('registerSubtitle')}
-            </p>
+          <div className="text-center space-y-3">
+            <div className="flex justify-center">
+              <BrandLogo size="lg" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                {t('registerTitle')}
+              </h2>
+              <p className="text-xs text-gray-500">
+                {t('registerSubtitle')}
+              </p>
+            </div>
           </div>
 
         <form onSubmit={handleRegister} className="space-y-4">

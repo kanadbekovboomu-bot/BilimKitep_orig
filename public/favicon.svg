@@ -1,6 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
-  <path d="M6 6h10"/>
-  <path d="M6 10h10"/>
-  <path d="M6 14h6"/>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="emeraldGrad" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10B981" />
+      <stop offset="0.5" stop-color="#059669" />
+      <stop offset="1" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="goldSunGrad" x1="16" y1="8" x2="48" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FDE047" />
+      <stop offset="0.5" stop-color="#F59E0B" />
+      <stop offset="1" stop-color="#D97706" />
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#emeraldGrad)" />
+  <circle cx="32" cy="22" r="10" stroke="url(#goldSunGrad)" stroke-width="2" />
+  <path d="M 25 20 Q 32 23 39 20" stroke="url(#goldSunGrad)" stroke-width="1.5" stroke-linecap="round" />
+  <path d="M 25 24 Q 32 27 39 24" stroke="url(#goldSunGrad)" stroke-width="1.5" stroke-linecap="round" />
+  <path d="M 29 16 Q 32 23 29 30" stroke="url(#goldSunGrad)" stroke-width="1.5" stroke-linecap="round" />
+  <path d="M 35 16 Q 32 23 35 30" stroke="url(#goldSunGrad)" stroke-width="1.5" stroke-linecap="round" />
+  <path d="M 32 49 C 25 45 17 45 10 48 L 10 38 C 17 35 25 35 32 39 Z" fill="#FFFFFF" />
+  <path d="M 32 49 C 39 45 47 45 54 48 L 54 38 C 47 35 39 35 32 39 Z" fill="#F8FAFC" />
+  <path d="M 32 37 L 32 50" stroke="#047857" stroke-width="2" stroke-linecap="round" />
+  <path d="M 30 50 L 32 54 L 34 50 Z" fill="#F59E0B" />
 </svg>

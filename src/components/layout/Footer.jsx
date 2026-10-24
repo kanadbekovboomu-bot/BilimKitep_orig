@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { BookOpen, Heart, Shield, Phone, Mail, MapPin } from 'lucide-react';
-import { TyndykEmblem, KochkorMuyuzPattern } from '../common/KyrgyzOrnament';
+import { Heart, Shield, Phone, Mail, MapPin, CreditCard, Clock, Truck } from 'lucide-react';
+import { KochkorMuyuzPattern } from '../common/KyrgyzOrnament';
+import { BrandLogo } from '../common/BrandLogo';
 
 export const Footer = () => {
   const { t } = useTranslation('common');
@@ -21,24 +22,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-gray-100 dark:border-darkBorder">
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="relative">
-                <div className="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center text-white font-bold">
-                  <BookOpen className="w-5 h-5" />
-                </div>
-                <div className="absolute -top-1 -right-1">
-                  <TyndykEmblem size={13} className="text-amber-500" />
-                </div>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-xl tracking-tight text-gray-900 dark:text-gray-100">
-                  Bilim<span className="text-brand-500">Kitep</span>
-                </span>
-                <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-red-600 text-white">
-                  KG
-                </span>
-              </div>
-            </Link>
+            <BrandLogo size="md" showTagline={false} />
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
               {t('footer.about')}
             </p>
@@ -100,19 +84,48 @@ export const Footer = () => {
                 <MapPin className="w-3.5 h-3.5 text-brand-500 shrink-0 mt-0.5" />
                 <span>{t('footer.address')}</span>
               </li>
+              <li className="flex items-center gap-2 text-[11px] text-gray-500">
+                <Clock className="w-3.5 h-3.5 text-brand-500 shrink-0" />
+                <span>09:00 - 20:00 (Дем алышсыз)</span>
+              </li>
             </ul>
           </div>
 
-          {/* Diploma Specs */}
-          <div className="space-y-3 bg-gray-50 dark:bg-darkBorder/40 p-4 rounded-2xl">
-            <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wider">
-              {t('footer.diploma')}
-            </h4>
+          {/* Safe Shopping & Payment Methods */}
+          <div className="space-y-3.5 bg-gradient-to-br from-gray-50 to-emerald-50/30 dark:from-darkBorder/40 dark:to-emerald-950/20 p-4 rounded-2xl border border-gray-100 dark:border-darkBorder">
+            <div className="flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-brand-600 dark:text-brand-400" />
+              <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wider">
+                Коопсуз төлөм жана жеткирүү
+              </h4>
+            </div>
+
             <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
-              «BilimKitep» Web Platform.
+              Кыргызстандын бардык банктары жана капчыктары аркылуу коопсуз төлөм кабыл алынат.
             </p>
-            <div className="text-[11px] font-mono text-gray-500 dark:text-gray-400 pt-1">
-              Stack: React 18, Vite, Tailwind CSS, Redux Toolkit, i18n, Neon Postgres, Cloudinary, Telegram.
+
+            {/* Payment method chips */}
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              <span className="px-2 py-0.5 rounded-lg bg-white dark:bg-darkCard text-[10px] font-black text-blue-600 border border-gray-200 dark:border-darkBorder shadow-xs">
+                MBANK
+              </span>
+              <span className="px-2 py-0.5 rounded-lg bg-white dark:bg-darkCard text-[10px] font-black text-emerald-600 border border-gray-200 dark:border-darkBorder shadow-xs">
+                ЭЛСОМ
+              </span>
+              <span className="px-2 py-0.5 rounded-lg bg-white dark:bg-darkCard text-[10px] font-black text-rose-600 border border-gray-200 dark:border-darkBorder shadow-xs">
+                О!Деньги
+              </span>
+              <span className="px-2 py-0.5 rounded-lg bg-white dark:bg-darkCard text-[10px] font-black text-amber-600 border border-gray-200 dark:border-darkBorder shadow-xs">
+                ЭЛКАРТ
+              </span>
+              <span className="px-2 py-0.5 rounded-lg bg-white dark:bg-darkCard text-[10px] font-black text-indigo-600 border border-gray-200 dark:border-darkBorder shadow-xs">
+                VISA
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1.5 pt-1 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
+              <Truck className="w-3.5 h-3.5" />
+              <span>7 облус боюнча 24 саатта жеткирүү</span>
             </div>
           </div>
         </div>
