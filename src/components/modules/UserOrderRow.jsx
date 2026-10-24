@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Package, Clock, ShieldCheck, MapPin } from 'lucide-react';
+import { Package, Clock, ShieldCheck, MapPin, Truck } from 'lucide-react';
 import { formatKGS, formatDate } from '../../utils/formatters';
+import { Modal } from '../common/Modal';
+import { CourierDeliveryMap } from './CourierDeliveryMap';
 
 export const UserOrderRow = ({ order }) => {
   const { t } = useTranslation(['profile', 'common']);
+  const [showTracking, setShowTracking] = useState(false);
 
   return (
     <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -38,7 +41,7 @@ export const UserOrderRow = ({ order }) => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto pt-3 md:pt-0 border-t md:border-t-0 border-gray-100 dark:border-darkBorder">
+      <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto pt-3 md:pt-0 border-t md:border-t-0 border-gray-100 dark:border-darkBorder">
         <div className="text-left md:text-right">
           <div className="text-xs text-gray-400">{t('units.total', { ns: 'common' })}</div>
           <div className="text-base font-black text-brand-600 dark:text-brand-400">
@@ -51,7 +54,34 @@ export const UserOrderRow = ({ order }) => {
             </div>
           )}
         </div>
+
+        <button
+          type="button"
+          onClick={() => setShowTracking(true)}
+          className="px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 border border-emerald-200/50 dark:border-emerald-800/40"
+          title="Курьердин картасын ачуу"
+        >
+          <Truck className="w-4 h-4 text-emerald-600" />
+          <span>Карта</span>
+        </button>
       </div>
+
+      {/* Live Courier Tracking Modal */}
+      {showTracking && (
+        <Modal
+          isOpen={showTracking}
+          onClose={() => setShowTracking(false)}
+          title={`Курьерди көзөмөлдөө • Заказ #${order.id}`}
+          maxWidth="max-w-4xl"
+        >
+          <CourierDeliveryMap
+            city={order.city || 'Бишкек'}
+            currentAddress={order.address || ''}
+            orderId={order.id}
+            isLiveTracking={true}
+          />
+        </Modal>
+      )}
     </div>
   );
 };

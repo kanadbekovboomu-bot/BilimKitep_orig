@@ -13,11 +13,12 @@ import {
 } from 'lucide-react';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { Input } from '../components/common/Input';
-import { Select } from '../components/common/Select';
+import { CitySelector } from '../components/common/CitySelector';
 import { Button } from '../components/common/Button';
 import { OrderSummary } from '../components/modules/OrderSummary';
 import { RentalDatePicker } from '../components/modules/RentalDatePicker';
 import { PaymentDemoModal } from '../components/modules/PaymentDemoModal';
+import { CourierDeliveryMap } from '../components/modules/CourierDeliveryMap';
 import { api } from '../services/api';
 import { notifyTelegramOrder } from '../services/telegram';
 import { clearCart } from '../features/cart/cartSlice';
@@ -45,6 +46,7 @@ export const CheckoutPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [createdOrder, setCreatedOrder] = useState(null);
+  const [showDeliveryMap, setShowDeliveryMap] = useState(true);
 
   const shippingCost = deliveryMethod === 'courier' ? 150 : 0;
   const finalTotal = totalAmount + shippingCost;
@@ -108,7 +110,7 @@ export const CheckoutPage = () => {
 
   if (createdOrder) {
     return (
-      <div className="max-w-xl mx-auto px-4 py-16 text-center space-y-6">
+      <div className="max-w-2xl mx-auto px-4 py-10 text-center space-y-6">
         <div className="w-20 h-20 rounded-3xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 mx-auto flex items-center justify-center animate-bounce">
           <CheckCircle2 className="w-10 h-10" />
         </div>
@@ -120,6 +122,16 @@ export const CheckoutPage = () => {
         <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
           {t('successDesc', { id: createdOrder.id })}
         </p>
+
+        {/* Live Courier Tracking Map right on the order success screen */}
+        <div className="text-left pt-2">
+          <CourierDeliveryMap
+            city={createdOrder.city || city}
+            currentAddress={createdOrder.address || address}
+            orderId={createdOrder.id}
+            isLiveTracking={true}
+          />
+        </div>
 
         <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder text-left space-y-2 text-xs">
           <div className="flex justify-between">
@@ -190,30 +202,52 @@ export const CheckoutPage = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Select
+            <div className="space-y-4">
+              <CitySelector
                 label={t('city')}
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
-                options={[
-                  { value: 'Бишкек', label: t('cityBishkek') },
-                  { value: 'Ош', label: t('cityOsh') },
-                  { value: 'Жалал-Абад', label: t('cityJalalAbad') },
-                  { value: 'Каракол', label: t('cityKarakol') },
-                  { value: 'Нарын', label: t('cityNaryn') },
-                  { value: 'Талас', label: t('cityTalas') },
-                  { value: 'Баткен', label: t('cityBatken') },
-                  { value: 'Башка айыл/аймак', label: t('cityOther') },
-                ]}
+                onChange={(newCity) => setCity(newCity)}
+                onCitySelected={(cityObj) => {
+                  setCity(cityObj.value);
+                }}
               />
 
-              <Input
-                label={t('address')}
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Көчө, үй/батир номери"
-                error={errors.address}
-              />
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold text-gray-700 dark:text-gray-200">
+                    {t('address')}
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setShowDeliveryMap(!showDeliveryMap)}
+                    className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 flex items-center gap-1 cursor-pointer transition-colors"
+                  >
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>{showDeliveryMap ? 'Картаны жашыруу' : 'Картаны ачуу'}</span>
+                  </button>
+                </div>
+                <Input
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Көчө, үй/батир номери (же төмөндөгү картадан белгилеңиз)"
+                  error={errors.address}
+                />
+              </div>
+
+              {/* Interactive Courier Map for Address & Live Delivery Tracking */}
+              {showDeliveryMap && (
+                <div className="pt-2">
+                  <CourierDeliveryMap
+                    city={city}
+                    currentAddress={address}
+                    onAddressSelect={(geo) => {
+                      if (geo.estimatedText) {
+                        setAddress(geo.estimatedText);
+                      }
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
 
