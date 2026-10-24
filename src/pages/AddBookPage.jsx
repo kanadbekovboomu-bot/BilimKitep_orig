@@ -8,6 +8,7 @@ import { Input } from '../components/common/Input';
 import { Select } from '../components/common/Select';
 import { Button } from '../components/common/Button';
 import { ImageDropzone } from '../components/modules/ImageDropzone';
+import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import { createBookListing } from '../features/books/booksSlice';
 
 export const AddBookPage = () => {
@@ -82,19 +83,29 @@ export const AddBookPage = () => {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
       <Breadcrumbs items={[{ label: t('addBookTitle') }]} />
 
-      <div className="bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder p-6 sm:p-10 shadow-xs space-y-8">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-brand-700 dark:text-brand-300 text-xs font-bold mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-brand-500" />
-            <span>{t('ecoSharing')}</span>
+      <div className="bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder shadow-xs space-y-8 overflow-hidden">
+        {/* Kyrgyz National Tricolor Ribbon */}
+        <div className="h-1.5 w-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
+
+        <div className="p-6 sm:p-10 pt-2 space-y-8">
+          <div>
+            <div className="flex flex-wrap items-center gap-2 mb-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-brand-700 dark:text-brand-300 text-xs font-bold">
+                <Sparkles className="w-3.5 h-3.5 text-brand-500" />
+                <span>{t('ecoSharing')}</span>
+              </div>
+              <span className="inline-flex items-center gap-1 text-[11px] bg-amber-500/10 text-amber-900 dark:text-amber-200 px-2.5 py-0.5 rounded-full font-bold border border-amber-300/40">
+                <TyndykEmblem size={13} className="text-amber-500" />
+                <span>Кыргызстан • Окуу китептери</span>
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
+              {t('addBookTitle')}
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+              {t('addBookSubtitle')}
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
-            {t('addBookTitle')}
-          </h1>
-          <p className="text-xs sm:text-sm text-gray-500 mt-1">
-            {t('addBookSubtitle')}
-          </p>
-        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Images Upload Section */}
@@ -259,6 +270,7 @@ export const AddBookPage = () => {
             {t('bookForm.submit')}
           </Button>
         </form>
+        </div>
       </div>
     </div>
   );

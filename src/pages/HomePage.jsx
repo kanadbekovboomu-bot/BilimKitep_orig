@@ -17,6 +17,7 @@ import { BookGrid } from '../components/modules/BookGrid';
 import { QuickViewModal } from '../components/modules/QuickViewModal';
 import { Button } from '../components/common/Button';
 import { ToastNotification } from '../components/common/ToastNotification';
+import { TyndykEmblem, KochkorMuyuzPattern, KyrgyzCultureBadge } from '../components/common/KyrgyzOrnament';
 import { fetchBooks } from '../features/books/booksSlice';
 import { addToCart } from '../features/cart/cartSlice';
 
@@ -73,13 +74,16 @@ export const HomePage = () => {
 
   return (
     <div className="space-y-16 pb-16">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-20 bg-gradient-to-b from-brand-50/50 via-white to-transparent dark:from-emerald-950/20 dark:via-darkBg dark:to-transparent">
+      {/* Hero Section with Kyrgyz Cultural & Store Highlights */}
+      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-16 bg-gradient-to-b from-emerald-50/60 via-amber-50/30 to-transparent dark:from-emerald-950/20 dark:via-darkBg dark:to-transparent border-b border-gray-100 dark:border-darkBorder">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/80 dark:bg-emerald-950/60 text-brand-800 dark:text-brand-300 text-xs font-bold shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
-              <span>{t('hero.badge')}</span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <KyrgyzCultureBadge text="Кыргызстандын окуу китептер дүкөнү • 7 облус" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/80 dark:bg-emerald-950/60 text-brand-800 dark:text-brand-300 text-xs font-bold shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
+                <span>{t('hero.badge')}</span>
+              </div>
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-black text-gray-900 dark:text-gray-100 tracking-tight leading-tight">
@@ -128,6 +132,11 @@ export const HomePage = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Kyrgyz National Ornament Runner */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 opacity-25">
+          <KochkorMuyuzPattern className="h-4 text-emerald-600 dark:text-emerald-400" />
         </div>
       </section>
 

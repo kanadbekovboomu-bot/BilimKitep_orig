@@ -7,6 +7,7 @@ import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { CartItem } from '../components/modules/CartItem';
 import { OrderSummary } from '../components/modules/OrderSummary';
 import { Button } from '../components/common/Button';
+import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import {
   removeFromCart,
   changeRentDuration,
@@ -76,6 +77,19 @@ export const CartPage = () => {
           <Trash2 className="w-3.5 h-3.5" />
           <span>{t('clearCart')}</span>
         </button>
+      </div>
+
+      {/* Kyrgyz Store Notice Banner */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 bg-gradient-to-r from-emerald-500/10 via-amber-500/10 to-red-500/10 rounded-2xl border border-amber-300/30 dark:border-amber-700/30 text-xs">
+        <div className="flex items-center gap-3">
+          <TyndykEmblem size={24} className="text-amber-500 shrink-0" />
+          <span className="font-semibold text-gray-800 dark:text-gray-200">
+            Кыргызстандын окуу китептери • 100% күрөө кайтаруу кепилдиги жана 7 облуска жеткирүү
+          </span>
+        </div>
+        <span className="text-[11px] font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-darkCard px-3 py-1 rounded-full shadow-xs border border-brand-200/50">
+          🇰🇬 Бишкек, Ош жана 7 облус
+        </span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

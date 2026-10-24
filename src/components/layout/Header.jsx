@@ -14,6 +14,7 @@ import {
 import { ThemeToggle } from '../common/ThemeToggle';
 import { LangSwitcher } from '../common/LangSwitcher';
 import { BurgerMenu } from './BurgerMenu';
+import { TyndykEmblem } from '../common/KyrgyzOrnament';
 import { logout } from '../../features/auth/authSlice';
 
 export const Header = ({ onOpenDefenseModal }) => {
@@ -32,20 +33,33 @@ export const Header = ({ onOpenDefenseModal }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 dark:bg-darkBg/90 border-b border-gray-100 dark:border-darkBorder transition-colors">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 dark:bg-darkBg/95 border-b border-gray-100 dark:border-darkBorder transition-colors shadow-xs">
+      {/* Kyrgyz National Color Ribbon */}
+      <div className="w-full h-1 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
-          {/* Logo */}
+          {/* Logo with Kyrgyz cultural Tyndyk accent */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
-              <BookOpen className="w-5 h-5" />
+            <div className="relative">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <div className="absolute -top-1.5 -right-1.5">
+                <TyndykEmblem size={15} className="text-amber-500 drop-shadow-sm" />
+              </div>
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold text-xl tracking-tight text-gray-900 dark:text-gray-100">
-                Bilim<span className="text-brand-500">Kitep</span>
-              </span>
-              <span className="text-[10px] text-gray-400 dark:text-gray-400 font-medium tracking-wider uppercase hidden sm:block">
-                {t('dealType.both')}
+              <div className="flex items-center gap-1.5">
+                <span className="font-extrabold text-xl tracking-tight text-gray-900 dark:text-gray-100">
+                  Bilim<span className="text-brand-500">Kitep</span>
+                </span>
+                <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-red-600 text-white shadow-xs">
+                  KG
+                </span>
+              </div>
+              <span className="text-[10px] text-gray-400 dark:text-gray-400 font-medium tracking-wider hidden sm:block">
+                Кыргызстан • Окуу китептер дүкөнү
               </span>
             </div>
           </Link>

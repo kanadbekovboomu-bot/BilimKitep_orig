@@ -42,27 +42,14 @@ export const BookCard = ({
       className="group bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-4 flex flex-col justify-between hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-700 transition-all duration-300 cursor-pointer text-left"
     >
       <div>
-        {/* Image & Badges */}
-        <div className="relative w-full h-56 bg-gray-50 dark:bg-darkBorder/40 rounded-xl overflow-hidden mb-3 flex items-center justify-center p-2">
+        {/* Clean Book Cover Picture - No text or badges overlapping the image */}
+        <div className="relative w-full h-56 bg-gray-50/80 dark:bg-darkBorder/40 rounded-xl overflow-hidden mb-3 flex items-center justify-center p-2.5 border border-gray-100 dark:border-darkBorder">
           <img
             src={coverImage}
             alt={book.title}
             loading="lazy"
             className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
           />
-
-          <div className="absolute top-2 left-2 flex flex-col gap-1 items-start">
-            <DealBadge dealType={book.dealType} />
-            <Badge variant="default" size="sm">
-              {t('units.grade', { count: book.grade })}
-            </Badge>
-          </div>
-
-          <div className="absolute top-2 right-2">
-            <Badge variant="primary" size="sm">
-              {book.language}
-            </Badge>
-          </div>
 
           {/* Quick View Button overlay on hover */}
           <button
@@ -74,9 +61,20 @@ export const BookCard = ({
             className="absolute bottom-2 right-2 bg-white/95 dark:bg-darkCard/95 hover:bg-white text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity shadow-md cursor-pointer flex items-center gap-1 text-xs font-semibold"
             title={t('actions.quickView')}
           >
-            <Eye className="w-3.5 h-3.5" />
+            <Eye className="w-3.5 h-3.5 text-brand-600" />
             <span className="hidden sm:inline">{t('actions.quickView')}</span>
           </button>
+        </div>
+
+        {/* Clean Meta Badges below the image */}
+        <div className="flex items-center gap-1.5 flex-wrap pb-2">
+          <DealBadge dealType={book.dealType} />
+          <Badge variant="default" size="sm">
+            {t('units.grade', { count: book.grade })}
+          </Badge>
+          <Badge variant="primary" size="sm">
+            {book.language}
+          </Badge>
         </div>
 
         {/* Content */}

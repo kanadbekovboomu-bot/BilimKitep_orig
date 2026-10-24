@@ -19,6 +19,7 @@ import { OrderSummary } from '../components/modules/OrderSummary';
 import { RentalDatePicker } from '../components/modules/RentalDatePicker';
 import { PaymentDemoModal } from '../components/modules/PaymentDemoModal';
 import { CourierDeliveryMap } from '../components/modules/CourierDeliveryMap';
+import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import { api } from '../services/api';
 import { notifyTelegramOrder } from '../services/telegram';
 import { clearCart } from '../features/cart/cartSlice';
@@ -174,6 +175,19 @@ export const CheckoutPage = () => {
       <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
         {t('title')}
       </h1>
+
+      {/* Kyrgyz National Delivery & Trust Banner */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 bg-gradient-to-r from-emerald-500/10 via-amber-500/10 to-red-500/10 rounded-2xl border border-amber-300/30 dark:border-amber-700/30 text-xs">
+        <div className="flex items-center gap-3">
+          <TyndykEmblem size={24} className="text-amber-500 shrink-0" />
+          <span className="font-semibold text-gray-800 dark:text-gray-200">
+            Кыргызстан • Коопсуз буйрутма жана бүтүндөй республика боюнча ыкчам жеткирүү
+          </span>
+        </div>
+        <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-white dark:bg-darkCard px-3 py-1 rounded-full shadow-xs border border-emerald-200/50">
+          🇰🇬 7 облус • MBANK / ЭЛСОМ / О!Деньги
+        </span>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Form fields */}

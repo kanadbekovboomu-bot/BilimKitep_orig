@@ -9,7 +9,8 @@ import {
   MessageSquarePlus,
   Share2,
   Calendar,
-  AlertCircle
+  AlertCircle,
+  Truck
 } from 'lucide-react';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { BookGallery } from '../components/modules/BookGallery';
@@ -21,6 +22,7 @@ import { DealBadge } from '../components/modules/DealBadge';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 import { ToastNotification } from '../components/common/ToastNotification';
+import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import { fetchBookById, addReviewToBook } from '../features/books/booksSlice';
 import { addToCart } from '../features/cart/cartSlice';
 
@@ -142,6 +144,24 @@ export const BookDetailPage = () => {
               </div>
             </div>
 
+            {/* Kyrgyz State Educational Compliance Banner */}
+            <div className="flex items-center gap-3.5 p-3.5 bg-gradient-to-r from-amber-500/10 via-emerald-500/10 to-transparent rounded-xl border border-amber-300/40 dark:border-amber-700/30">
+              <TyndykEmblem size={32} className="text-amber-500 shrink-0" />
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black text-gray-900 dark:text-gray-100">
+                    КР Билим берүү жана илим министрлиги
+                  </span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400">
+                    Бекитилген
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
+                  Кыргыз Республикасынын мектеп программасына толук ылайыкталган окуу китеби
+                </p>
+              </div>
+            </div>
+
             {/* Description */}
             <div className="space-y-2">
               <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">
@@ -199,6 +219,48 @@ export const BookDetailPage = () => {
           />
 
           <SellerCard owner={book.owner} />
+
+          {/* Kyrgyz Store Guarantees & Trust Card */}
+          <div className="bg-gradient-to-b from-white to-emerald-50/40 dark:from-darkCard dark:to-darkCard/90 rounded-2xl border border-emerald-200/50 dark:border-darkBorder p-5 space-y-3.5 shadow-xs">
+            <div className="flex items-center gap-2 pb-2.5 border-b border-emerald-100 dark:border-darkBorder">
+              <TyndykEmblem size={20} className="text-amber-500 shrink-0" />
+              <span className="text-xs font-black text-gray-900 dark:text-gray-100 uppercase tracking-wide">
+                БилимКитеп Кепилдиги • 100% Ишеним
+              </span>
+            </div>
+
+            <div className="space-y-2.5 text-xs text-gray-600 dark:text-gray-300">
+              <div className="flex items-start gap-2.5">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold text-gray-900 dark:text-gray-100">100% Кайтарым Күрөө</p>
+                  <p className="text-[11px] text-gray-500">Китепти кайтаргандан кийин депозиттик сумма картаңызга толук кайтарылат.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2.5">
+                <Truck className="w-4 h-4 text-brand-600 dark:text-brand-400 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold text-gray-900 dark:text-gray-100">7 Облуска Ыкчам Жеткирүү</p>
+                  <p className="text-[11px] text-gray-500">Бишкек, Ош жана бардык аймактарга курьер же почта аркылуу 24 саатта.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2.5">
+                <BookOpen className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold text-gray-900 dark:text-gray-100">Текшерилген Абал</p>
+                  <p className="text-[11px] text-gray-500">Ар бир окуу китеби бүтүндүгү жана сапаты текшерилип тапшырылат.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-emerald-100 dark:border-darkBorder text-center">
+              <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 italic">
+                «Билим — түгөнгүс кенч, өнөр — өчпөс чырак» 🇰🇬
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 

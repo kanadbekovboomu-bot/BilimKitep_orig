@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ShieldCheck, ArrowRight } from 'lucide-react';
 import { Button } from '../common/Button';
+import { TyndykEmblem } from '../common/KyrgyzOrnament';
 import { formatKGS } from '../../utils/formatters';
 
 export const OrderSummary = ({
@@ -18,10 +19,19 @@ export const OrderSummary = ({
   const subtotalWithoutDeposit = Math.max(0, totalAmount - depositAmount);
 
   return (
-    <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-6 shadow-sm space-y-5">
-      <h3 className="font-bold text-base text-gray-900 dark:text-gray-100 pb-3 border-b border-gray-100 dark:border-darkBorder">
-        {t('orderCost')}
-      </h3>
+    <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder shadow-sm space-y-5 overflow-hidden">
+      {/* Kyrgyz National Tricolor Accent Ribbon */}
+      <div className="h-1.5 w-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
+
+      <div className="px-6 pb-6 pt-1 space-y-5">
+        <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-darkBorder">
+          <h3 className="font-bold text-base text-gray-900 dark:text-gray-100">
+            {t('orderCost')}
+          </h3>
+          <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-brand-600 dark:text-brand-400">
+            КР Дүкөнү 🇰🇬
+          </span>
+        </div>
 
       <div className="space-y-3 text-xs text-gray-600 dark:text-gray-300">
         <div className="flex justify-between">
@@ -72,9 +82,23 @@ export const OrderSummary = ({
         </Button>
       )}
 
-      <p className="text-[11px] text-gray-400 text-center leading-relaxed">
-        {t('termsNote')}
-      </p>
+        <p className="text-[11px] text-gray-400 text-center leading-relaxed">
+          {t('termsNote')}
+        </p>
+
+        {/* Kyrgyz Store Guarantee & Eco Trust Badge */}
+        <div className="pt-2 border-t border-gray-100 dark:border-darkBorder space-y-2">
+          <div className="flex items-center gap-2 p-2.5 rounded-xl bg-amber-500/10 dark:bg-amber-950/20 border border-amber-300/30 dark:border-amber-700/20 text-amber-900 dark:text-amber-200 text-[11px]">
+            <TyndykEmblem size={18} className="text-amber-500 shrink-0" />
+            <span className="font-semibold">
+              Кыргызстан • Коопсуз төлөм жана кепилденген кайтарым күрөө
+            </span>
+          </div>
+          <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center">
+            🌿 Китепти кайра колдонуу — жаратылышты жана каражатты сактайт
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

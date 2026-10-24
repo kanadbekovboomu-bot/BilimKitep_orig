@@ -13,6 +13,7 @@ import { RevenueChart } from '../components/admin/RevenueChart';
 import { CategoriesPieChart } from '../components/admin/CategoriesPieChart';
 import { AdminBooksTable } from '../components/admin/AdminBooksTable';
 import { AdminOrderModal } from '../components/admin/AdminOrderModal';
+import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import { api } from '../services/api';
 import { formatKGS, formatDate } from '../utils/formatters';
 
@@ -75,6 +76,10 @@ export const AdminDashboardPage = () => {
           {/* Header */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-900 dark:text-amber-200 text-[11px] font-bold border border-amber-300/40 mb-1.5">
+                <TyndykEmblem size={13} className="text-amber-500" />
+                <span>Кыргызстан • Билим берүү жана окуу китептер платформасы</span>
+              </div>
               <h1 className="text-2xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
                 {t('title')}
               </h1>

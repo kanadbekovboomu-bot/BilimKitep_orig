@@ -11,6 +11,7 @@ import { BookGrid } from '../components/modules/BookGrid';
 import { Pagination } from '../components/common/Pagination';
 import { QuickViewModal } from '../components/modules/QuickViewModal';
 import { ToastNotification } from '../components/common/ToastNotification';
+import { TyndykEmblem, KochkorMuyuzPattern } from '../components/common/KyrgyzOrnament';
 import { fetchBooks } from '../features/books/booksSlice';
 import {
   setSearchQuery,
@@ -80,6 +81,10 @@ export const CatalogPage = () => {
       {/* Header and Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200/50 dark:border-amber-800/40 text-amber-900 dark:text-amber-200 text-xs font-bold mb-2">
+            <TyndykEmblem size={14} className="text-amber-500" />
+            <span>Кыргызстандын окуу китептери • Расмий каталог</span>
+          </div>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
             {t('title')}
           </h1>

@@ -16,6 +16,7 @@ import { ProfileStats } from '../components/modules/ProfileStats';
 import { UserOrderRow } from '../components/modules/UserOrderRow';
 import { ListingManageRow } from '../components/modules/ListingManageRow';
 import { Button } from '../components/common/Button';
+import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import { api } from '../services/api';
 import { logout } from '../features/auth/authSlice';
 import { deleteBook } from '../features/books/booksSlice';
@@ -70,47 +71,56 @@ export const ProfilePage = () => {
       <Breadcrumbs items={[{ label: t('title') }]} />
 
       {/* User Header */}
-      <div className="bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xs">
-        <div className="flex items-center gap-4">
-          {user?.avatar ? (
-            <img
-              src={user.avatar}
-              alt={user.name || 'User'}
-              className="w-16 h-16 rounded-2xl object-cover shadow-md shadow-brand-500/20 border-2 border-brand-400"
-            />
-          ) : (
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 text-white flex items-center justify-center font-extrabold text-2xl shadow-md shadow-brand-500/20">
-              {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
-            </div>
-          )}
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">
-                {user?.name || t('defaultUser')}
-              </h1>
-              <ShieldCheck className="w-5 h-5 text-brand-500" title={t('seller.verified', { ns: 'common' })} />
-              {user?.authProvider === 'GOOGLE' && (
-                <span className="text-[10px] bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full font-bold border border-blue-200 dark:border-blue-800">
-                  Google ID
+      <div className="bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder shadow-xs overflow-hidden">
+        {/* Kyrgyz National Tricolor Ribbon */}
+        <div className="h-1.5 w-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
+
+        <div className="p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            {user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user.name || 'User'}
+                className="w-16 h-16 rounded-2xl object-cover shadow-md shadow-brand-500/20 border-2 border-brand-400"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 text-white flex items-center justify-center font-extrabold text-2xl shadow-md shadow-brand-500/20">
+                {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+              </div>
+            )}
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">
+                  {user?.name || t('defaultUser')}
+                </h1>
+                <ShieldCheck className="w-5 h-5 text-brand-500" title={t('seller.verified', { ns: 'common' })} />
+                <span className="inline-flex items-center gap-1 text-[11px] bg-gradient-to-r from-amber-500/10 to-emerald-500/10 text-amber-900 dark:text-amber-200 px-2.5 py-0.5 rounded-full font-bold border border-amber-300/40">
+                  <TyndykEmblem size={13} className="text-amber-500" />
+                  <span>Кыргызстан 🇰🇬</span>
                 </span>
-              )}
+                {user?.authProvider === 'GOOGLE' && (
+                  <span className="text-[10px] bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full font-bold border border-blue-200 dark:border-blue-800">
+                    Google ID
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-gray-500 mt-0.5">
+                {user?.email} • {user?.phone || '+996 700 123 456'}
+              </p>
             </div>
-            <p className="text-xs text-gray-500 mt-0.5">
-              {user?.email} • {user?.phone || '+996 700 123 456'}
-            </p>
           </div>
-        </div>
 
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <Link to="/add-book" className="flex-1 sm:flex-none">
-            <Button variant="primary" size="sm" icon={PlusCircle} className="w-full">
-              {t('addBookBtn')}
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <Link to="/add-book" className="flex-1 sm:flex-none">
+              <Button variant="primary" size="sm" icon={PlusCircle} className="w-full">
+                {t('addBookBtn')}
+              </Button>
+            </Link>
+
+            <Button variant="outline" size="sm" icon={LogOut} onClick={handleLogout}>
+              {t('logoutBtn')}
             </Button>
-          </Link>
-
-          <Button variant="outline" size="sm" icon={LogOut} onClick={handleLogout}>
-            {t('logoutBtn')}
-          </Button>
+          </div>
         </div>
       </div>
 

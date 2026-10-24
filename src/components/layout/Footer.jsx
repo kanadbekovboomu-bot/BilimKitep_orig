@@ -2,23 +2,42 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { BookOpen, Heart, Shield, Phone, Mail, MapPin } from 'lucide-react';
+import { TyndykEmblem, KochkorMuyuzPattern } from '../common/KyrgyzOrnament';
 
 export const Footer = () => {
   const { t } = useTranslation('common');
 
   return (
-    <footer className="w-full bg-white dark:bg-darkCard border-t border-gray-100 dark:border-darkBorder pt-14 pb-8 transition-colors mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="w-full bg-white dark:bg-darkCard border-t border-gray-100 dark:border-darkBorder transition-colors mt-auto">
+      {/* Kyrgyz National Color Ribbon */}
+      <div className="w-full h-1.5 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
+
+      {/* Subtle Kyrgyz Kochkor-Muyuz pattern */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 opacity-30">
+        <KochkorMuyuzPattern className="h-4 text-emerald-600 dark:text-emerald-400" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-gray-100 dark:border-darkBorder">
           {/* Brand Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center text-white font-bold">
-                <BookOpen className="w-5 h-5" />
+              <div className="relative">
+                <div className="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center text-white font-bold">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div className="absolute -top-1 -right-1">
+                  <TyndykEmblem size={13} className="text-amber-500" />
+                </div>
               </div>
-              <span className="font-extrabold text-xl tracking-tight text-gray-900 dark:text-gray-100">
-                Bilim<span className="text-brand-500">Kitep</span>
-              </span>
+              <div className="flex items-center gap-1.5">
+                <span className="font-extrabold text-xl tracking-tight text-gray-900 dark:text-gray-100">
+                  Bilim<span className="text-brand-500">Kitep</span>
+                </span>
+                <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-red-600 text-white">
+                  KG
+                </span>
+              </div>
             </Link>
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
               {t('footer.about')}
@@ -101,10 +120,10 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <p>{t('footer.rights')}</p>
-          <p className="flex items-center gap-1">
-            <span>Made with</span>
+          <p className="flex items-center gap-1.5 font-medium">
+            <span>Кыргызстанда сүйүү менен жасалган</span>
             <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" />
-            <span>for education in Kyrgyzstan</span>
+            <span>• Билим — түгөнгүс кенч 🇰🇬</span>
           </p>
         </div>
       </div>

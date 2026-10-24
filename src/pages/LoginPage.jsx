@@ -7,6 +7,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import { Input } from '../components/common/Input';
 import { Button } from '../components/common/Button';
+import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import { setCredentials } from '../features/auth/authSlice';
 
 export const LoginPage = () => {
@@ -111,23 +112,37 @@ export const LoginPage = () => {
 
   return (
     <div className="min-h-[75vh] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder p-8 shadow-xl space-y-6">
-        <div className="text-center space-y-2">
-          <Link to="/" className="inline-flex items-center gap-2 mb-2">
-            <div className="w-10 h-10 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <span className="font-extrabold text-xl text-gray-900 dark:text-gray-100">
-              Bilim<span className="text-brand-500">Kitep</span>
-            </span>
-          </Link>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-            {t('loginTitle')}
-          </h2>
-          <p className="text-xs text-gray-500">
-            {t('loginSubtitle')}
-          </p>
-        </div>
+      <div className="w-full max-w-md bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder shadow-xl space-y-6 overflow-hidden">
+        {/* Kyrgyz National Tricolor Ribbon */}
+        <div className="h-2 w-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
+
+        <div className="p-8 pt-2 space-y-6">
+          <div className="text-center space-y-2">
+            <Link to="/" className="inline-flex items-center gap-2.5 mb-1 group">
+              <div className="relative">
+                <div className="w-11 h-11 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-bold shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div className="absolute -bottom-1 -right-1 bg-white dark:bg-darkCard rounded-full p-0.5 shadow-xs">
+                  <TyndykEmblem size={14} className="text-amber-500" />
+                </div>
+              </div>
+              <div className="text-left">
+                <span className="font-extrabold text-xl text-gray-900 dark:text-gray-100 tracking-tight block leading-tight">
+                  Bilim<span className="text-brand-500">Kitep</span>
+                </span>
+                <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest block">
+                  Кыргызстан • Дүкөн
+                </span>
+              </div>
+            </Link>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+              {t('loginTitle')}
+            </h2>
+            <p className="text-xs text-gray-500">
+              {t('loginSubtitle')}
+            </p>
+          </div>
 
         {/* Quick Demo Login Box */}
         <div className="p-3.5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/40 border border-brand-200/60 dark:border-brand-800/40 space-y-2.5">
@@ -213,11 +228,12 @@ export const LoginPage = () => {
           </div>
         </div>
 
-        <div className="text-center text-xs text-gray-500 pt-2 border-t border-gray-100 dark:border-darkBorder">
-          <span>{t('noAccount')} </span>
-          <Link to="/register" className="font-bold text-brand-600 hover:text-brand-700">
-            {t('registerBtn')}
-          </Link>
+          <div className="text-center text-xs text-gray-500 pt-2 border-t border-gray-100 dark:border-darkBorder">
+            <span>{t('noAccount')} </span>
+            <Link to="/register" className="font-bold text-brand-600 hover:text-brand-700">
+              {t('registerBtn')}
+            </Link>
+          </div>
         </div>
       </div>
     </div>
