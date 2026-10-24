@@ -72,15 +72,28 @@ export const ProfilePage = () => {
       {/* User Header */}
       <div className="bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xs">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 text-white flex items-center justify-center font-extrabold text-2xl shadow-md shadow-brand-500/20">
-            {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
-          </div>
+          {user?.avatar ? (
+            <img
+              src={user.avatar}
+              alt={user.name || 'User'}
+              className="w-16 h-16 rounded-2xl object-cover shadow-md shadow-brand-500/20 border-2 border-brand-400"
+            />
+          ) : (
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 text-white flex items-center justify-center font-extrabold text-2xl shadow-md shadow-brand-500/20">
+              {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+            </div>
+          )}
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">
                 {user?.name || 'Колдонуучу'}
               </h1>
               <ShieldCheck className="w-5 h-5 text-brand-500" title="Верифицирован" />
+              {user?.authProvider === 'GOOGLE' && (
+                <span className="text-[10px] bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full font-bold border border-blue-200 dark:border-blue-800">
+                  Google ID
+                </span>
+              )}
             </div>
             <p className="text-xs text-gray-500 mt-0.5">
               {user?.email} • {user?.phone || '+996 700 123 456'}

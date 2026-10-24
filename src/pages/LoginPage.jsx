@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Lock, Mail, BookOpen, ShieldCheck, UserCheck } from 'lucide-react';
+import { Lock, Mail, BookOpen, ShieldCheck, UserCheck, Globe } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 import { Input } from '../components/common/Input';
 import { Button } from '../components/common/Button';
 import { setCredentials } from '../features/auth/authSlice';
@@ -38,6 +40,36 @@ export const LoginPage = () => {
     navigate(mockUser.role === 'ADMIN' ? '/admin' : from, { replace: true });
   };
 
+  // Google OAuth Success Handler
+  const handleGoogleSuccess = (credentialResponse) => {
+    try {
+      if (!credentialResponse?.credential) {
+        throw new Error('No credential received');
+      }
+      const decoded = jwtDecode(credentialResponse.credential);
+      const googleUser = {
+        id: `google_${decoded.sub || Date.now()}`,
+        name: decoded.name || decoded.email?.split('@')[0] || 'Google User',
+        email: decoded.email,
+        avatar: decoded.picture || '',
+        role: 'USER',
+        phone: '+996 700 888 999',
+        authProvider: 'GOOGLE',
+        emailVerified: !!decoded.email_verified,
+      };
+
+      dispatch(setCredentials({ user: googleUser, token: credentialResponse.credential }));
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.error('Google decode error:', err);
+      setError(t('googleAuthFailed'));
+    }
+  };
+
+  const handleGoogleError = () => {
+    setError(t('googleAuthFailed'));
+  };
+
   // Quick Demo Logins for Diploma Defense
   const handleQuickDemo = (role) => {
     if (role === 'ADMIN') {
@@ -50,6 +82,19 @@ export const LoginPage = () => {
       };
       dispatch(setCredentials({ user: adminUser, token: 'mock_jwt_admin_token' }));
       navigate('/admin', { replace: true });
+    } else if (role === 'GOOGLE') {
+      const googleDemoUser = {
+        id: 'u_google_demo_101',
+        name: 'Нурсултан Касымов',
+        email: 'nursultan.kasymov@gmail.com',
+        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
+        role: 'USER',
+        phone: '+996 705 554 433',
+        authProvider: 'GOOGLE',
+        city: 'Бишкек',
+      };
+      dispatch(setCredentials({ user: googleDemoUser, token: 'mock_jwt_google_token' }));
+      navigate('/profile', { replace: true });
     } else {
       const standardUser = {
         id: 'u_502',
@@ -90,11 +135,11 @@ export const LoginPage = () => {
             <ShieldCheck className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
             <span>{t('quickDemoLogin')}</span>
           </div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-3 gap-1.5">
             <button
               type="button"
               onClick={() => handleQuickDemo('USER')}
-              className="py-2 px-2 rounded-xl bg-white dark:bg-darkCard hover:bg-emerald-100/50 text-xs font-semibold text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-darkBorder transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+              className="py-2 px-1.5 rounded-xl bg-white dark:bg-darkCard hover:bg-emerald-100/50 text-[11px] font-semibold text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-darkBorder transition-all flex items-center justify-center gap-1 shadow-xs cursor-pointer"
             >
               <UserCheck className="w-3.5 h-3.5 text-brand-500" />
               <span>Колдонуучу</span>
@@ -102,10 +147,18 @@ export const LoginPage = () => {
             <button
               type="button"
               onClick={() => handleQuickDemo('ADMIN')}
-              className="py-2 px-2 rounded-xl bg-white dark:bg-darkCard hover:bg-purple-100/50 text-xs font-semibold text-purple-700 dark:text-purple-300 border border-gray-200 dark:border-darkBorder transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+              className="py-2 px-1.5 rounded-xl bg-white dark:bg-darkCard hover:bg-purple-100/50 text-[11px] font-semibold text-purple-700 dark:text-purple-300 border border-gray-200 dark:border-darkBorder transition-all flex items-center justify-center gap-1 shadow-xs cursor-pointer"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-purple-600" />
               <span>Админ КР</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickDemo('GOOGLE')}
+              className="py-2 px-1.5 rounded-xl bg-white dark:bg-darkCard hover:bg-blue-100/50 text-[11px] font-semibold text-blue-700 dark:text-blue-300 border border-gray-200 dark:border-darkBorder transition-all flex items-center justify-center gap-1 shadow-xs cursor-pointer"
+            >
+              <Globe className="w-3.5 h-3.5 text-blue-500" />
+              <span>{t('demoGoogleUser')}</span>
             </button>
           </div>
         </div>
@@ -136,6 +189,30 @@ export const LoginPage = () => {
           </Button>
         </form>
 
+        {/* Google OAuth Section */}
+        <div className="space-y-3 pt-1">
+          <div className="relative flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200 dark:border-darkBorder" />
+            </div>
+            <span className="relative bg-white dark:bg-darkCard px-3 text-[11px] uppercase tracking-wider text-gray-400">
+              {t('orWithGoogle')}
+            </span>
+          </div>
+
+          <div className="flex justify-center w-full min-h-[44px]">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              theme="outline"
+              size="large"
+              shape="pill"
+              text="continue_with"
+              width="360"
+            />
+          </div>
+        </div>
+
         <div className="text-center text-xs text-gray-500 pt-2 border-t border-gray-100 dark:border-darkBorder">
           <span>{t('noAccount')} </span>
           <Link to="/register" className="font-bold text-brand-600 hover:text-brand-700">
@@ -148,3 +225,4 @@ export const LoginPage = () => {
 };
 
 export default LoginPage;
+

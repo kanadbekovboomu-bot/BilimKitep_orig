@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { User, Mail, Lock, Phone, BookOpen } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 import { Input } from '../components/common/Input';
 import { Select } from '../components/common/Select';
 import { Button } from '../components/common/Button';
@@ -38,6 +40,36 @@ export const RegisterPage = () => {
 
     dispatch(registerUser({ user: newUser, token: 'jwt_registered_token_456' }));
     navigate('/profile', { replace: true });
+  };
+
+  const handleGoogleSuccess = (credentialResponse) => {
+    try {
+      if (!credentialResponse?.credential) {
+        throw new Error('No credential received');
+      }
+      const decoded = jwtDecode(credentialResponse.credential);
+      const googleUser = {
+        id: `google_${decoded.sub || Date.now()}`,
+        name: decoded.name || decoded.email?.split('@')[0] || 'Google User',
+        email: decoded.email,
+        avatar: decoded.picture || '',
+        role: 'USER',
+        phone: '+996 700 888 999',
+        authProvider: 'GOOGLE',
+        userType: role,
+        emailVerified: !!decoded.email_verified,
+      };
+
+      dispatch(registerUser({ user: googleUser, token: credentialResponse.credential }));
+      navigate('/profile', { replace: true });
+    } catch (err) {
+      console.error('Google decode error:', err);
+      setError(t('googleAuthFailed'));
+    }
+  };
+
+  const handleGoogleError = () => {
+    setError(t('googleAuthFailed'));
   };
 
   return (
@@ -113,6 +145,30 @@ export const RegisterPage = () => {
           </Button>
         </form>
 
+        {/* Google OAuth Section */}
+        <div className="space-y-3 pt-1">
+          <div className="relative flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200 dark:border-darkBorder" />
+            </div>
+            <span className="relative bg-white dark:bg-darkCard px-3 text-[11px] uppercase tracking-wider text-gray-400">
+              {t('orWithGoogle')}
+            </span>
+          </div>
+
+          <div className="flex justify-center w-full min-h-[44px]">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              theme="outline"
+              size="large"
+              shape="pill"
+              text="signup_with"
+              width="360"
+            />
+          </div>
+        </div>
+
         <div className="text-center text-xs text-gray-500 pt-2 border-t border-gray-100 dark:border-darkBorder">
           <span>{t('hasAccount')} </span>
           <Link to="/login" className="font-bold text-brand-600 hover:text-brand-700">
@@ -123,5 +179,6 @@ export const RegisterPage = () => {
     </div>
   );
 };
+
 
 export default RegisterPage;

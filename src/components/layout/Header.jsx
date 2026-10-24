@@ -107,9 +107,17 @@ export const Header = ({ onOpenDefenseModal }) => {
                   to="/profile"
                   className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-darkBorder hover:bg-gray-50 dark:hover:bg-darkCard transition-colors"
                 >
-                  <div className="w-7 h-7 rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-300 flex items-center justify-center font-bold text-xs">
-                    {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-                  </div>
+                  {user.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.name || 'User'}
+                      className="w-7 h-7 rounded-full object-cover border border-brand-300"
+                    />
+                  ) : (
+                    <div className="w-7 h-7 rounded-full bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-300 flex items-center justify-center font-bold text-xs">
+                      {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                  )}
                   <span className="text-xs font-semibold text-gray-800 dark:text-gray-200 max-w-[100px] truncate">
                     {user.name || user.email}
                   </span>

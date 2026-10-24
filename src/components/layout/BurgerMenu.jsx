@@ -77,7 +77,11 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount, user, onLogout }) => {
                   onClick={onClose}
                   className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-darkBorder hover:text-brand-600"
                 >
-                  <User className="w-4 h-4" />
+                  {user.avatar ? (
+                    <img src={user.avatar} alt={user.name} className="w-5 h-5 rounded-full object-cover border border-brand-300" />
+                  ) : (
+                    <User className="w-4 h-4" />
+                  )}
                   {t('nav.profile')}
                 </Link>
 
