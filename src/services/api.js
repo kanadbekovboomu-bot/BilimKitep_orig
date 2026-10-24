@@ -1,4 +1,5 @@
-// Mock REST API Service with LocalStorage persistence for BilimKitep
+// Hybrid REST API Service with Neon Postgres & LocalStorage fallback
+import { neonService, isNeonAvailable } from './neonClient';
 
 const STORAGE_KEY_BOOKS = 'bilimkitep_books_db';
 const STORAGE_KEY_ORDERS = 'bilimkitep_orders_db';
@@ -402,6 +403,15 @@ const delay = (ms = 150) => new Promise((resolve) => setTimeout(resolve, ms));
 export const api = {
   // Books CRUD
   async getBooks(params = {}) {
+    if (isNeonAvailable()) {
+      try {
+        const res = await neonService.getBooks(params);
+        return res;
+      } catch (err) {
+        console.warn('[API] Neon getBooks fallback to local:', err.message);
+      }
+    }
+
     await delay();
     let books = getStoredBooks();
 
@@ -463,6 +473,15 @@ export const api = {
   },
 
   async getBookById(id) {
+    if (isNeonAvailable()) {
+      try {
+        const book = await neonService.getBookById(id);
+        return book;
+      } catch (err) {
+        console.warn('[API] Neon getBookById fallback to local:', err.message);
+      }
+    }
+
     await delay();
     const books = getStoredBooks();
     const book = books.find(b => b.id === id);
@@ -471,6 +490,19 @@ export const api = {
   },
 
   async createBook(bookData) {
+    if (isNeonAvailable()) {
+      try {
+        const created = await neonService.createBook(bookData);
+        // Also sync local
+        const books = getStoredBooks();
+        books.unshift(created);
+        saveStoredBooks(books);
+        return created;
+      } catch (err) {
+        console.warn('[API] Neon createBook fallback to local:', err.message);
+      }
+    }
+
     await delay();
     const books = getStoredBooks();
     const newBook = {
@@ -494,6 +526,21 @@ export const api = {
   },
 
   async updateBook(id, updateData) {
+    if (isNeonAvailable()) {
+      try {
+        const updated = await neonService.updateBook(id, updateData);
+        const books = getStoredBooks();
+        const index = books.findIndex(b => b.id === id);
+        if (index > -1) {
+          books[index] = updated;
+          saveStoredBooks(books);
+        }
+        return updated;
+      } catch (err) {
+        console.warn('[API] Neon updateBook fallback to local:', err.message);
+      }
+    }
+
     await delay();
     const books = getStoredBooks();
     const index = books.findIndex(b => b.id === id);
@@ -504,6 +551,14 @@ export const api = {
   },
 
   async deleteBook(id) {
+    if (isNeonAvailable()) {
+      try {
+        await neonService.deleteBook(id);
+      } catch (err) {
+        console.warn('[API] Neon deleteBook fallback to local:', err.message);
+      }
+    }
+
     await delay();
     let books = getStoredBooks();
     books = books.filter(b => b.id !== id);
@@ -512,6 +567,15 @@ export const api = {
   },
 
   async addReview(bookId, review) {
+    if (isNeonAvailable()) {
+      try {
+        const updated = await neonService.addReview(bookId, review);
+        return updated;
+      } catch (err) {
+        console.warn('[API] Neon addReview fallback to local:', err.message);
+      }
+    }
+
     await delay();
     const books = getStoredBooks();
     const book = books.find(b => b.id === bookId);
@@ -532,6 +596,18 @@ export const api = {
 
   // Orders CRUD
   async createOrder(orderData) {
+    if (isNeonAvailable()) {
+      try {
+        const newOrder = await neonService.createOrder(orderData);
+        const orders = getStoredOrders();
+        orders.unshift(newOrder);
+        saveStoredOrders(orders);
+        return newOrder;
+      } catch (err) {
+        console.warn('[API] Neon createOrder fallback to local:', err.message);
+      }
+    }
+
     await delay();
     const orders = getStoredOrders();
     const newOrder = {
@@ -546,12 +622,30 @@ export const api = {
   },
 
   async getOrders() {
+    if (isNeonAvailable()) {
+      try {
+        const orders = await neonService.getOrders();
+        return orders;
+      } catch (err) {
+        console.warn('[API] Neon getOrders fallback to local:', err.message);
+      }
+    }
+
     await delay();
     return getStoredOrders();
   },
 
   // Admin Metrics
   async getAdminMetrics() {
+    if (isNeonAvailable()) {
+      try {
+        const metrics = await neonService.getAdminMetrics();
+        return metrics;
+      } catch (err) {
+        console.warn('[API] Neon getAdminMetrics fallback to local:', err.message);
+      }
+    }
+
     await delay();
     const books = getStoredBooks();
     const orders = getStoredOrders();

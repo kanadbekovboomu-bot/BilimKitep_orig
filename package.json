@@ -10,6 +10,9 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@neon/config": "^1.9.3",
+    "@neon/env": "^1.6.4",
+    "@neondatabase/serverless": "^1.2.0",
     "@reduxjs/toolkit": "^2.2.3",
     "i18next": "^23.11.2",
     "i18next-browser-languagedetector": "^7.2.1",
