@@ -36,13 +36,17 @@ export const QuickViewModal = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left: Image & Specs */}
         <div>
-          <div className="w-full h-64 bg-gray-100 dark:bg-darkBorder rounded-xl overflow-hidden mb-3">
+          <Link
+            to={`/books/${book.id}`}
+            onClick={onClose}
+            className="block w-full h-64 bg-gray-50 dark:bg-darkBorder/40 rounded-xl overflow-hidden mb-3 p-2 group"
+          >
             <img
-              src={book.images?.[0] || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80'}
+              src={book.images?.[0] || '/covers/geometry-8.svg'}
               alt={book.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
             />
-          </div>
+          </Link>
           <div className="flex flex-wrap gap-1.5 mb-2">
             <DealBadge dealType={book.dealType} />
             <Badge variant="default" size="sm">

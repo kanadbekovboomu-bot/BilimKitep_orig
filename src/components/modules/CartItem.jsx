@@ -18,11 +18,11 @@ export const CartItem = ({
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder gap-4">
       {/* Book Info */}
       <div className="flex items-center gap-3.5 w-full sm:w-auto">
-        <div className="w-16 h-20 bg-gray-100 dark:bg-darkBorder rounded-xl overflow-hidden shrink-0">
+        <div className="w-16 h-20 bg-gray-50 dark:bg-darkBorder/40 rounded-xl overflow-hidden shrink-0 flex items-center justify-center p-1 border border-gray-100 dark:border-darkBorder">
           <img
-            src={item.book.images?.[0] || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80'}
+            src={item.book.images?.[0] || '/covers/geometry-8.svg'}
             alt={item.book.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         </div>
         <div className="space-y-1">

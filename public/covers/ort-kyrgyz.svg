@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 850" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#831843" />
+      <stop offset="100%" stop-color="#500724" />
+    </linearGradient>
+
+    <!-- Spine 3D Shadow -->
+    <linearGradient id="spineShadow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.6"/>
+      <stop offset="3%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="6%" stop-color="#000000" stop-opacity="0.2"/>
+      <stop offset="10%" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Top Highlight -->
+    <linearGradient id="topGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base Cover -->
+  <rect x="0" y="0" width="600" height="850" rx="16" fill="url(#bgGrad)" />
+
+  <!-- Background Decorative Lines -->
+  <circle cx="300" cy="425" r="260" fill="none" stroke="#f43f5e" stroke-opacity="0.12" stroke-width="48" />
+  <circle cx="300" cy="425" r="180" fill="none" stroke="#fbbf24" stroke-opacity="0.15" stroke-width="2" stroke-dasharray="10,6" />
+
+  <!-- Outer Border Frame -->
+  <rect x="25" y="25" width="550" height="800" rx="10" fill="none" stroke="#fde047" stroke-opacity="0.4" stroke-width="2" />
+  <rect x="33" y="33" width="534" height="784" rx="8" fill="none" stroke="#fde047" stroke-opacity="0.2" stroke-width="1" />
+
+  <!-- Top Header Ministry -->
+  <text x="300" y="70" fill="#ffffff" fill-opacity="0.8" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" letter-spacing="1.5">
+    ЖАЛПЫ РЕСПУБЛИКАЛЫК ТЕСТИРЛӨӨ
+  </text>
+
+  <!-- Authors -->
+  <text x="300" y="115" fill="#fde047" font-family="Arial, sans-serif" font-weight="600" font-size="18" text-anchor="middle">
+    Г. Орозова, Т. Бакасова
+  </text>
+
+  <!-- Grade Badge (Top Right) -->
+  <g transform="translate(480, 80)">
+    <circle cx="30" cy="30" r="34" fill="#fde047" stroke="#ffffff" stroke-width="3" />
+    <text x="30" y="32" fill="#0f172a" font-family="Arial, sans-serif" font-weight="900" font-size="22" text-anchor="middle">ОРТ</text>
+    <text x="30" y="47" fill="#0f172a" font-family="Arial, sans-serif" font-weight="bold" font-size="10" text-anchor="middle">100%</text>
+  </g>
+
+  <!-- Subject Title Header Banner -->
+  <g transform="translate(0, 140)">
+    <rect x="60" y="10" width="480" height="75" rx="14" fill="#000000" fill-opacity="0.3" stroke="#f43f5e" stroke-width="2" />
+    <text x="300" y="58" fill="#ffffff" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="38" text-anchor="middle" letter-spacing="3">
+      ЖРТ КЫРГЫЗ ТИЛИ
+    </text>
+  </g>
+
+  <!-- Subtitle -->
+  <text x="300" y="248" fill="#fbbf24" font-family="Arial, sans-serif" font-weight="500" font-size="16" text-anchor="middle">
+    Окуу, түшүнүү жана сөздүк
+  </text>
+
+  <!-- Center Thematic Illustration -->
+  <g>
+    
+      <!-- Certificate Badge -->
+      <circle cx="300" cy="380" r="80" fill="#be185d" stroke="#fde047" stroke-width="5"/>
+      <circle cx="300" cy="380" r="66" fill="#831843" stroke="#fef08a" stroke-width="2" stroke-dasharray="6,4"/>
+      <!-- Open Dictionary Book -->
+      <path d="M 230 400 Q 270 380 300 390 Q 330 380 370 400 L 370 340 Q 330 320 300 330 Q 270 320 230 340 Z" fill="#ffffff" stroke="#fde047" stroke-width="3"/>
+      <!-- Checklist / Accuracy Target -->
+      <circle cx="300" cy="445" r="16" fill="#10b981"/>
+      <path d="M 292 445 L 298 451 L 309 439" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      <text x="300" y="525" fill="#fde047" font-family="Arial, sans-serif" font-weight="900" font-size="22" text-anchor="middle">АНАЛОГИЯЛАР</text>
+      <text x="300" y="555" fill="#fce7f3" font-family="Arial, sans-serif" font-weight="bold" font-size="16" text-anchor="middle">ТЕКСТТИ ТҮШҮНҮҮ</text>
+    
+  </g>
+
+  <!-- Bottom Type Text & Publisher -->
+  <rect x="70" y="690" width="460" height="1" fill="#fde047" fill-opacity="0.4"/>
+  <text x="300" y="730" fill="#ffffff" fill-opacity="0.9" font-family="Arial, sans-serif" font-weight="bold" font-size="13" text-anchor="middle" letter-spacing="1">
+    НЕГИЗГИ ТЕСТКЕ ДАЯРДЫК КОЛДОНМОСУ
+  </text>
+  <text x="300" y="775" fill="#fde047" fill-opacity="0.8" font-family="Arial, sans-serif" font-weight="bold" font-size="12" text-anchor="middle" letter-spacing="2">
+    БИЛИМ БОРБОРУ • БИШКЕК
+  </text>
+
+  <!-- Top Gloss Highlight -->
+  <rect x="0" y="0" width="600" height="400" rx="16" fill="url(#topGlow)" pointer-events="none" />
+
+  <!-- 3D Realistic Spine Shadow on Left Edge -->
+  <rect x="0" y="0" width="50" height="850" fill="url(#spineShadow)" pointer-events="none" />
+</svg>

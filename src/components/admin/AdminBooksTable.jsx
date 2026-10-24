@@ -40,9 +40,9 @@ export const AdminBooksTable = ({
                 <td className="py-3 px-4">
                   <div className="flex items-center gap-2.5">
                     <img
-                      src={b.images?.[0] || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80'}
+                      src={b.images?.[0] || '/covers/geometry-8.svg'}
                       alt=""
-                      className="w-8 h-10 object-cover rounded-lg shrink-0"
+                      className="w-8 h-10 object-contain rounded-lg shrink-0 bg-gray-50 dark:bg-darkBorder/40 p-0.5 border border-gray-100 dark:border-darkBorder"
                     />
                     <div>
                       <div className="font-bold text-gray-900 dark:text-gray-100 line-clamp-1">

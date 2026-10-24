@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 850" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#022c22" />
+    </linearGradient>
+
+    <!-- Spine 3D Shadow -->
+    <linearGradient id="spineShadow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.6"/>
+      <stop offset="3%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="6%" stop-color="#000000" stop-opacity="0.2"/>
+      <stop offset="10%" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Top Highlight -->
+    <linearGradient id="topGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base Cover -->
+  <rect x="0" y="0" width="600" height="850" rx="16" fill="url(#bgGrad)" />
+
+  <!-- Background Decorative Lines -->
+  <circle cx="300" cy="425" r="260" fill="none" stroke="#10b981" stroke-opacity="0.12" stroke-width="48" />
+  <circle cx="300" cy="425" r="180" fill="none" stroke="#34d399" stroke-opacity="0.15" stroke-width="2" stroke-dasharray="10,6" />
+
+  <!-- Outer Border Frame -->
+  <rect x="25" y="25" width="550" height="800" rx="10" fill="none" stroke="#fbbf24" stroke-opacity="0.4" stroke-width="2" />
+  <rect x="33" y="33" width="534" height="784" rx="8" fill="none" stroke="#fbbf24" stroke-opacity="0.2" stroke-width="1" />
+
+  <!-- Top Header Ministry -->
+  <text x="300" y="70" fill="#ffffff" fill-opacity="0.8" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" letter-spacing="1.5">
+    МИНИСТЕРСТВО ОБРАЗОВАНИЯ И НАУКИ КЫРГЫЗСКОЙ РЕСПУБЛИКИ
+  </text>
+
+  <!-- Authors -->
+  <text x="300" y="115" fill="#fbbf24" font-family="Arial, sans-serif" font-weight="600" font-size="18" text-anchor="middle">
+    С. Сатыбалдиев, О. Рудзитис
+  </text>
+
+  <!-- Grade Badge (Top Right) -->
+  <g transform="translate(480, 80)">
+    <circle cx="30" cy="30" r="34" fill="#fbbf24" stroke="#ffffff" stroke-width="3" />
+    <text x="30" y="32" fill="#0f172a" font-family="Arial, sans-serif" font-weight="900" font-size="22" text-anchor="middle">8</text>
+    <text x="30" y="47" fill="#0f172a" font-family="Arial, sans-serif" font-weight="bold" font-size="10" text-anchor="middle">КЛАСС</text>
+  </g>
+
+  <!-- Subject Title Header Banner -->
+  <g transform="translate(0, 140)">
+    <rect x="60" y="10" width="480" height="75" rx="14" fill="#000000" fill-opacity="0.3" stroke="#10b981" stroke-width="2" />
+    <text x="300" y="58" fill="#ffffff" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="38" text-anchor="middle" letter-spacing="3">
+      ХИМИЯ
+    </text>
+  </g>
+
+  <!-- Subtitle -->
+  <text x="300" y="248" fill="#34d399" font-family="Arial, sans-serif" font-weight="500" font-size="16" text-anchor="middle">
+    Неорганическая химия
+  </text>
+
+  <!-- Center Thematic Illustration -->
+  <g>
+    
+      <!-- Erlenmeyer Flask -->
+      <path d="M 270 330 L 330 330 L 330 380 L 410 500 C 420 515 410 530 390 530 L 210 530 C 190 530 180 515 190 500 L 270 380 Z" fill="none" stroke="#34d399" stroke-width="6" stroke-linejoin="round"/>
+      <path d="M 215 490 L 385 490 L 360 450 L 240 450 Z" fill="#10b981" opacity="0.6"/>
+      <circle cx="270" cy="470" r="8" fill="#a7f3d0" opacity="0.8"/>
+      <circle cx="330" cy="480" r="12" fill="#a7f3d0" opacity="0.7"/>
+      <circle cx="300" cy="460" r="6" fill="#a7f3d0" opacity="0.9"/>
+      <!-- Molecule Benzene Ring -->
+      <polygon points="300,240 350,270 350,330 300,360 250,330 250,270" fill="none" stroke="#fbbf24" stroke-width="4"/>
+      <circle cx="300" cy="300" r="30" fill="none" stroke="#fbbf24" stroke-width="3" stroke-dasharray="6,4"/>
+      <!-- Atoms -->
+      <circle cx="300" cy="240" r="9" fill="#f87171"/>
+      <circle cx="350" cy="270" r="9" fill="#60a5fa"/>
+      <circle cx="350" cy="330" r="9" fill="#34d399"/>
+      <circle cx="300" cy="360" r="9" fill="#f87171"/>
+      <circle cx="250" cy="330" r="9" fill="#60a5fa"/>
+      <circle cx="250" cy="270" r="9" fill="#34d399"/>
+      <!-- Formulas -->
+      <text x="140" y="380" fill="#a7f3d0" font-family="Arial, sans-serif" font-weight="bold" font-size="20">H₂O</text>
+      <text x="430" y="380" fill="#a7f3d0" font-family="Arial, sans-serif" font-weight="bold" font-size="20">NaCl</text>
+      <text x="140" y="470" fill="#fef08a" font-family="Arial, sans-serif" font-weight="bold" font-size="18">H₂SO₄</text>
+      <text x="430" y="470" fill="#fef08a" font-family="Arial, sans-serif" font-weight="bold" font-size="18">O₂ + 2H₂</text>
+    
+  </g>
+
+  <!-- Bottom Type Text & Publisher -->
+  <rect x="70" y="690" width="460" height="1" fill="#fbbf24" fill-opacity="0.4"/>
+  <text x="300" y="730" fill="#ffffff" fill-opacity="0.9" font-family="Arial, sans-serif" font-weight="bold" font-size="13" text-anchor="middle" letter-spacing="1">
+    УЧЕБНИК ДЛЯ ОБЩЕОБРАЗОВАТЕЛЬНЫХ ШКОЛ
+  </text>
+  <text x="300" y="775" fill="#fbbf24" fill-opacity="0.8" font-family="Arial, sans-serif" font-weight="bold" font-size="12" text-anchor="middle" letter-spacing="2">
+    БИЛИМ-КОМПЬЮТЕР • БИШКЕК
+  </text>
+
+  <!-- Top Gloss Highlight -->
+  <rect x="0" y="0" width="600" height="400" rx="16" fill="url(#topGlow)" pointer-events="none" />
+
+  <!-- 3D Realistic Spine Shadow on Left Edge -->
+  <rect x="0" y="0" width="50" height="850" fill="url(#spineShadow)" pointer-events="none" />
+</svg>

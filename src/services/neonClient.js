@@ -134,7 +134,7 @@ export const neonService = {
   async createBook(b) {
     if (!sql) throw new Error('Neon database is not configured');
     const id = b.id || `b_${Date.now()}`;
-    const images = JSON.stringify(b.images && b.images.length > 0 ? b.images : ["https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80"]);
+    const images = JSON.stringify(b.images && b.images.length > 0 ? b.images : ["/covers/geometry-8.svg"]);
     const owner = JSON.stringify(b.owner || {});
     const reviews = JSON.stringify(b.reviews || []);
 

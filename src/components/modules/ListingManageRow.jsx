@@ -11,11 +11,11 @@ export const ListingManageRow = ({ book, onDelete }) => {
   return (
     <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div className="flex items-center gap-3.5">
-        <div className="w-14 h-18 bg-gray-100 dark:bg-darkBorder rounded-xl overflow-hidden shrink-0">
+        <div className="w-14 h-18 bg-gray-50 dark:bg-darkBorder/40 rounded-xl overflow-hidden shrink-0 flex items-center justify-center p-1 border border-gray-100 dark:border-darkBorder">
           <img
-            src={book.images?.[0] || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80'}
+            src={book.images?.[0] || '/covers/geometry-8.svg'}
             alt={book.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         </div>
         <div className="space-y-1">

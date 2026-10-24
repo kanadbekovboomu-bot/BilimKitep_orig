@@ -19,10 +19,9 @@ export const INITIAL_BOOKS = [
     condition: "GOOD",
     year: 2021,
     images: [
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1532012164546-f432f2e3777f?auto=format&fit=crop&w=800&q=80"
+      "/covers/geometry-8.svg"
     ],
-    description: "Китеп жакшы абалда, барактары бүтүн, чийилген жерлери жок. КР Билим берүү министрлиги бекиткен программа.",
+    description: "Кыргыз тилиндеги 8-класстар үчүн геометрия окуу китеби. Планиметрия, көп бурчтуктар, Пифагордун теоремасы жана фигуралардын аянттары.",
     status: "AVAILABLE",
     owner: {
       id: "u_502",
@@ -52,9 +51,9 @@ export const INITIAL_BOOKS = [
     condition: "EXCELLENT",
     year: 2022,
     images: [
-      "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80"
+      "/covers/kyrgyz-7.svg"
     ],
-    description: "Жаңыдай сакталган окуу китеби. Тышталган, бардык эрежелер жана көнүгүүлөр так көрүнүп турат.",
+    description: "Жаңыдай сакталган окуу китеби. Кеп маданияты, морфология, этиштер жана бардык эрежелер так берилген.",
     status: "AVAILABLE",
     owner: {
       id: "u_503",
@@ -71,7 +70,7 @@ export const INITIAL_BOOKS = [
   },
   {
     id: "b_103",
-    title: "Алгебра жана анализдин башталышы 10-11",
+    title: "Алгебра жана анализдин башталышы 10-11-класс",
     author: "А. А. Бөрүбаев, И. Б. Бекбоев",
     subject: "Алгебра",
     grade: 10,
@@ -83,9 +82,9 @@ export const INITIAL_BOOKS = [
     condition: "GOOD",
     year: 2020,
     images: [
-      "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80"
+      "/covers/algebra-10.svg"
     ],
-    description: "Жогорку класстар үчүн негизги алгебра китеби. Функциялар, туунду жана интеграл темалары камтылган.",
+    description: "Жогорку класстар үчүн алгебра жана анализ окуу китеби. Тригонометриялык функциялар, туунду, интеграл жана экстремумдар.",
     status: "AVAILABLE",
     owner: {
       id: "u_504",
@@ -112,9 +111,9 @@ export const INITIAL_BOOKS = [
     condition: "EXCELLENT",
     year: 2023,
     images: [
-      "https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=800&q=80"
+      "/covers/history-9.svg"
     ],
-    description: "Кыргызстандын байыркы доордон азыркы күнгө чейинки тарыхы. Карталар, сүрөттөр толук сакталган.",
+    description: "Кыргызстандын байыркы доордон бүгүнкү күнгө чейинки тарыхы. Бурана мунарасы, Улуу Жибек жолу, тарыхый карталар.",
     status: "AVAILABLE",
     owner: {
       id: "u_505",
@@ -141,9 +140,9 @@ export const INITIAL_BOOKS = [
     condition: "NEW",
     year: 2024,
     images: [
-      "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80"
+      "/covers/ort-math.svg"
     ],
-    description: "Жалпы республикалык тестирлөөгө (ЖРТ/ОРТ) даярдануу үчүн 1200дөн ашык тесттер жана алардын чыгарылыштары.",
+    description: "Жалпы республикалык тестирлөөгө (ЖРТ/ОРТ) даярдануу үчүн 1500дөн ашык тесттер жана алардын толук чыгарылыштары.",
     status: "AVAILABLE",
     owner: {
       id: "u_506",
@@ -170,9 +169,9 @@ export const INITIAL_BOOKS = [
     condition: "GOOD",
     year: 2021,
     images: [
-      "https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=800&q=80"
+      "/covers/physics-9.svg"
     ],
-    description: "Официальный учебник физики для 9 классов русскоязычных школ КР. Законы механики, оптика, волны.",
+    description: "Официальный учебник физики для 9 классов общеобразовательных школ. Законы механики, электромагнитные волны, оптика, квантовая физика.",
     status: "AVAILABLE",
     owner: {
       id: "u_507",
@@ -199,9 +198,9 @@ export const INITIAL_BOOKS = [
     condition: "EXCELLENT",
     year: 2022,
     images: [
-      "https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?auto=format&fit=crop&w=800&q=80"
+      "/covers/chemistry-8.svg"
     ],
-    description: "Химия боюнча базалык түшүнүктөр, таблицалар жана практикалык иштер. Барактары таза.",
+    description: "Базовый учебник неорганической химии для 8 класса. Периодический закон Д. И. Менделеева, химические формулы, реакции и лабораторные опыты.",
     status: "AVAILABLE",
     owner: {
       id: "u_502",
@@ -228,9 +227,9 @@ export const INITIAL_BOOKS = [
     condition: "GOOD",
     year: 2023,
     images: [
-      "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=800&q=80"
+      "/covers/english-6.svg"
     ],
-    description: "Кыргызстан мектептеринин 6-класстары үчүн англис тили китеби. Түстүү сүрөттөрү менен.",
+    description: "Кыргызстан мектептеринин 6-класстары үчүн англис тили окуу китеби. Грамматика, лексикалык темалар, диалогдор жана көнүгүүлөр.",
     status: "AVAILABLE",
     owner: {
       id: "u_508",
@@ -257,9 +256,9 @@ export const INITIAL_BOOKS = [
     condition: "EXCELLENT",
     year: 2021,
     images: [
-      "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80"
+      "/covers/manas-5.svg"
     ],
-    description: "Улуу «Манас» эпосун үйрөнүүчү 5-класстын окуу куралы. Көркөм сүрөттөр жана түшүндүрмөлөр камтылган.",
+    description: "Улуу «Манас» эпосун үйрөнүүчү 5-класстын окуу куралы. Айкөл Манастын баатырдык эрдиктери жана көркөм сүрөттөр.",
     status: "AVAILABLE",
     owner: {
       id: "u_509",
@@ -286,9 +285,9 @@ export const INITIAL_BOOKS = [
     condition: "GOOD",
     year: 2020,
     images: [
-      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80"
+      "/covers/biology-8.svg"
     ],
-    description: "Адам анатомиясы жана физиологиясы. Барактары бүтүн, сапаттуу китеп.",
+    description: "8-класс үчүн адам анатомиясы жана физиологиясы. Органдар системасы, ДНК, кан айлануу жана ден соолукту сактоо эрежелери.",
     status: "AVAILABLE",
     owner: {
       id: "u_503",
@@ -303,7 +302,7 @@ export const INITIAL_BOOKS = [
   },
   {
     id: "b_111",
-    title: "Русский язык 5 класс",
+    title: "Русский язык 5-класс",
     author: "М. М. Разумовская, П. Лекант",
     subject: "Русский язык",
     grade: 5,
@@ -315,9 +314,9 @@ export const INITIAL_BOOKS = [
     condition: "EXCELLENT",
     year: 2022,
     images: [
-      "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=800&q=80"
+      "/covers/russian-5.svg"
     ],
-    description: "Учебник русского языка для школ с русским языком обучения. Все правила и орфографический словарь.",
+    description: "Учебник русского языка для школ с русским языком обучения. Все правила орфографии, синтаксис, теория и практические упражнения.",
     status: "AVAILABLE",
     owner: {
       id: "u_507",
@@ -344,9 +343,9 @@ export const INITIAL_BOOKS = [
     condition: "NEW",
     year: 2024,
     images: [
-      "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=800&q=80"
+      "/covers/ort-kyrgyz.svg"
     ],
-    description: "ЖРТ негизги тесттин кыргыз тили бөлүмү: аналогиялар, сүйлөм толуктоо жана текстти түшүнүү.",
+    description: "ЖРТ негизги тесттин кыргыз тили бөлүмү: аналогиялар, сүйлөм толуктоо жана текстти түшүнүү боюнча тесттердин толук чыгарылышы.",
     status: "AVAILABLE",
     owner: {
       id: "u_506",
@@ -369,7 +368,14 @@ const getStoredBooks = () => {
       localStorage.setItem(STORAGE_KEY_BOOKS, JSON.stringify(INITIAL_BOOKS));
       return INITIAL_BOOKS;
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // If stored books have old unsplash links, refresh to new vector textbook covers
+    const hasOldImages = Array.isArray(parsed) && parsed.some(b => b.images?.[0]?.includes('unsplash.com'));
+    if (hasOldImages) {
+      localStorage.setItem(STORAGE_KEY_BOOKS, JSON.stringify(INITIAL_BOOKS));
+      return INITIAL_BOOKS;
+    }
+    return parsed;
   } catch {
     return INITIAL_BOOKS;
   }
@@ -513,7 +519,7 @@ export const api = {
       reviews: [],
       images: bookData.images && bookData.images.length > 0
         ? bookData.images
-        : ["https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80"],
+        : ["/covers/geometry-8.svg"],
       ...bookData,
       grade: Number(bookData.grade) || 8,
       price: Number(bookData.price) || 300,

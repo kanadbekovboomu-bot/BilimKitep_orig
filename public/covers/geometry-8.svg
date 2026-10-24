@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 850" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <!-- Spine 3D Shadow -->
+    <linearGradient id="spineShadow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.6"/>
+      <stop offset="3%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="6%" stop-color="#000000" stop-opacity="0.2"/>
+      <stop offset="10%" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Top Highlight -->
+    <linearGradient id="topGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base Cover -->
+  <rect x="0" y="0" width="600" height="850" rx="16" fill="url(#bgGrad)" />
+
+  <!-- Background Decorative Lines -->
+  <circle cx="300" cy="425" r="260" fill="none" stroke="#38bdf8" stroke-opacity="0.12" stroke-width="48" />
+  <circle cx="300" cy="425" r="180" fill="none" stroke="#60a5fa" stroke-opacity="0.15" stroke-width="2" stroke-dasharray="10,6" />
+
+  <!-- Outer Border Frame -->
+  <rect x="25" y="25" width="550" height="800" rx="10" fill="none" stroke="#facc15" stroke-opacity="0.4" stroke-width="2" />
+  <rect x="33" y="33" width="534" height="784" rx="8" fill="none" stroke="#facc15" stroke-opacity="0.2" stroke-width="1" />
+
+  <!-- Top Header Ministry -->
+  <text x="300" y="70" fill="#ffffff" fill-opacity="0.8" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" letter-spacing="1.5">
+    КЫРГЫЗ РЕСПУБЛИКАСЫНЫН БИЛИМ БЕРҮҮ ЖАНА ИЛИМ МИНИСТРЛИГИ
+  </text>
+
+  <!-- Authors -->
+  <text x="300" y="115" fill="#facc15" font-family="Arial, sans-serif" font-weight="600" font-size="18" text-anchor="middle">
+    И. Б. Бекбоев, А. А. Бөрүбаев
+  </text>
+
+  <!-- Grade Badge (Top Right) -->
+  <g transform="translate(480, 80)">
+    <circle cx="30" cy="30" r="34" fill="#facc15" stroke="#ffffff" stroke-width="3" />
+    <text x="30" y="32" fill="#0f172a" font-family="Arial, sans-serif" font-weight="900" font-size="22" text-anchor="middle">8</text>
+    <text x="30" y="47" fill="#0f172a" font-family="Arial, sans-serif" font-weight="bold" font-size="10" text-anchor="middle">КЛАСС</text>
+  </g>
+
+  <!-- Subject Title Header Banner -->
+  <g transform="translate(0, 140)">
+    <rect x="60" y="10" width="480" height="75" rx="14" fill="#000000" fill-opacity="0.3" stroke="#38bdf8" stroke-width="2" />
+    <text x="300" y="58" fill="#ffffff" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="38" text-anchor="middle" letter-spacing="3">
+      ГЕОМЕТРИЯ
+    </text>
+  </g>
+
+  <!-- Subtitle -->
+  <text x="300" y="248" fill="#60a5fa" font-family="Arial, sans-serif" font-weight="500" font-size="16" text-anchor="middle">
+    Планиметрия жана фигуралар
+  </text>
+
+  <!-- Center Thematic Illustration -->
+  <g>
+    
+      <!-- Right Triangle & Altitude -->
+      <polygon points="180,510 440,510 180,310" fill="#0284c7" fill-opacity="0.3" stroke="#38bdf8" stroke-width="5"/>
+      <line x1="180" y1="510" x2="260" y2="372" stroke="#facc15" stroke-width="4" stroke-dasharray="6,4"/>
+      <!-- Inscribed Circle -->
+      <circle cx="300" cy="400" r="90" fill="none" stroke="#60a5fa" stroke-width="4"/>
+      <!-- Compass Tool Stylized -->
+      <path d="M 300 240 L 260 360" stroke="#facc15" stroke-width="5" stroke-linecap="round"/>
+      <path d="M 300 240 L 340 360" stroke="#facc15" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="300" cy="240" r="10" fill="#e2e8f0"/>
+      <!-- Angle Arc -->
+      <path d="M 230 510 A 50 50 0 0 1 200 480" fill="none" stroke="#f87171" stroke-width="4"/>
+      <text x="210" y="495" fill="#f87171" font-family="Arial, sans-serif" font-weight="bold" font-size="16">α</text>
+      <!-- Pythagorean Formula -->
+      <rect x="210" y="535" width="180" height="34" rx="8" fill="#0f172a" fill-opacity="0.8" stroke="#38bdf8" stroke-width="2"/>
+      <text x="300" y="558" fill="#facc15" font-family="Arial, sans-serif" font-weight="bold" font-size="18" text-anchor="middle">a² + b² = c²</text>
+    
+  </g>
+
+  <!-- Bottom Type Text & Publisher -->
+  <rect x="70" y="690" width="460" height="1" fill="#facc15" fill-opacity="0.4"/>
+  <text x="300" y="730" fill="#ffffff" fill-opacity="0.9" font-family="Arial, sans-serif" font-weight="bold" font-size="13" text-anchor="middle" letter-spacing="1">
+    8-КЛАСС ҮЧҮН ОКУУ КИТЕБИ
+  </text>
+  <text x="300" y="775" fill="#facc15" fill-opacity="0.8" font-family="Arial, sans-serif" font-weight="bold" font-size="12" text-anchor="middle" letter-spacing="2">
+    БИЛИМ-КОМПЬЮТЕР • БИШКЕК
+  </text>
+
+  <!-- Top Gloss Highlight -->
+  <rect x="0" y="0" width="600" height="400" rx="16" fill="url(#topGlow)" pointer-events="none" />
+
+  <!-- 3D Realistic Spine Shadow on Left Edge -->
+  <rect x="0" y="0" width="50" height="850" fill="url(#spineShadow)" pointer-events="none" />
+</svg>

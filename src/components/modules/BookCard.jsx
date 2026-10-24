@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Eye, ShoppingBag, MapPin } from 'lucide-react';
 import { DealBadge } from './DealBadge';
@@ -13,21 +13,42 @@ export const BookCard = ({
   onAddToCart,
 }) => {
   const { t } = useTranslation('common');
+  const navigate = useNavigate();
+
   const isRentable = book.dealType === 'RENT' || book.dealType === 'BOTH';
   const coverImage = book.images && book.images.length > 0
     ? book.images[0]
-    : 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80';
+    : '/covers/geometry-8.svg';
+
+  const handleCardClick = (e) => {
+    // Prevent navigation if clicking interactive buttons
+    if (e.target.closest('button')) {
+      return;
+    }
+    navigate(`/books/${book.id}`);
+  };
 
   return (
-    <div className="group bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-4 flex flex-col justify-between hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-700 transition-all duration-300">
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleCardClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          navigate(`/books/${book.id}`);
+        }
+      }}
+      className="group bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-4 flex flex-col justify-between hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-700 transition-all duration-300 cursor-pointer text-left"
+    >
       <div>
         {/* Image & Badges */}
-        <div className="relative w-full h-52 bg-gray-100 dark:bg-darkBorder rounded-xl overflow-hidden mb-3">
+        <div className="relative w-full h-56 bg-gray-50 dark:bg-darkBorder/40 rounded-xl overflow-hidden mb-3 flex items-center justify-center p-2">
           <img
             src={coverImage}
             alt={book.title}
             loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
           />
 
           <div className="absolute top-2 left-2 flex flex-col gap-1 items-start">
@@ -46,8 +67,11 @@ export const BookCard = ({
           {/* Quick View Button overlay on hover */}
           <button
             type="button"
-            onClick={() => onQuickView && onQuickView(book)}
-            className="absolute bottom-2 right-2 bg-white/90 dark:bg-darkCard/90 hover:bg-white text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity shadow-md cursor-pointer flex items-center gap-1 text-xs font-semibold"
+            onClick={(e) => {
+              e.stopPropagation();
+              onQuickView && onQuickView(book);
+            }}
+            className="absolute bottom-2 right-2 bg-white/95 dark:bg-darkCard/95 hover:bg-white text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity shadow-md cursor-pointer flex items-center gap-1 text-xs font-semibold"
             title={t('actions.quickView')}
           >
             <Eye className="w-3.5 h-3.5" />
@@ -58,19 +82,24 @@ export const BookCard = ({
         {/* Content */}
         <div className="space-y-1">
           <div className="flex items-center justify-between text-xs text-gray-400">
-            <span className="truncate">{book.subject}</span>
+            <span className="truncate font-medium">{book.subject}</span>
             <RatingStars rating={book.rating || 5} showNumber />
           </div>
 
           <Link
             to={`/books/${book.id}`}
+            onClick={(e) => e.stopPropagation()}
             className="block font-bold text-sm text-gray-900 dark:text-gray-100 hover:text-brand-600 dark:hover:text-brand-400 line-clamp-1 transition-colors"
           >
             {book.title}
           </Link>
 
-          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">
+          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 font-medium">
             {book.author}
+          </p>
+
+          <p className="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-2 pt-1 leading-relaxed">
+            {book.description}
           </p>
 
           {book.owner?.city && (
@@ -111,7 +140,10 @@ export const BookCard = ({
 
         <button
           type="button"
-          onClick={() => onAddToCart && onAddToCart(book, isRentable ? 'RENT' : 'BUY', 9)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddToCart && onAddToCart(book, isRentable ? 'RENT' : 'BUY', 9);
+          }}
           className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-brand-500 hover:text-white text-brand-700 dark:text-brand-300 transition-all cursor-pointer shadow-xs"
           title={t('actions.addToCart')}
         >
