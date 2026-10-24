@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Sparkles, Star } from 'lucide-react';
 import { BrandLogoIcon } from './BrandLogo';
 
 /**
@@ -69,10 +70,10 @@ export const CreativePageLoader = ({
             <BrandLogoIcon size={84} />
           </div>
 
-          {/* Floating magical sparkles */}
-          <span className="absolute -top-2 -right-2 text-amber-400 text-sm animate-pulse">✨</span>
-          <span className="absolute -bottom-1 -left-2 text-emerald-500 text-xs animate-pulse" style={{ animationDelay: '0.6s' }}>✦</span>
-          <span className="absolute top-1/2 -left-4 text-amber-500 text-xs animate-ping" style={{ animationDelay: '1.2s' }}>★</span>
+          {/* Floating magical sparkles with Lucide Icons */}
+          <Sparkles className="absolute -top-2 -right-2 w-4 h-4 text-amber-400 animate-pulse" />
+          <Star className="absolute -bottom-1 -left-2 w-3.5 h-3.5 text-emerald-500 fill-emerald-500/30 animate-pulse" style={{ animationDelay: '0.6s' }} />
+          <Sparkles className="absolute top-1/2 -left-4 w-3 h-3 text-amber-500 animate-ping" style={{ animationDelay: '1.2s' }} />
         </div>
 
         {/* Progress Bar & Percentage */}

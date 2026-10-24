@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, ArrowRight } from 'lucide-react';
+import { ShieldCheck, ArrowRight, Leaf } from 'lucide-react';
 import { Button } from '../common/Button';
 import { TyndykEmblem } from '../common/KyrgyzOrnament';
 import { formatKGS } from '../../utils/formatters';
@@ -19,7 +19,7 @@ export const OrderSummary = ({
   const subtotalWithoutDeposit = Math.max(0, totalAmount - depositAmount);
 
   return (
-    <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder shadow-sm space-y-5 overflow-hidden">
+    <div className="bg-white/90 dark:bg-slate-900/85 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm space-y-5 overflow-hidden">
       {/* Kyrgyz National Tricolor Accent Ribbon */}
       <div className="h-1.5 w-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
 
@@ -28,8 +28,9 @@ export const OrderSummary = ({
           <h3 className="font-bold text-base text-gray-900 dark:text-gray-100">
             {t('orderCost')}
           </h3>
-          <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-brand-600 dark:text-brand-400">
-            КР Дүкөнү 🇰🇬
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/40">
+            <TyndykEmblem size={13} className="text-emerald-600 dark:text-emerald-400" />
+            <span>КР Дүкөнү</span>
           </span>
         </div>
 
@@ -94,8 +95,9 @@ export const OrderSummary = ({
               Кыргызстан • Коопсуз төлөм жана кепилденген кайтарым күрөө
             </span>
           </div>
-          <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center">
-            🌿 Китепти кайра колдонуу — жаратылышты жана каражатты сактайт
+          <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center flex items-center justify-center gap-1">
+            <Leaf className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+            <span>Китепти кайра колдонуу — жаратылышты жана каражатты сактайт</span>
           </p>
         </div>
       </div>

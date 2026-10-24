@@ -5,6 +5,7 @@ import { ErrorBoundary } from './components/layout/ErrorBoundary';
 import { AppRoutes } from './routes/AppRoutes';
 import { DiplomaDefenseModal } from './components/modules/DiplomaDefenseModal';
 import { CreativePageLoader } from './components/common/CreativePageLoader';
+import { KyrgyzMandalaBackground } from './components/common/KyrgyzMandalaBackground';
 
 export const App = () => {
   const [isDefenseModalOpen, setIsDefenseModalOpen] = useState(false);
@@ -33,7 +34,10 @@ export const App = () => {
         />
       )}
 
-      <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 transition-colors duration-200">
+      <div className="relative min-h-screen flex flex-col bg-gray-50/70 text-gray-900 dark:bg-darkBg dark:text-gray-100 transition-colors duration-200">
+        {/* Luxury Ethnic Mandala & Shyrdak Background Pattern */}
+        <KyrgyzMandalaBackground />
+
         <Header onOpenDefenseModal={() => setIsDefenseModalOpen(true)} />
         <main className="flex-1">
           <AppRoutes />

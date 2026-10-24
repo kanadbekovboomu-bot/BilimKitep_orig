@@ -10,7 +10,8 @@ import {
   Tag,
   Coins,
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  Globe
 } from 'lucide-react';
 import { Button } from '../common/Button';
 import { formatKGS } from '../../utils/formatters';
@@ -41,10 +42,10 @@ export const SidebarFilter = ({
   ];
 
   const languages = [
-    { value: 'all', label: t('filters.allLanguages'), flag: '🌐', sub: 'Бардык тилдер' },
-    { value: 'KG', label: t('filters.langKG'), flag: '🇰🇬', sub: 'Кыргыз тилинде' },
-    { value: 'RU', label: t('filters.langRU'), flag: '🇷🇺', sub: 'На русском языке' },
-    { value: 'EN', label: t('filters.langEN'), flag: '🇬🇧', sub: 'English textbook' },
+    { value: 'all', label: t('filters.allLanguages'), Icon: Globe, sub: 'Бардык тилдер' },
+    { value: 'KG', label: t('filters.langKG'), Icon: TyndykEmblem, sub: 'Кыргыз тилинде' },
+    { value: 'RU', label: t('filters.langRU'), Icon: Languages, sub: 'На русском языке' },
+    { value: 'EN', label: t('filters.langEN'), Icon: BookOpen, sub: 'English textbook' },
   ];
 
   const dealTypes = [
@@ -54,7 +55,7 @@ export const SidebarFilter = ({
   ];
 
   return (
-    <aside className={`bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder overflow-hidden shadow-sm space-y-5 ${className}`}>
+    <aside className={`bg-white/90 dark:bg-slate-900/85 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-slate-800/80 overflow-hidden shadow-sm space-y-5 ${className}`}>
       {/* Kyrgyz National Color Ribbon on Top */}
       <div className="w-full h-2 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
 
@@ -207,7 +208,13 @@ export const SidebarFilter = ({
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className="text-base">{langItem.flag}</span>
+                    <div className="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                      {langItem.value === 'KG' ? (
+                        <TyndykEmblem size={16} className="text-amber-500" />
+                      ) : (
+                        <langItem.Icon className="w-3.5 h-3.5" />
+                      )}
+                    </div>
                     <div>
                       <div className="font-bold text-xs">{langItem.label}</div>
                       <div className="text-[10px] text-gray-400">{langItem.sub}</div>

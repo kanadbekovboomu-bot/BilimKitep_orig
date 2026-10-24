@@ -185,8 +185,8 @@ export const CourierDeliveryMap = ({
       html: `
         <div style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;">
           <span style="position: absolute; width: 40px; height: 40px; border-radius: 50%; background: #3b82f6; opacity: 0.45; animation: ping 1.4s cubic-bezier(0,0,0.2,1) infinite;"></span>
-          <div style="width: 34px; height: 34px; border-radius: 50%; background: #2563eb; border: 3px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; color: white; font-size: 15px;">
-            📍
+          <div style="width: 34px; height: 34px; border-radius: 50%; background: #2563eb; border: 3px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; color: white;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
           <div style="margin-top: 4px; background: #1e3a8a; color: #ffffff; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 9999px; box-shadow: 0 2px 6px rgba(0,0,0,0.35); white-space: nowrap;">
             ${t('map.myLocation')}
@@ -203,8 +203,8 @@ export const CourierDeliveryMap = ({
       html: `
         <div style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;">
           <span style="position: absolute; width: 46px; height: 46px; border-radius: 50%; background: #10b981; opacity: 0.5; animation: ping 1.2s cubic-bezier(0,0,0.2,1) infinite;"></span>
-          <div style="width: 40px; height: 40px; border-radius: 50%; background: #059669; border: 3px solid #ffffff; box-shadow: 0 4px 16px rgba(16,185,129,0.55); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">
-            🛵
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: #059669; border: 3px solid #ffffff; box-shadow: 0 4px 16px rgba(16,185,129,0.55); display: flex; align-items: center; justify-content: center; color: white;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
           </div>
           <div style="margin-top: 4px; background: #064e3b; color: #a7f3d0; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 9999px; box-shadow: 0 2px 6px rgba(0,0,0,0.35); white-space: nowrap;">
             Азамат (~${currentSpeed} ${t('map.speed')})
@@ -317,7 +317,7 @@ export const CourierDeliveryMap = ({
     // Create custom Traffic Light DivIcons
     trafficLights.forEach((tl) => {
       const colorBg = tl.state === 'RED' ? '#ef4444' : tl.state === 'YELLOW' ? '#f59e0b' : '#10b981';
-      const labelText = tl.state === 'RED' ? '🔴 Светофор' : tl.state === 'YELLOW' ? '🟡 Светофор' : '🟢 Светофор';
+      const labelText = 'Светофор';
 
       const tlIcon = L.divIcon({
         className: 'tl-marker',
@@ -618,9 +618,9 @@ export const CourierDeliveryMap = ({
             <button
               type="button"
               onClick={handleCenterCourier}
-              className="bg-white/95 dark:bg-darkCard/95 hover:bg-white text-gray-800 dark:text-gray-100 text-xs font-bold px-3 py-2 rounded-xl shadow-md border border-gray-100 dark:border-darkBorder flex items-center gap-1.5 cursor-pointer transition-all"
+              className="bg-white/95 dark:bg-darkCard/95 hover:bg-white text-gray-800 dark:text-gray-100 text-xs font-bold px-3 py-2 rounded-xl shadow-md border border-gray-100 dark:border-darkBorder flex items-center gap-1.5 cursor-pointer transition-all hover:border-emerald-400 hover:shadow-[0_0_15px_rgba(16,185,129,0.25)]"
             >
-              <span>🛵</span>
+              <Truck className="w-3.5 h-3.5 text-emerald-500" />
               <span>{t('map.whereCourier')}</span>
             </button>
 

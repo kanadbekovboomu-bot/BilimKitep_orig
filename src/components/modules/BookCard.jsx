@@ -1,7 +1,19 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Eye, ShoppingBag, MapPin } from 'lucide-react';
+import {
+  Eye,
+  ShoppingBag,
+  MapPin,
+  Calculator,
+  Languages,
+  Zap,
+  FlaskConical,
+  Landmark,
+  Globe,
+  Laptop,
+  BookOpen
+} from 'lucide-react';
 import { DealBadge } from './DealBadge';
 import { Badge } from '../common/Badge';
 import { RatingStars } from '../common/RatingStars';
@@ -23,30 +35,31 @@ export const BookCard = ({
   const getSubjectStyle = (subject = '') => {
     const s = subject.toLowerCase();
     if (s.includes('математик') || s.includes('алгебр') || s.includes('геометр')) {
-      return { bg: 'bg-blue-50 dark:bg-blue-950/60', text: 'text-blue-700 dark:text-blue-300', border: 'border-blue-200/80 dark:border-blue-800/40', icon: '📐' };
+      return { bg: 'bg-blue-50 dark:bg-blue-950/60', text: 'text-blue-700 dark:text-blue-300', border: 'border-blue-200/80 dark:border-blue-800/40', Icon: Calculator };
     }
     if (s.includes('кыргыз') || s.includes('адабият') || s.includes('тили')) {
-      return { bg: 'bg-emerald-50 dark:bg-emerald-950/60', text: 'text-emerald-700 dark:text-emerald-300', border: 'border-emerald-200/80 dark:border-emerald-800/40', icon: '🇰🇬' };
+      return { bg: 'bg-emerald-50 dark:bg-emerald-950/60', text: 'text-emerald-700 dark:text-emerald-300', border: 'border-emerald-200/80 dark:border-emerald-800/40', Icon: BookOpen };
     }
     if (s.includes('физик') || s.includes('астроном')) {
-      return { bg: 'bg-indigo-50 dark:bg-indigo-950/60', text: 'text-indigo-700 dark:text-indigo-300', border: 'border-indigo-200/80 dark:border-indigo-800/40', icon: '⚡' };
+      return { bg: 'bg-indigo-50 dark:bg-indigo-950/60', text: 'text-indigo-700 dark:text-indigo-300', border: 'border-indigo-200/80 dark:border-indigo-800/40', Icon: Zap };
     }
     if (s.includes('хим') || s.includes('биолог')) {
-      return { bg: 'bg-teal-50 dark:bg-teal-950/60', text: 'text-teal-700 dark:text-teal-300', border: 'border-teal-200/80 dark:border-teal-800/40', icon: '🧪' };
+      return { bg: 'bg-teal-50 dark:bg-teal-950/60', text: 'text-teal-700 dark:text-teal-300', border: 'border-teal-200/80 dark:border-teal-800/40', Icon: FlaskConical };
     }
     if (s.includes('тарых') || s.includes('географ')) {
-      return { bg: 'bg-amber-50 dark:bg-amber-950/60', text: 'text-amber-800 dark:text-amber-300', border: 'border-amber-200/80 dark:border-amber-800/40', icon: '🏛️' };
+      return { bg: 'bg-amber-50 dark:bg-amber-950/60', text: 'text-amber-800 dark:text-amber-300', border: 'border-amber-200/80 dark:border-amber-800/40', Icon: Landmark };
     }
     if (s.includes('англ') || s.includes('english')) {
-      return { bg: 'bg-rose-50 dark:bg-rose-950/60', text: 'text-rose-700 dark:text-rose-300', border: 'border-rose-200/80 dark:border-rose-800/40', icon: '🇬🇧' };
+      return { bg: 'bg-rose-50 dark:bg-rose-950/60', text: 'text-rose-700 dark:text-rose-300', border: 'border-rose-200/80 dark:border-rose-800/40', Icon: Globe };
     }
     if (s.includes('информ') || s.includes('ит')) {
-      return { bg: 'bg-violet-50 dark:bg-violet-950/60', text: 'text-violet-700 dark:text-violet-300', border: 'border-violet-200/80 dark:border-violet-800/40', icon: '💻' };
+      return { bg: 'bg-violet-50 dark:bg-violet-950/60', text: 'text-violet-700 dark:text-violet-300', border: 'border-violet-200/80 dark:border-violet-800/40', Icon: Laptop };
     }
-    return { bg: 'bg-slate-50 dark:bg-slate-900/60', text: 'text-slate-700 dark:text-slate-300', border: 'border-slate-200/80 dark:border-slate-800/40', icon: '📚' };
+    return { bg: 'bg-slate-50 dark:bg-slate-900/60', text: 'text-slate-700 dark:text-slate-300', border: 'border-slate-200/80 dark:border-slate-800/40', Icon: BookOpen };
   };
 
   const subjectStyle = getSubjectStyle(book.subject);
+  const SubjectIcon = subjectStyle.Icon || BookOpen;
 
   const handleCardClick = (e) => {
     // Prevent navigation if clicking interactive buttons
@@ -67,11 +80,11 @@ export const BookCard = ({
           navigate(`/books/${book.id}`);
         }
       }}
-      className="group bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-4 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 hover:border-brand-300 dark:hover:border-brand-700 transition-all duration-300 cursor-pointer text-left"
+      className="group bg-white/90 dark:bg-slate-900/85 backdrop-blur-md rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-4 flex flex-col justify-between hover:shadow-[0_16px_36px_rgba(16,185,129,0.16)] hover:-translate-y-1.5 hover:border-emerald-400/80 dark:hover:border-emerald-500/80 transition-all duration-300 cursor-pointer text-left"
     >
       <div>
         {/* Clean Book Cover Picture - No text or badges overlapping the image */}
-        <div className="relative w-full h-56 bg-gray-50/80 dark:bg-darkBorder/40 rounded-xl overflow-hidden mb-3 flex items-center justify-center p-2.5 border border-gray-100 dark:border-darkBorder">
+        <div className="relative w-full h-56 bg-gray-50/80 dark:bg-darkBorder/40 rounded-2xl overflow-hidden mb-3 flex items-center justify-center p-2.5 border border-gray-100 dark:border-darkBorder">
           <img
             src={coverImage}
             alt={book.title}
@@ -86,7 +99,7 @@ export const BookCard = ({
               e.stopPropagation();
               onQuickView && onQuickView(book);
             }}
-            className="absolute bottom-2 right-2 bg-white/95 dark:bg-darkCard/95 hover:bg-white text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity shadow-md cursor-pointer flex items-center gap-1 text-xs font-semibold"
+            className="absolute bottom-2 right-2 bg-white/95 dark:bg-slate-900/95 hover:bg-white dark:hover:bg-slate-800 text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 hover:brightness-110 hover:shadow-md transition-all cursor-pointer flex items-center gap-1 text-xs font-semibold border border-slate-200/70 dark:border-slate-700/70"
             title={t('actions.quickView')}
           >
             <Eye className="w-3.5 h-3.5 text-brand-600" />
@@ -108,8 +121,8 @@ export const BookCard = ({
         {/* Content with OnlineMektep-styled Subject Badge */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between text-xs gap-2">
-            <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold border max-w-[70%] truncate ${subjectStyle.bg} ${subjectStyle.text} ${subjectStyle.border}`}>
-              <span>{subjectStyle.icon}</span>
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border max-w-[70%] truncate ${subjectStyle.bg} ${subjectStyle.text} ${subjectStyle.border}`}>
+              <SubjectIcon className="w-3 h-3 shrink-0" />
               <span className="truncate">{book.subject}</span>
             </span>
             <RatingStars rating={book.rating || 5} showNumber />
@@ -173,7 +186,7 @@ export const BookCard = ({
             e.stopPropagation();
             onAddToCart && onAddToCart(book, isRentable ? 'RENT' : 'BUY', 9);
           }}
-          className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-brand-500 hover:text-white text-brand-700 dark:text-brand-300 transition-all cursor-pointer shadow-xs"
+          className="p-2.5 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white hover:brightness-125 hover:shadow-[0_0_16px_rgba(16,185,129,0.55)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-xs"
           title={t('actions.addToCart')}
         >
           <ShoppingBag className="w-4 h-4" />

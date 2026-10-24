@@ -11,7 +11,9 @@ import {
   Search,
   CheckCircle,
   Users,
-  GraduationCap
+  GraduationCap,
+  Coins,
+  Truck
 } from 'lucide-react';
 import { BookGrid } from '../components/modules/BookGrid';
 import { QuickViewModal } from '../components/modules/QuickViewModal';
@@ -154,9 +156,9 @@ export const HomePage = () => {
       {/* OnlineMektep-inspired Gamified Impact & Trust Stats */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-200/50 dark:border-blue-900/30 flex items-center gap-3.5 hover:scale-102 transition-transform shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-blue-500 text-white flex items-center justify-center font-black text-xl shadow-md shadow-blue-500/20">
-              🎓
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-200/50 dark:border-blue-900/30 flex items-center gap-3.5 hover:scale-102 hover:shadow-lg hover:shadow-blue-500/15 transition-all shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-blue-500 text-white flex items-center justify-center font-black shadow-md shadow-blue-500/25">
+              <GraduationCap className="w-6 h-6" />
             </div>
             <div>
               <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">85 000+</div>
@@ -164,9 +166,9 @@ export const HomePage = () => {
             </div>
           </div>
 
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border border-emerald-200/50 dark:border-emerald-900/30 flex items-center gap-3.5 hover:scale-102 transition-transform shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black text-xl shadow-md shadow-emerald-500/20">
-              📚
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border border-emerald-200/50 dark:border-emerald-900/30 flex items-center gap-3.5 hover:scale-102 hover:shadow-lg hover:shadow-emerald-500/15 transition-all shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black shadow-md shadow-emerald-500/25">
+              <BookOpen className="w-6 h-6" />
             </div>
             <div>
               <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">12 400+</div>
@@ -174,9 +176,9 @@ export const HomePage = () => {
             </div>
           </div>
 
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-amber-500/10 to-yellow-500/5 border border-amber-200/50 dark:border-amber-900/30 flex items-center gap-3.5 hover:scale-102 transition-transform shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-black text-xl shadow-md shadow-amber-500/20">
-              💰
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-amber-500/10 to-yellow-500/5 border border-amber-200/50 dark:border-amber-900/30 flex items-center gap-3.5 hover:scale-102 hover:shadow-lg hover:shadow-amber-500/15 transition-all shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-black shadow-md shadow-amber-500/25">
+              <Coins className="w-6 h-6" />
             </div>
             <div>
               <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">4.8 млн сом</div>
@@ -184,9 +186,9 @@ export const HomePage = () => {
             </div>
           </div>
 
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-rose-500/10 to-red-500/5 border border-rose-200/50 dark:border-rose-900/30 flex items-center gap-3.5 hover:scale-102 transition-transform shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center font-black text-xl shadow-md shadow-rose-500/20">
-              🚚
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-rose-500/10 to-red-500/5 border border-rose-200/50 dark:border-rose-900/30 flex items-center gap-3.5 hover:scale-102 hover:shadow-lg hover:shadow-rose-500/15 transition-all shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center font-black shadow-md shadow-rose-500/25">
+              <Truck className="w-6 h-6" />
             </div>
             <div>
               <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">7 Облус</div>

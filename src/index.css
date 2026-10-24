@@ -122,3 +122,39 @@
   transform: translateY(-5px);
   box-shadow: 0 16px 32px -8px rgba(16, 185, 129, 0.15), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
 }
+
+/* MBANK Digital Fintech Card & Button Glow Utilities */
+.mbank-card {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background-color: rgba(255, 255, 255, 0.90);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .mbank-card {
+  background-color: rgba(15, 23, 42, 0.85);
+  border-color: rgba(30, 41, 59, 0.85);
+}
+
+.mbank-card:hover {
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 16px 36px -4px rgba(16, 185, 129, 0.18), 0 0 20px 0 rgba(16, 185, 129, 0.12);
+  transform: translateY(-4px);
+}
+
+.mbank-btn-glow {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mbank-btn-glow:hover {
+  filter: brightness(1.25);
+  box-shadow: 0 0 22px rgba(16, 185, 129, 0.55);
+  transform: scale(1.02);
+}
+
+.mbank-btn-glow:active {
+  transform: scale(0.98);
+}
+
