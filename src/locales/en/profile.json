@@ -1,0 +1,31 @@
+{
+  "title": "User Dashboard",
+  "stats": {
+    "activeRentals": "Active Rentals",
+    "savedMoney": "KGS Saved",
+    "myListings": "My Listings",
+    "depositHolding": "Refundable Deposits"
+  },
+  "tabs": {
+    "orders": "Orders & Active Rentals",
+    "listings": "My Listed Books",
+    "settings": "Profile Settings"
+  },
+  "addBookTitle": "List a Textbook for Rent or Sale",
+  "addBookSubtitle": "Help other parents and students save while monetizing your used curriculum books",
+  "bookForm": {
+    "title": "Book Title (e.g. Geometry Grade 8)",
+    "author": "Author(s) (e.g. I. B. Bekboev)",
+    "subject": "School Subject",
+    "grade": "Grade (1-11 or University/ORT)",
+    "language": "Textbook Language",
+    "dealType": "Listing Type (Rent / Sale / Both)",
+    "price": "Sale Price (KGS)",
+    "rentPricePerMonth": "Rental Price per Month (KGS)",
+    "deposit": "Deposit Amount (KGS)",
+    "condition": "Condition",
+    "description": "Description (notes, pages condition, edition)",
+    "images": "Book Photos (Cloudinary Unsigned Upload)",
+    "submit": "Publish Listing"
+  }
+}

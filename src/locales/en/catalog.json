@@ -1,0 +1,31 @@
+{
+  "title": "Textbook & Study Materials Catalog",
+  "subtitle": "Official Kyrgyz curriculum textbooks, ORT/JRT test preparation, and university literature",
+  "searchPlaceholder": "Search by title, author, or subject (e.g. Geometry 8, Bekboev)...",
+  "filters": {
+    "title": "Filter Catalog",
+    "grade": "School Grade",
+    "allGrades": "All Grades (1-11)",
+    "language": "Medium of Instruction",
+    "allLanguages": "All Languages",
+    "langKG": "Kyrgyz language",
+    "langRU": "Russian language",
+    "langEN": "English language",
+    "dealType": "Listing Type",
+    "allTypes": "All Types",
+    "rentOnly": "Rent Only",
+    "buyOnly": "Buy Only",
+    "priceRange": "Price Range (KGS)",
+    "sortBy": "Sort By",
+    "sortNewest": "Newest First",
+    "sortPriceAsc": "Price: Low to High",
+    "sortPriceDesc": "Price: High to Low",
+    "sortRating": "Highest Rated"
+  },
+  "results": {
+    "found": "Books found",
+    "emptyTitle": "No textbooks match your search",
+    "emptyDesc": "Try adjusting your search terms or clearing applied filters.",
+    "resetBtn": "Reset Filters"
+  }
+}

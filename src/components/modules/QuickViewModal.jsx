@@ -1,0 +1,169 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Modal } from '../common/Modal';
+import { DealBadge } from './DealBadge';
+import { Badge } from '../common/Badge';
+import { RatingStars } from '../common/RatingStars';
+import { Button } from '../common/Button';
+import { formatKGS } from '../../utils/formatters';
+import { ShoppingBag, ArrowRight } from 'lucide-react';
+
+export const QuickViewModal = ({
+  book,
+  isOpen,
+  onClose,
+  onAddToCart,
+}) => {
+  const [selectedMonths, setSelectedMonths] = useState(9);
+  const [dealType, setDealType] = useState('RENT');
+
+  if (!book) return null;
+
+  const isRentable = book.dealType === 'RENT' || book.dealType === 'BOTH';
+  const isBuyable = book.dealType === 'BUY' || book.dealType === 'BOTH';
+
+  const rentTotal = (Number(book.rentPricePerMonth) * selectedMonths) + Number(book.deposit || 0);
+
+  const handleAdd = () => {
+    onAddToCart(book, dealType, selectedMonths);
+    onClose();
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title={book.title} maxWidth="max-w-2xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left: Image & Specs */}
+        <div>
+          <div className="w-full h-64 bg-gray-100 dark:bg-darkBorder rounded-xl overflow-hidden mb-3">
+            <img
+              src={book.images?.[0] || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80'}
+              alt={book.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex flex-wrap gap-1.5 mb-2">
+            <DealBadge dealType={book.dealType} />
+            <Badge variant="default" size="sm">{book.grade}-класс</Badge>
+            <Badge variant="primary" size="sm">{book.language}</Badge>
+            <Badge variant="default" size="sm">{book.condition}</Badge>
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-3">
+            {book.description}
+          </p>
+        </div>
+
+        {/* Right: Pricing & Rent Calculation */}
+        <div className="flex flex-col justify-between space-y-4">
+          <div>
+            <div className="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-darkBorder mb-3">
+              <span className="text-xs text-gray-400">Автор:</span>
+              <span className="text-xs font-bold text-gray-800 dark:text-gray-200">{book.author}</span>
+            </div>
+
+            {/* Deal Type Switcher if BOTH */}
+            {book.dealType === 'BOTH' && (
+              <div className="flex gap-2 p-1 bg-gray-100 dark:bg-darkBorder rounded-xl mb-4">
+                <button
+                  type="button"
+                  onClick={() => setDealType('RENT')}
+                  className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    dealType === 'RENT'
+                      ? 'bg-white dark:bg-darkCard text-brand-600 shadow-xs'
+                      : 'text-gray-500'
+                  }`}
+                >
+                  Ижара (Аренда)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDealType('BUY')}
+                  className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    dealType === 'BUY'
+                      ? 'bg-white dark:bg-darkCard text-brand-600 shadow-xs'
+                      : 'text-gray-500'
+                  }`}
+                >
+                  Сатып алуу (Покупка)
+                </button>
+              </div>
+            )}
+
+            {/* Rental Duration Options */}
+            {dealType === 'RENT' && isRentable ? (
+              <div className="space-y-3 bg-emerald-50/60 dark:bg-emerald-950/30 p-3.5 rounded-xl border border-brand-200/50 dark:border-brand-800/30">
+                <span className="text-xs font-bold text-brand-800 dark:text-brand-300">
+                  Мөөнөттү тандаңыз:
+                </span>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { m: 3, label: '3 ай' },
+                    { m: 5, label: '5 ай' },
+                    { m: 9, label: '9 ай' },
+                  ].map((opt) => (
+                    <button
+                      key={opt.m}
+                      type="button"
+                      onClick={() => setSelectedMonths(opt.m)}
+                      className={`py-2 px-1 rounded-xl text-xs font-bold border transition-all text-center ${
+                        selectedMonths === opt.m
+                          ? 'bg-brand-500 text-white border-brand-500 shadow-sm'
+                          : 'bg-white dark:bg-darkCard text-gray-700 dark:text-gray-300 border-gray-200 dark:border-darkBorder'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="pt-2 text-xs space-y-1 text-gray-600 dark:text-gray-300">
+                  <div className="flex justify-between">
+                    <span>Ижара акысы ({selectedMonths} ай):</span>
+                    <span className="font-semibold">{formatKGS(book.rentPricePerMonth * selectedMonths)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Кайтарылуучу залог:</span>
+                    <span className="font-semibold">{formatKGS(book.deposit)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm font-extrabold text-brand-700 dark:text-brand-300 pt-1 border-t border-brand-200 dark:border-brand-800/40">
+                    <span>Жалпы сумма:</span>
+                    <span>{formatKGS(rentTotal)}</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="p-4 bg-gray-50 dark:bg-darkBorder/40 rounded-xl space-y-2">
+                <span className="text-xs text-gray-400">Сатып алуу баасы:</span>
+                <div className="text-2xl font-black text-gray-900 dark:text-gray-100">
+                  {formatKGS(book.price)}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="space-y-2 pt-2">
+            <Button
+              variant="primary"
+              size="md"
+              className="w-full"
+              icon={ShoppingBag}
+              onClick={handleAdd}
+            >
+              Себетке салуу ({formatKGS(dealType === 'RENT' && isRentable ? rentTotal : book.price)})
+            </Button>
+
+            <Link
+              to={`/books/${book.id}`}
+              onClick={onClose}
+              className="flex items-center justify-center gap-1.5 text-xs font-semibold text-brand-600 hover:text-brand-700 py-1"
+            >
+              <span>Толук маалыматты көрүү</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+export default QuickViewModal;

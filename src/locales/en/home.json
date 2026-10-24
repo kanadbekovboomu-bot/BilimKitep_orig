@@ -1,0 +1,43 @@
+{
+  "hero": {
+    "badge": "Save up to 70% on school textbooks",
+    "title": "Textbooks for all grades in Kyrgyzstan — Rent, Buy, and Share",
+    "subtitle": "Stop overpaying for books used only for a single school year. Rent textbooks for a quarter, semester, or full academic year with guaranteed deposit return.",
+    "ctaCatalog": "Explore Catalog",
+    "ctaAdd": "List Your Books",
+    "statsBooks": "1,500+ books listed",
+    "statsSaved": "up to 70% budget saved",
+    "statsRegions": "All 7 regions of KG"
+  },
+  "howItWorks": {
+    "title": "How BilimKitep Works",
+    "subtitle": "A transparent 3-step rental and sharing journey",
+    "step1Title": "1. Find Your Textbook",
+    "step1Desc": "Select school grade (1-11), subject, language (Kyrgyz/Russian), or National Testing (JRT/ORT) guidebooks.",
+    "step2Title": "2. Choose Rental Duration",
+    "step2Desc": "Rent for 3, 5, or 9 months. Pricing starts from 30 KGS/mo + refundable safety deposit.",
+    "step3Title": "3. Receive and Return",
+    "step3Desc": "Pick up locally or order city courier delivery. Return the book at the end of the year and get 100% of your deposit back."
+  },
+  "featured": {
+    "title": "Popular Textbooks of the Week",
+    "subtitle": "In-demand Ministry of Education curriculum textbooks and prep materials",
+    "viewAll": "View All Books"
+  },
+  "grades": {
+    "title": "Browse by School Grade",
+    "primary": "Elementary School (Grades 1-4)",
+    "middle": "Middle School (Grades 5-9)",
+    "senior": "High School (Grades 10-11)",
+    "ort": "National Scholarship Test (ORT/JRT)"
+  },
+  "benefits": {
+    "title": "Why Choose BilimKitep",
+    "b1Title": "Eco-Friendly & Affordable",
+    "b1Desc": "Extending the circular lifecycle of books, protecting trees and family budgets.",
+    "b2Title": "Official State Curriculum",
+    "b2Desc": "Approved textbooks by Bekboev, Ibraimov, Mambetakunov, and leading Kyrgyz educators.",
+    "b3Title": "Secure Transactions",
+    "b3Desc": "Structured escrow deposit system and condition verification before handover."
+  }
+}

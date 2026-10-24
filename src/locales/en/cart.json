@@ -1,0 +1,15 @@
+{
+  "title": "Your Rental & Purchase Cart",
+  "emptyTitle": "Your cart is empty",
+  "emptyDesc": "Browse the catalog and add textbooks to rent or buy.",
+  "goToCatalog": "Go to Catalog",
+  "itemsCount": "textbooks in cart",
+  "rentPeriod": "Rental Period",
+  "deposit": "Refundable Deposit",
+  "subtotal": "Rental/Purchase subtotal",
+  "totalDeposit": "Total refundable deposit",
+  "total": "Total Amount",
+  "clearCart": "Clear Cart",
+  "proceedToCheckout": "Proceed to Checkout",
+  "months": "mo."
+}

@@ -1,0 +1,74 @@
+{
+  "version": "2.1.0",
+  "engine": "ecc-ultra-os-homunculus",
+  "updated_at": "2026-10-24T14:48:00+06:00",
+  "instincts": [
+    {
+      "id": "gateguard-fact-force-before-edit",
+      "trigger": "Перед первым редактированием или созданием кодового файла",
+      "action": "Проверить импортеров файла, затронутый публичный контракт, отсутствие дублирующей утилиты в проекте и точные схемы данных",
+      "confidence": 0.95,
+      "domain": "architecture",
+      "scope": "global",
+      "evidence": [
+        "ECC GateGuard A/B benchmark (+2.25 quality points)",
+        "Предотвращает поломку зависимых модулей и дублирование кода"
+      ]
+    },
+    {
+      "id": "tdd-red-green-refactor",
+      "trigger": "При реализации новой фичи или исправлении бага (T1-T4)",
+      "action": "Сначала написать тест и убедиться в валидном падении (RED), затем написать минимальный код для прохождения (GREEN) и провести рефакторинг с покрытием >= 80%",
+      "confidence": 0.95,
+      "domain": "testing",
+      "scope": "global",
+      "evidence": [
+        "ECC Core Principle #2: Test-Driven Development"
+      ]
+    },
+    {
+      "id": "plankton-config-tamper-lock",
+      "trigger": "При возникновении ошибок компиляции, типизации (tsc/pyright) или линтера (eslint/biome/ruff)",
+      "action": "Исправлять исключительно исходный код и типы; никогда не ослаблять правила в tsconfig.json, eslint, biome.json или pyproject.toml",
+      "confidence": 0.95,
+      "domain": "code-quality",
+      "scope": "global",
+      "evidence": [
+        "Plankton Config Protection Guardrail"
+      ]
+    },
+    {
+      "id": "zero-slop-no-silent-failures",
+      "trigger": "При написании обработчиков ошибок, API-запросов и UI-компонентов",
+      "action": "Запретить пустые catch-блоки, фейковые мок-массивы вместо реальной БД, TODO-заглушки и пропуск состояний loading/error/empty в UI",
+      "confidence": 0.95,
+      "domain": "reliability",
+      "scope": "global",
+      "evidence": [
+        "ECC Silent Failure Hunter + Zero-Slop Protocol"
+      ]
+    },
+    {
+      "id": "adversarial-separation-of-eval",
+      "trigger": "При проверке готовности сложных фич, UI или архитектуры (T2-T4)",
+      "action": "Отделять генерацию от оценки: использовать рубрику GAN Evaluator (порог >= 8.5/10) и двойную независимую проверку Santa Method (Reviewer A + Reviewer B)",
+      "confidence": 0.92,
+      "domain": "verification",
+      "scope": "global",
+      "evidence": [
+        "Anthropic Harness Design & ECC Santa Method"
+      ]
+    },
+    {
+      "id": "immutability-and-boundary-validation",
+      "trigger": "При работе с объектами состояния, массивами и внешними входными данными",
+      "action": "Создавать новые копии данных без мутации существующих объектов и валидировать все внешние входы схемами (Zod/Pydantic) на границе системы",
+      "confidence": 0.93,
+      "domain": "security-and-style",
+      "scope": "global",
+      "evidence": [
+        "ECC Core Principles #3 & #4"
+      ]
+    }
+  ]
+}

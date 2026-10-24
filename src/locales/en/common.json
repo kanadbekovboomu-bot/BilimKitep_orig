@@ -1,0 +1,62 @@
+{
+  "brand": "BilimKitep",
+  "tagline": "Textbook sharing, rental, and marketplace platform in Kyrgyzstan",
+  "currency": "KGS",
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "rent": "Rentals",
+    "howItWorks": "How it Works",
+    "addBook": "List a Book",
+    "cart": "Cart",
+    "profile": "Dashboard",
+    "myListings": "My Listings",
+    "admin": "Admin Panel",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "logout": "Sign Out"
+  },
+  "actions": {
+    "search": "Search",
+    "filter": "Filters",
+    "reset": "Reset",
+    "apply": "Apply",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "viewDetails": "View Details",
+    "quickView": "Quick View",
+    "addToCart": "Add to Cart",
+    "rentBook": "Rent Book",
+    "buyBook": "Buy Book",
+    "checkout": "Proceed to Checkout",
+    "back": "Back",
+    "loading": "Loading...",
+    "close": "Close"
+  },
+  "status": {
+    "available": "Available",
+    "rented": "Rented",
+    "reserved": "Reserved",
+    "sold": "Sold"
+  },
+  "dealType": {
+    "rent": "Rental",
+    "buy": "Purchase",
+    "both": "Rental & Sale"
+  },
+  "condition": {
+    "new": "Brand New",
+    "excellent": "Excellent",
+    "good": "Good",
+    "fair": "Fair"
+  },
+  "footer": {
+    "about": "BilimKitep is the first ecosystem for sharing school and university textbooks in Kyrgyzstan. We make education accessible for every family.",
+    "links": "Navigation",
+    "contacts": "Contact Us",
+    "help": "Parent & Student Support",
+    "rights": "All rights reserved. Diploma Project 2026."
+  }
+}

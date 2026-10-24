@@ -1,0 +1,298 @@
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  CheckCircle2,
+  ShieldCheck,
+  Truck,
+  MapPin,
+  CreditCard,
+  Send,
+  ArrowRight
+} from 'lucide-react';
+import { Breadcrumbs } from '../components/layout/Breadcrumbs';
+import { Input } from '../components/common/Input';
+import { Select } from '../components/common/Select';
+import { Button } from '../components/common/Button';
+import { OrderSummary } from '../components/modules/OrderSummary';
+import { RentalDatePicker } from '../components/modules/RentalDatePicker';
+import { PaymentDemoModal } from '../components/modules/PaymentDemoModal';
+import { api } from '../services/api';
+import { notifyTelegramOrder } from '../services/telegram';
+import { clearCart } from '../features/cart/cartSlice';
+import { isValidPhoneKG } from '../utils/validators';
+
+export const CheckoutPage = () => {
+  const { t } = useTranslation('checkout');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { items, totalAmount, depositAmount } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
+
+  // Form State
+  const [fullName, setFullName] = useState(user?.name || '');
+  const [phone, setPhone] = useState(user?.phone || '+996 ');
+  const [city, setCity] = useState('Бишкек');
+  const [address, setAddress] = useState('');
+  const [deliveryMethod, setDeliveryMethod] = useState('pickup'); // 'pickup' | 'courier'
+  const [paymentMethod, setPaymentMethod] = useState('MBANK');
+  const [rentalStartDate, setRentalStartDate] = useState(new Date().toISOString().split('T')[0]);
+
+  // UI State
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [createdOrder, setCreatedOrder] = useState(null);
+
+  const shippingCost = deliveryMethod === 'courier' ? 150 : 0;
+  const finalTotal = totalAmount + shippingCost;
+
+  const validate = () => {
+    const errs = {};
+    if (!fullName.trim()) errs.fullName = 'Сураныч, аты-жөнүңүздү көрсөтүңүз';
+    if (!phone || phone.replace(/\D/g, '').length < 9) {
+      errs.phone = 'Туура телефон номерин жазыңыз (мис. +996 700 123 456)';
+    }
+    if (deliveryMethod === 'courier' && !address.trim()) {
+      errs.address = 'Курьер жеткирүү үчүн даректи жазыңыз';
+    }
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  const handleStartCheckout = () => {
+    if (!validate()) return;
+    setIsPaymentModalOpen(true);
+  };
+
+  const handlePaymentSuccess = async (paymentDetails) => {
+    setIsPaymentModalOpen(false);
+    setSubmitting(true);
+
+    try {
+      const orderPayload = {
+        customerName: fullName.trim(),
+        customerPhone: phone.trim(),
+        city,
+        address: address.trim() || 'Самовывоз пунктунан',
+        deliveryMethod: deliveryMethod === 'courier' ? 'Курьер жеткирүү (150 сом)' : 'Самовывоз',
+        paymentMethod: paymentDetails.paymentMethod,
+        transactionId: paymentDetails.transactionId,
+        items,
+        totalAmount: finalTotal,
+        depositAmount,
+        rentalStartDate,
+        status: 'CONFIRMED',
+      };
+
+      // 1. Save to database / localStorage API
+      const newOrder = await api.createOrder(orderPayload);
+
+      // 2. Dispatch alert to Telegram Bot API
+      await notifyTelegramOrder({
+        ...newOrder,
+        bookTitle: items.map(i => `${i.book?.title} (${i.type === 'RENT' ? `${i.months} ай` : 'Сатуу'})`).join(', ')
+      });
+
+      // 3. Clear cart
+      dispatch(clearCart());
+      setCreatedOrder(newOrder);
+    } catch (err) {
+      alert('Ошибка при оформлении заказа: ' + err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (createdOrder) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-16 text-center space-y-6">
+        <div className="w-20 h-20 rounded-3xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 mx-auto flex items-center justify-center animate-bounce">
+          <CheckCircle2 className="w-10 h-10" />
+        </div>
+
+        <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100">
+          {t('successTitle')}
+        </h1>
+
+        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+          {t('successDesc', { id: createdOrder.id })}
+        </p>
+
+        <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder text-left space-y-2 text-xs">
+          <div className="flex justify-between">
+            <span className="text-gray-400">Заказ номери:</span>
+            <span className="font-mono font-bold text-gray-900 dark:text-gray-100">#{createdOrder.id}</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-400">Жалпы сумма:</span>
+            <span className="font-bold text-brand-600">{createdOrder.totalAmount} сом</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-400">Telegram кабарлама:</span>
+            <span className="font-semibold text-emerald-600 flex items-center gap-1">
+              <Send className="w-3 h-3" /> Жөнөтүлдү
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-3 pt-2 justify-center">
+          <Button variant="primary" size="md" onClick={() => navigate('/profile')}>
+            {t('viewOrder')}
+          </Button>
+          <Button variant="outline" size="md" onClick={() => navigate('/')}>
+            {t('backHome')}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (items.length === 0) {
+    navigate('/cart');
+    return null;
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <Breadcrumbs items={[{ label: 'Себет', to: '/cart' }, { label: t('title') }]} />
+
+      <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
+        {t('title')}
+      </h1>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Form fields */}
+        <div className="lg:col-span-8 space-y-6">
+          {/* Recipient Details */}
+          <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-6 space-y-4">
+            <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100 pb-2 border-b border-gray-100 dark:border-darkBorder">
+              {t('contactInfo')}
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Input
+                label={t('fullName')}
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Мис. Айбек Нурланов"
+                error={errors.fullName}
+              />
+
+              <Input
+                label={t('phone')}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+996 (700) 123-456"
+                error={errors.phone}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Select
+                label={t('city')}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                options={[
+                  { value: 'Бишкек', label: t('cityBishkek') },
+                  { value: 'Ош', label: t('cityOsh') },
+                  { value: 'Жалал-Абад', label: t('cityJalalAbad') },
+                  { value: 'Каракол', label: t('cityKarakol') },
+                  { value: 'Нарын', label: t('cityNaryn') },
+                  { value: 'Талас', label: t('cityTalas') },
+                  { value: 'Баткен', label: t('cityBatken') },
+                  { value: 'Башка айыл/аймак', label: t('cityOther') },
+                ]}
+              />
+
+              <Input
+                label={t('address')}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Көчө, үй/батир номери"
+                error={errors.address}
+              />
+            </div>
+          </div>
+
+          {/* Delivery Method */}
+          <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-6 space-y-4">
+            <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100 pb-2 border-b border-gray-100 dark:border-darkBorder">
+              {t('deliveryMethod')}
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setDeliveryMethod('pickup')}
+                className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+                  deliveryMethod === 'pickup'
+                    ? 'border-brand-500 bg-brand-50/50 dark:bg-emerald-950/40 ring-2 ring-brand-500/20'
+                    : 'border-gray-200 dark:border-darkBorder hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center gap-2 font-bold text-xs text-gray-900 dark:text-gray-100">
+                  <MapPin className="w-4 h-4 text-brand-500" />
+                  <span>{t('pickup')}</span>
+                </div>
+                <p className="text-[11px] text-gray-400 mt-1">
+                  Бишкек шаары, Чүй проспектиси 205 (Билим Hub)
+                </p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setDeliveryMethod('courier')}
+                className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+                  deliveryMethod === 'courier'
+                    ? 'border-brand-500 bg-brand-50/50 dark:bg-emerald-950/40 ring-2 ring-brand-500/20'
+                    : 'border-gray-200 dark:border-darkBorder hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center gap-2 font-bold text-xs text-gray-900 dark:text-gray-100">
+                  <Truck className="w-4 h-4 text-brand-500" />
+                  <span>{t('courier')}</span>
+                </div>
+                <p className="text-[11px] text-gray-400 mt-1">
+                  Эртеси күнү эшигиңизге чейин жеткирип беребиз
+                </p>
+              </button>
+            </div>
+          </div>
+
+          {/* Rental Duration Schedule */}
+          <RentalDatePicker
+            months={items.find(i => i.type === 'RENT')?.months || 9}
+            startDate={rentalStartDate}
+            onStartDateChange={(d) => setRentalStartDate(d)}
+          />
+        </div>
+
+        {/* Order Summary & Checkout Trigger */}
+        <div className="lg:col-span-4 sticky top-24">
+          <OrderSummary
+            items={items}
+            totalAmount={totalAmount}
+            depositAmount={depositAmount}
+            shippingCost={shippingCost}
+            isCheckoutPage
+            onCheckout={handleStartCheckout}
+            buttonText={t('confirmOrder')}
+          />
+        </div>
+      </div>
+
+      {/* Payment Demo Modal */}
+      <PaymentDemoModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        totalAmount={finalTotal}
+        onPaymentSuccess={handlePaymentSuccess}
+      />
+    </div>
+  );
+};
+
+export default CheckoutPage;

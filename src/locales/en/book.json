@@ -1,0 +1,27 @@
+{
+  "rentCalculator": {
+    "title": "Textbook Rental Calculator",
+    "chooseDuration": "Select rental period:",
+    "durationQuarter": "3 Months (Quarter)",
+    "durationSemester": "5 Months (Semester)",
+    "durationYear": "9 Months (Academic Year)",
+    "rentPrice": "Rental Fee:",
+    "deposit": "Refundable Deposit:",
+    "total": "Total due today:",
+    "depositNote": "* Deposit is refunded in full upon return of the textbook in good condition.",
+    "rentButton": "Rent for"
+  },
+  "details": {
+    "author": "Author",
+    "grade": "Grade",
+    "language": "Language",
+    "subject": "Subject",
+    "condition": "Condition",
+    "year": "Publication Year",
+    "description": "Condition description & details",
+    "seller": "Book Owner",
+    "reviews": "Ratings & Reviews",
+    "addReview": "Write a Review",
+    "noReviews": "No reviews yet. Be the first to review this textbook!"
+  }
+}

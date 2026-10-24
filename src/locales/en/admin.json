@@ -1,0 +1,28 @@
+{
+  "title": "BilimKitep Admin Dashboard",
+  "subtitle": "Catalog management, orders, users, and platform business intelligence",
+  "metrics": {
+    "totalRevenue": "Gross Platform Volume",
+    "activeRentals": "Active Rental Agreements",
+    "totalBooks": "Total Catalog Inventory",
+    "depositPool": "Escrow Safety Deposit Pool"
+  },
+  "charts": {
+    "revenueTitle": "Revenue & Rental Volume (KGS)",
+    "categoriesTitle": "Inventory by Subject",
+    "gradesTitle": "Demand by School Grade"
+  },
+  "tables": {
+    "booksTitle": "Catalog Inventory Management",
+    "ordersTitle": "Recent Orders & Rental Bookings",
+    "colBook": "Textbook / Author",
+    "colSubject": "Subject / Grade",
+    "colPrice": "Price / Rent",
+    "colStatus": "Status",
+    "colActions": "Actions",
+    "colOrderId": "Order #",
+    "colCustomer": "Customer",
+    "colType": "Deal Type",
+    "colAmount": "Amount"
+  }
+}
