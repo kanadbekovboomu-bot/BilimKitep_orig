@@ -69,7 +69,7 @@ export const CatalogPage = () => {
 
   const handleAddToCart = (book, type = 'RENT', months = 9) => {
     dispatch(addToCart({ book, type, months }));
-    setToastMessage(`«${book.title}» себетке кошулду!`);
+    setToastMessage(t('toast.addedSimple', { ns: 'common', title: book.title }));
     setShowToast(true);
   };
 
@@ -84,7 +84,7 @@ export const CatalogPage = () => {
             {t('title')}
           </h1>
           <p className="text-xs text-gray-500 mt-1">
-            {t('subtitle')} • Найдено {totalItems} учебников
+            {t('subtitle')} • {t('results.foundCount', { count: totalItems })}
           </p>
         </div>
 
@@ -124,11 +124,11 @@ export const CatalogPage = () => {
               className="lg:hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 dark:border-darkBorder text-xs font-semibold"
             >
               <SlidersHorizontal className="w-3.5 h-3.5 text-brand-500" />
-              <span>Фильтры</span>
+              <span>{t('results.filterButton')}</span>
             </button>
 
             <div className="flex items-center gap-2 ml-auto text-xs text-gray-500">
-              <span className="hidden sm:inline">Сортировка:</span>
+              <span className="hidden sm:inline">{t('results.sortLabel')}</span>
               <select
                 value={filterState.sort}
                 onChange={(e) => handleFilterChange('sort', e.target.value)}

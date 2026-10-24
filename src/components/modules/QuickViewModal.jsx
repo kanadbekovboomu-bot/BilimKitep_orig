@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Modal } from '../common/Modal';
 import { DealBadge } from './DealBadge';
 import { Badge } from '../common/Badge';
@@ -14,6 +15,7 @@ export const QuickViewModal = ({
   onClose,
   onAddToCart,
 }) => {
+  const { t } = useTranslation(['book', 'common']);
   const [selectedMonths, setSelectedMonths] = useState(9);
   const [dealType, setDealType] = useState('RENT');
 
@@ -43,7 +45,9 @@ export const QuickViewModal = ({
           </div>
           <div className="flex flex-wrap gap-1.5 mb-2">
             <DealBadge dealType={book.dealType} />
-            <Badge variant="default" size="sm">{book.grade}-класс</Badge>
+            <Badge variant="default" size="sm">
+              {t('units.grade', { count: book.grade, ns: 'common' })}
+            </Badge>
             <Badge variant="primary" size="sm">{book.language}</Badge>
             <Badge variant="default" size="sm">{book.condition}</Badge>
           </div>
@@ -56,7 +60,7 @@ export const QuickViewModal = ({
         <div className="flex flex-col justify-between space-y-4">
           <div>
             <div className="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-darkBorder mb-3">
-              <span className="text-xs text-gray-400">Автор:</span>
+              <span className="text-xs text-gray-400">{t('details.author')}:</span>
               <span className="text-xs font-bold text-gray-800 dark:text-gray-200">{book.author}</span>
             </div>
 
@@ -72,7 +76,7 @@ export const QuickViewModal = ({
                       : 'text-gray-500'
                   }`}
                 >
-                  Ижара (Аренда)
+                  {t('dealType.rent', { ns: 'common' })}
                 </button>
                 <button
                   type="button"
@@ -83,7 +87,7 @@ export const QuickViewModal = ({
                       : 'text-gray-500'
                   }`}
                 >
-                  Сатып алуу (Покупка)
+                  {t('dealType.buy', { ns: 'common' })}
                 </button>
               </div>
             )}
@@ -92,13 +96,13 @@ export const QuickViewModal = ({
             {dealType === 'RENT' && isRentable ? (
               <div className="space-y-3 bg-emerald-50/60 dark:bg-emerald-950/30 p-3.5 rounded-xl border border-brand-200/50 dark:border-brand-800/30">
                 <span className="text-xs font-bold text-brand-800 dark:text-brand-300">
-                  Мөөнөттү тандаңыз:
+                  {t('rentCalculator.chooseDuration')}
                 </span>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { m: 3, label: '3 ай' },
-                    { m: 5, label: '5 ай' },
-                    { m: 9, label: '9 ай' },
+                    { m: 3, label: t('units.monthCount', { count: 3, ns: 'common' }) },
+                    { m: 5, label: t('units.monthCount', { count: 5, ns: 'common' }) },
+                    { m: 9, label: t('units.monthCount', { count: 9, ns: 'common' }) },
                   ].map((opt) => (
                     <button
                       key={opt.m}
@@ -117,22 +121,22 @@ export const QuickViewModal = ({
 
                 <div className="pt-2 text-xs space-y-1 text-gray-600 dark:text-gray-300">
                   <div className="flex justify-between">
-                    <span>Ижара акысы ({selectedMonths} ай):</span>
+                    <span>{t('rentCalculator.rentPrice')} ({t('units.monthCount', { count: selectedMonths, ns: 'common' })}):</span>
                     <span className="font-semibold">{formatKGS(book.rentPricePerMonth * selectedMonths)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Кайтарылуучу залог:</span>
+                    <span>{t('rentCalculator.deposit')}:</span>
                     <span className="font-semibold">{formatKGS(book.deposit)}</span>
                   </div>
                   <div className="flex justify-between text-sm font-extrabold text-brand-700 dark:text-brand-300 pt-1 border-t border-brand-200 dark:border-brand-800/40">
-                    <span>Жалпы сумма:</span>
+                    <span>{t('units.total', { ns: 'common' })}</span>
                     <span>{formatKGS(rentTotal)}</span>
                   </div>
                 </div>
               </div>
             ) : (
               <div className="p-4 bg-gray-50 dark:bg-darkBorder/40 rounded-xl space-y-2">
-                <span className="text-xs text-gray-400">Сатып алуу баасы:</span>
+                <span className="text-xs text-gray-400">{t('buySection.title')}</span>
                 <div className="text-2xl font-black text-gray-900 dark:text-gray-100">
                   {formatKGS(book.price)}
                 </div>
@@ -148,7 +152,7 @@ export const QuickViewModal = ({
               icon={ShoppingBag}
               onClick={handleAdd}
             >
-              Себетке салуу ({formatKGS(dealType === 'RENT' && isRentable ? rentTotal : book.price)})
+              {t('actions.addToCart', { ns: 'common' })} ({formatKGS(dealType === 'RENT' && isRentable ? rentTotal : book.price)})
             </Button>
 
             <Link
@@ -156,7 +160,7 @@ export const QuickViewModal = ({
               onClick={onClose}
               className="flex items-center justify-center gap-1.5 text-xs font-semibold text-brand-600 hover:text-brand-700 py-1"
             >
-              <span>Толук маалыматты көрүү</span>
+              <span>{t('actions.viewDetails', { ns: 'common' })}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>

@@ -43,21 +43,21 @@ export const BookDetailPage = () => {
   const handleRentSubmit = (months) => {
     if (!book) return;
     dispatch(addToCart({ book, type: 'RENT', months }));
-    setToastMessage(`«${book.title}» (${months} айга ижара) себетке кошулду!`);
+    setToastMessage(t('toast.addedRent', { ns: 'common', title: book.title, months }));
     setShowToast(true);
   };
 
   const handleBuySubmit = () => {
     if (!book) return;
     dispatch(addToCart({ book, type: 'BUY', months: null }));
-    setToastMessage(`«${book.title}» (сатып алуу) себетке кошулду!`);
+    setToastMessage(t('toast.addedBuy', { ns: 'common', title: book.title }));
     setShowToast(true);
   };
 
   const handleAddReview = (reviewData) => {
     if (!book) return;
     dispatch(addReviewToBook({ bookId: book.id, review: reviewData }));
-    setToastMessage('Сиздин пикириңиз ийгиликтүү кошулду!');
+    setToastMessage(t('toast.reviewAdded', { ns: 'common' }));
     setShowToast(true);
   };
 
@@ -65,7 +65,7 @@ export const BookDetailPage = () => {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
         <div className="w-10 h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-xs text-gray-500">Китептин маалыматы жүктөлүүдө...</p>
+        <p className="text-xs text-gray-500">{t('notFound.loading')}</p>
       </div>
     );
   }
@@ -77,13 +77,13 @@ export const BookDetailPage = () => {
           <AlertCircle className="w-8 h-8" />
         </div>
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-          Окуу китеби табылган жок
+          {t('notFound.title')}
         </h2>
         <p className="text-xs text-gray-500">
-          Бул китеп сатылып кеткен болушу мүмкүн же каталогдон өчүрүлгөн.
+          {t('notFound.desc')}
         </p>
         <Link to="/catalog">
-          <Button variant="primary" size="md">Каталогго кайтуу</Button>
+          <Button variant="primary" size="md">{t('notFound.backBtn')}</Button>
         </Link>
       </div>
     );
@@ -93,7 +93,7 @@ export const BookDetailPage = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
       <Breadcrumbs
         items={[
-          { label: 'Каталог', to: '/catalog' },
+          { label: t('nav.catalog', { ns: 'common' }), to: '/catalog' },
           { label: book.title },
         ]}
       />
@@ -108,8 +108,8 @@ export const BookDetailPage = () => {
             <div className="space-y-3">
               <div className="flex flex-wrap items-center gap-2">
                 <DealBadge dealType={book.dealType} />
-                <Badge variant="default">{book.grade}-класс</Badge>
-                <Badge variant="primary">{book.language} тилинде</Badge>
+                <Badge variant="default">{t('units.grade', { count: book.grade, ns: 'common' })}</Badge>
+                <Badge variant="primary">{book.language}</Badge>
                 <Badge variant="default">{book.condition}</Badge>
               </div>
 
@@ -118,7 +118,7 @@ export const BookDetailPage = () => {
               </h1>
 
               <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
-                Автору: <span className="text-brand-600 dark:text-brand-400">{book.author}</span>
+                {t('details.author')}: <span className="text-brand-600 dark:text-brand-400">{book.author}</span>
               </p>
             </div>
 
@@ -130,7 +130,7 @@ export const BookDetailPage = () => {
               </div>
               <div>
                 <span className="text-gray-400 block text-[11px]">{t('details.grade')}:</span>
-                <span className="font-bold text-gray-800 dark:text-gray-200">{book.grade}-класс</span>
+                <span className="font-bold text-gray-800 dark:text-gray-200">{t('units.grade', { count: book.grade, ns: 'common' })}</span>
               </div>
               <div>
                 <span className="text-gray-400 block text-[11px]">{t('details.year')}:</span>

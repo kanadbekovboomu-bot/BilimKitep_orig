@@ -48,7 +48,7 @@ export const AdminDashboardPage = () => {
   }, []);
 
   const handleDeleteBook = async (id) => {
-    if (window.confirm('Бул китепти базадан өчүрүүгө ишенесизби?')) {
+    if (window.confirm(t('actions.confirmDelete', { ns: 'common' }))) {
       await api.deleteBook(id);
       setBooks((prev) => prev.filter((b) => b.id !== id));
     }
@@ -88,7 +88,7 @@ export const AdminDashboardPage = () => {
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-gray-200 dark:border-darkBorder bg-white dark:bg-darkCard text-xs font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-              <span>Жаңылоо (Обновить)</span>
+              <span>{t('actions.refresh', { ns: 'common' })}</span>
             </button>
           </div>
 
@@ -104,7 +104,7 @@ export const AdminDashboardPage = () => {
               <div className="text-2xl font-black text-brand-600 dark:text-brand-400">
                 {formatKGS(metrics?.totalRevenue || 45200)}
               </div>
-              <p className="text-[11px] text-gray-400">+18% өткөн айга караганда</p>
+              <p className="text-[11px] text-gray-400">{t('metricsSub.revenueGrowth')}</p>
             </div>
 
             <div className="p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-2">
@@ -115,9 +115,9 @@ export const AdminDashboardPage = () => {
                 </div>
               </div>
               <div className="text-2xl font-black text-gray-900 dark:text-gray-100">
-                {metrics?.activeRentals || 42} келишим
+                {metrics?.activeRentals || 42} {t('metricsSub.contracts')}
               </div>
-              <p className="text-[11px] text-gray-400">3, 5 жана 9 айлык мөөнөттөр</p>
+              <p className="text-[11px] text-gray-400">{t('metricsSub.rentalsPeriods')}</p>
             </div>
 
             <div className="p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-2">
@@ -128,9 +128,9 @@ export const AdminDashboardPage = () => {
                 </div>
               </div>
               <div className="text-2xl font-black text-gray-900 dark:text-gray-100">
-                {books.length} китеп
+                {books.length} {t('metricsSub.booksCount')}
               </div>
-              <p className="text-[11px] text-gray-400">1-11 класс + ЖРТ колдонмолору</p>
+              <p className="text-[11px] text-gray-400">{t('metricsSub.booksCoverage')}</p>
             </div>
 
             <div className="p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-2">
@@ -143,7 +143,7 @@ export const AdminDashboardPage = () => {
               <div className="text-2xl font-black text-amber-600 dark:text-amber-400">
                 {formatKGS(metrics?.depositPool || 8400)}
               </div>
-              <p className="text-[11px] text-gray-400">100% кайтарылуучу эскроу-фонд</p>
+              <p className="text-[11px] text-gray-400">{t('metricsSub.depositGuarantee')}</p>
             </div>
           </div>
 
@@ -179,7 +179,7 @@ export const AdminDashboardPage = () => {
                         type="button"
                         onClick={() => setSelectedOrder(ord)}
                         className="p-1.5 rounded-lg border border-gray-200 dark:border-darkBorder hover:bg-gray-50 text-gray-600 dark:text-gray-300"
-                        title="Көрүү"
+                        title={t('actions.viewDetails', { ns: 'common' })}
                       >
                         <Eye className="w-3.5 h-3.5" />
                       </button>
@@ -188,7 +188,7 @@ export const AdminDashboardPage = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-gray-400 py-3">Буйрутмалар азырынча жок</p>
+              <p className="text-xs text-gray-400 py-3">{t('tables.ordersTitle')} (0)</p>
             )}
           </div>
 

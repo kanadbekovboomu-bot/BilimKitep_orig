@@ -27,5 +27,14 @@
     "description": "Description (notes, pages condition, edition)",
     "images": "Book Photos (Cloudinary Unsigned Upload)",
     "submit": "Publish Listing"
-  }
+  },
+  "myListingsTitle": "My Listings",
+  "addBookBtn": "Add Textbook",
+  "logoutBtn": "Sign Out",
+  "noOrders": "You do not have any active rental orders yet.",
+  "noListings": "You have not listed any textbooks yet.",
+  "defaultUser": "User",
+  "confirmed": "Confirmed",
+  "ecoSharing": "Eco-Sharing & Extra Income",
+  "deleteListingConfirm": "Are you sure you want to delete this textbook listing?"
 }

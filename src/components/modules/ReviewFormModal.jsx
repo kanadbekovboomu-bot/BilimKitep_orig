@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Modal } from '../common/Modal';
 import { Input } from '../common/Input';
 import { Button } from '../common/Button';
@@ -9,6 +10,7 @@ export const ReviewFormModal = ({
   onClose,
   onSubmit,
 }) => {
+  const { t } = useTranslation(['book', 'common']);
   const [userName, setUserName] = useState('');
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
@@ -17,11 +19,11 @@ export const ReviewFormModal = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!userName.trim()) {
-      setError('Сураныч, аты-жөнүңүздү жазыңыз');
+      setError(t('reviewModal.errorName'));
       return;
     }
     if (!comment.trim()) {
-      setError('Сураныч, пикириңизди калтырыңыз');
+      setError(t('reviewModal.errorComment'));
       return;
     }
 
@@ -39,11 +41,11 @@ export const ReviewFormModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Окуу китебине пикир калтыруу">
+    <Modal isOpen={isOpen} onClose={onClose} title={t('reviewModal.title')}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1.5">
-            Бааңыз (Рейтинг):
+            {t('reviewModal.ratingLabel')}
           </label>
           <RatingStars
             rating={rating}
@@ -54,21 +56,21 @@ export const ReviewFormModal = ({
         </div>
 
         <Input
-          label="Аты-жөнүңүз (ФИО)"
-          placeholder="Мис. Айгүл Касымова"
+          label={t('reviewModal.nameLabel')}
+          placeholder={t('reviewModal.namePlaceholder')}
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
         />
 
         <div className="space-y-1.5">
           <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300">
-            Сиздин пикириңиз жана китептин абалы жөнүндө:
+            {t('reviewModal.commentLabel')}
           </label>
           <textarea
             rows={3}
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            placeholder="Китептин барактары, жеткирүү жана ижара тажрыйбасы тууралуу жазыңыз..."
+            placeholder={t('reviewModal.commentPlaceholder')}
             className="w-full text-xs rounded-xl border border-gray-200 dark:border-darkBorder bg-white dark:bg-darkCard p-3 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
           />
         </div>
@@ -77,10 +79,10 @@ export const ReviewFormModal = ({
 
         <div className="flex justify-end gap-2 pt-2">
           <Button variant="outline" size="sm" onClick={onClose}>
-            Жокко чыгаруу
+            {t('actions.cancel', { ns: 'common' })}
           </Button>
           <Button variant="primary" size="sm" type="submit">
-            Пикирди жарыялоо
+            {t('reviewModal.submitBtn')}
           </Button>
         </div>
       </form>

@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Trash2, Edit3, Eye, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Trash2, Eye } from 'lucide-react';
 import { formatKGS } from '../../utils/formatters';
 import { DealBadge } from './DealBadge';
 
-export const ListingManageRow = ({ book, onDelete, onStatusToggle }) => {
+export const ListingManageRow = ({ book, onDelete }) => {
+  const { t } = useTranslation('common');
+
   return (
     <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div className="flex items-center gap-3.5">
@@ -18,7 +21,9 @@ export const ListingManageRow = ({ book, onDelete, onStatusToggle }) => {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <DealBadge dealType={book.dealType} />
-            <span className="text-xs text-gray-400">{book.grade}-класс</span>
+            <span className="text-xs text-gray-400">
+              {t('units.grade', { count: book.grade })}
+            </span>
           </div>
           <h4 className="font-bold text-sm text-gray-900 dark:text-gray-100 line-clamp-1">
             {book.title}
@@ -33,11 +38,11 @@ export const ListingManageRow = ({ book, onDelete, onStatusToggle }) => {
         <div className="text-right">
           <div className="text-xs font-bold text-brand-600 dark:text-brand-400">
             {book.dealType === 'RENT' || book.dealType === 'BOTH'
-              ? `${formatKGS(book.rentPricePerMonth)} /ай`
+              ? `${formatKGS(book.rentPricePerMonth)} ${t('units.perMonth')}`
               : formatKGS(book.price)}
           </div>
           <span className="text-[11px] text-gray-400">
-            Статус: {book.status === 'AVAILABLE' ? 'Ачык (Бар)' : 'Ижарада'}
+            {book.status === 'AVAILABLE' ? t('status.available') : t('status.rented')}
           </span>
         </div>
 
@@ -45,7 +50,7 @@ export const ListingManageRow = ({ book, onDelete, onStatusToggle }) => {
           <Link
             to={`/books/${book.id}`}
             className="p-2 rounded-xl text-gray-400 hover:text-brand-600 hover:bg-emerald-50 dark:hover:bg-darkBorder"
-            title="Көрүү"
+            title={t('actions.viewDetails')}
           >
             <Eye className="w-4 h-4" />
           </Link>
@@ -55,7 +60,7 @@ export const ListingManageRow = ({ book, onDelete, onStatusToggle }) => {
               type="button"
               onClick={() => onDelete(book.id)}
               className="p-2 rounded-xl text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer"
-              title="Өчүрүү"
+              title={t('actions.delete')}
             >
               <Trash2 className="w-4 h-4" />
             </button>

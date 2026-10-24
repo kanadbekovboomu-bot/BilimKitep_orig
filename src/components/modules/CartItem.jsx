@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Trash2, Calendar, ShieldCheck } from 'lucide-react';
 import { formatKGS } from '../../utils/formatters';
 import { calculateItemTotal } from '../../features/cart/cartSlice';
@@ -8,10 +9,10 @@ export const CartItem = ({
   onChangeDuration,
   onRemove,
 }) => {
+  const { t } = useTranslation(['cart', 'common']);
   const isRent = item.type === 'RENT';
   const itemTotal = calculateItemTotal(item);
   const deposit = isRent ? (Number(item.book.deposit) || 0) : 0;
-  const rentFee = isRent ? ((Number(item.book.rentPricePerMonth) || 0) * (item.months || 3)) : 0;
 
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder gap-4">
@@ -31,9 +32,11 @@ export const CartItem = ({
                 ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300'
                 : 'bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300'
             }`}>
-              {isRent ? 'Ижара (Аренда)' : 'Сатып алуу'}
+              {isRent ? t('dealType.rent', { ns: 'common' }) : t('dealType.buy', { ns: 'common' })}
             </span>
-            <span className="text-xs text-gray-400">• {item.book.grade}-класс</span>
+            <span className="text-xs text-gray-400">
+              • {t('units.grade', { count: item.book.grade, ns: 'common' })}
+            </span>
           </div>
 
           <h4 className="font-bold text-sm text-gray-900 dark:text-gray-100 line-clamp-1">
@@ -49,15 +52,15 @@ export const CartItem = ({
       {isRent && (
         <div className="flex items-center gap-2 bg-gray-50 dark:bg-darkBorder/40 p-2 rounded-xl">
           <Calendar className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-          <span className="text-xs text-gray-500">Мөөнөт:</span>
+          <span className="text-xs text-gray-500">{t('rentPeriod')}:</span>
           <select
             value={item.months || 9}
             onChange={(e) => onChangeDuration(item.id, Number(e.target.value))}
             className="text-xs font-bold rounded-lg border-none bg-white dark:bg-darkCard py-1 px-2 text-brand-600 dark:text-brand-400 focus:ring-1 focus:ring-brand-500 cursor-pointer shadow-xs"
           >
-            <option value={3}>3 ай (чейрек)</option>
-            <option value={5}>5 ай (жарым жыл)</option>
-            <option value={9}>9 ай (учебный год)</option>
+            <option value={3}>{t('months.3', { ns: 'common' })}</option>
+            <option value={5}>{t('months.5', { ns: 'common' })}</option>
+            <option value={9}>{t('months.9', { ns: 'common' })}</option>
           </select>
         </div>
       )}
@@ -71,7 +74,7 @@ export const CartItem = ({
           {isRent && (
             <div className="text-[11px] text-gray-400 flex items-center gap-1 justify-end">
               <ShieldCheck className="w-3 h-3 text-emerald-500" />
-              <span>а.и. залог {formatKGS(deposit)}</span>
+              <span>{t('inclDeposit')} {formatKGS(deposit)}</span>
             </div>
           )}
         </div>
@@ -80,7 +83,7 @@ export const CartItem = ({
           type="button"
           onClick={() => onRemove(item.id)}
           className="p-2 rounded-xl text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors cursor-pointer"
-          title="Себеттен өчүрүү"
+          title={t('removeTooltip')}
         >
           <Trash2 className="w-4 h-4" />
         </button>

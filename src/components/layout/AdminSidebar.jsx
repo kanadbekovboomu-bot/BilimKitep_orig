@@ -1,12 +1,10 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   BarChart3,
   BookMarked,
-  ShoppingBag,
   Users,
-  Settings,
   ArrowLeft,
   ShieldAlert
 } from 'lucide-react';
@@ -15,9 +13,9 @@ export const AdminSidebar = () => {
   const { t } = useTranslation('admin');
 
   const links = [
-    { to: '/admin', icon: BarChart3, label: 'Аналитика и Дашборд', end: true },
-    { to: '/catalog', icon: BookMarked, label: 'Каталог на сайте' },
-    { to: '/profile', icon: Users, label: 'Пользовательский вид' },
+    { to: '/admin', icon: BarChart3, label: t('sidebar.dashboard'), end: true },
+    { to: '/catalog', icon: BookMarked, label: t('sidebar.catalog') },
+    { to: '/profile', icon: Users, label: t('sidebar.profile') },
   ];
 
   return (
@@ -28,10 +26,10 @@ export const AdminSidebar = () => {
         </div>
         <div>
           <h2 className="text-sm font-bold text-gray-900 dark:text-gray-100">
-            Админ-панель
+            {t('sidebar.title')}
           </h2>
           <span className="text-[11px] text-purple-600 dark:text-purple-400 font-semibold">
-            SuperAdmin КР
+            {t('sidebar.role')}
           </span>
         </div>
       </div>
@@ -60,13 +58,13 @@ export const AdminSidebar = () => {
       </nav>
 
       <div className="pt-4 border-t border-gray-100 dark:border-darkBorder">
-        <NavLink
+        <Link
           to="/"
           className="flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Сайтка кайтуу (На сайт)</span>
-        </NavLink>
+          <ArrowLeft className="w-4 h-4" />
+          <span>{t('sidebar.backHome')}</span>
+        </Link>
       </div>
     </aside>
   );

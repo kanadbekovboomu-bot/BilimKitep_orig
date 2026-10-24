@@ -58,10 +58,10 @@ describe('Common UI Components rendering & interaction', () => {
       />
     );
 
-    expect(screen.getByText(/Rental Calculator|Калькулятор аренды/i)).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /ай/i }).length).toBeGreaterThanOrEqual(3);
+    expect(screen.getByText(/Rental Calculator|Калькулятор аренды|калькулятору/i)).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /mo|мес|ай/i }).length).toBeGreaterThanOrEqual(3);
 
-    const rentBtn = screen.getByRole('button', { name: /Rent for|Арендовать на/i });
+    const rentBtn = screen.getByRole('button', { name: /Rent for|Арендовать на|ижара/i });
     fireEvent.click(rentBtn);
     expect(handleRentSubmit).toHaveBeenCalled();
   });

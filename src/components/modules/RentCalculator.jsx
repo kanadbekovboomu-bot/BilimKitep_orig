@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ShieldCheck, Calendar, Info, ShoppingBag } from 'lucide-react';
+import { ShieldCheck, Calendar, ShoppingBag } from 'lucide-react';
 import { Button } from '../common/Button';
 import { formatKGS } from '../../utils/formatters';
 
@@ -9,7 +9,7 @@ export const RentCalculator = ({
   onRentSubmit,
   onBuySubmit,
 }) => {
-  const { t } = useTranslation('book');
+  const { t } = useTranslation(['book', 'common']);
   const [months, setMonths] = useState(9);
   const [tab, setTab] = useState(book.dealType === 'BUY' ? 'BUY' : 'RENT');
 
@@ -40,7 +40,7 @@ export const RentCalculator = ({
                 : 'text-gray-500 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
-            Ижарага алуу (Аренда)
+            {t('dealType.rent', { ns: 'common' })}
           </button>
           <button
             type="button"
@@ -51,7 +51,7 @@ export const RentCalculator = ({
                 : 'text-gray-500 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
-            Сатып алуу (Покупка)
+            {t('dealType.buy', { ns: 'common' })}
           </button>
         </div>
       )}
@@ -84,7 +84,7 @@ export const RentCalculator = ({
                         : 'border-gray-200 dark:border-darkBorder bg-white dark:bg-darkCard hover:border-gray-300'
                     }`}
                   >
-                    <div className="text-xs font-bold">{d.value} ай</div>
+                    <div className="text-xs font-bold">{t('units.monthCount', { count: d.value, ns: 'common' })}</div>
                     <div className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
                       {formatKGS(book.rentPricePerMonth * d.value)}
                     </div>
@@ -97,7 +97,7 @@ export const RentCalculator = ({
           {/* Breakdown calculation */}
           <div className="bg-gray-50 dark:bg-darkBorder/40 rounded-xl p-4 space-y-2.5 text-xs">
             <div className="flex justify-between text-gray-600 dark:text-gray-400">
-              <span>{t('rentCalculator.rentPrice')} ({months} ай):</span>
+              <span>{t('rentCalculator.rentPrice')} ({t('units.monthCount', { count: months, ns: 'common' })}):</span>
               <span className="font-bold text-gray-900 dark:text-gray-100">{formatKGS(rentFee)}</span>
             </div>
             <div className="flex justify-between text-gray-600 dark:text-gray-400">
@@ -129,13 +129,13 @@ export const RentCalculator = ({
             icon={ShoppingBag}
             onClick={() => onRentSubmit && onRentSubmit(months)}
           >
-            {t('rentCalculator.rentButton')} {months} ай ({formatKGS(totalDue)})
+            {t('rentCalculator.rentButton')} {t('units.monthCount', { count: months, ns: 'common' })} ({formatKGS(totalDue)})
           </Button>
         </div>
       ) : (
         <div className="space-y-5">
           <div className="p-4 bg-gray-50 dark:bg-darkBorder/40 rounded-xl space-y-2">
-            <span className="text-xs text-gray-400">Сатып алуу баасы (биротоло):</span>
+            <span className="text-xs text-gray-400">{t('buySection.title')}</span>
             <div className="text-3xl font-black text-gray-900 dark:text-gray-100">
               {formatKGS(book.price)}
             </div>
@@ -148,7 +148,7 @@ export const RentCalculator = ({
             icon={ShoppingBag}
             onClick={() => onBuySubmit && onBuySubmit()}
           >
-            Купить сейчас ({formatKGS(book.price)})
+            {t('buySection.buyBtn')} ({formatKGS(book.price)})
           </Button>
         </div>
       )}

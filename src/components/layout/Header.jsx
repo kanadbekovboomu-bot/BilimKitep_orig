@@ -45,7 +45,7 @@ export const Header = ({ onOpenDefenseModal }) => {
                 Bilim<span className="text-brand-500">Kitep</span>
               </span>
               <span className="text-[10px] text-gray-400 dark:text-gray-400 font-medium tracking-wider uppercase hidden sm:block">
-                Шеринг & Аренда
+                {t('dealType.both')}
               </span>
             </div>
           </Link>

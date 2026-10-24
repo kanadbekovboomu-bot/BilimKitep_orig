@@ -24,7 +24,7 @@ export const LoginPage = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     if (!email || !password) {
-      setError('Электрондук почтаны жана сыр сөздү толтуруңуз');
+      setError(t('errorRequired'));
       return;
     }
 

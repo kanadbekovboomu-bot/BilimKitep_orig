@@ -31,6 +31,24 @@
     "senior": "High School (Grades 10-11)",
     "ort": "National Scholarship Test (ORT/JRT)"
   },
+  "gradeCards": {
+    "primaryTitle": "Primary School",
+    "primaryGrade": "Grades 1 - 4",
+    "primaryDesc": "Alippe, Native Language, Math, Science",
+    "primaryBadge": "Most Popular",
+    "middleTitle": "Middle School",
+    "middleGrade": "Grades 5 - 9",
+    "middleDesc": "Algebra, Geometry, Physics, Chemistry, Kyrgyz",
+    "middleBadge": "Save 70%",
+    "seniorTitle": "High School",
+    "seniorGrade": "Grades 10 - 11",
+    "seniorDesc": "Major Subjects, History, World Literature",
+    "seniorBadge": "9 Mo. Rental",
+    "ortTitle": "ORT / JRT Test Prep",
+    "ortGrade": "For University Applicants",
+    "ortDesc": "Analogies, Mathematics, Kyrgyz & Russian Languages",
+    "ortBadge": "Gold Certificate"
+  },
   "benefits": {
     "title": "Why Choose BilimKitep",
     "b1Title": "Eco-Friendly & Affordable",

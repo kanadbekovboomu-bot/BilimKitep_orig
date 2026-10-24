@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Eye, ShoppingBag, MapPin } from 'lucide-react';
 import { DealBadge } from './DealBadge';
 import { Badge } from '../common/Badge';
@@ -11,6 +12,7 @@ export const BookCard = ({
   onQuickView,
   onAddToCart,
 }) => {
+  const { t } = useTranslation('common');
   const isRentable = book.dealType === 'RENT' || book.dealType === 'BOTH';
   const coverImage = book.images && book.images.length > 0
     ? book.images[0]
@@ -31,7 +33,7 @@ export const BookCard = ({
           <div className="absolute top-2 left-2 flex flex-col gap-1 items-start">
             <DealBadge dealType={book.dealType} />
             <Badge variant="default" size="sm">
-              {book.grade}-класс
+              {t('units.grade', { count: book.grade })}
             </Badge>
           </div>
 
@@ -46,10 +48,10 @@ export const BookCard = ({
             type="button"
             onClick={() => onQuickView && onQuickView(book)}
             className="absolute bottom-2 right-2 bg-white/90 dark:bg-darkCard/90 hover:bg-white text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity shadow-md cursor-pointer flex items-center gap-1 text-xs font-semibold"
-            title="Быстрый просмотр"
+            title={t('actions.quickView')}
           >
             <Eye className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Көрүү</span>
+            <span className="hidden sm:inline">{t('actions.quickView')}</span>
           </button>
         </div>
 
@@ -85,15 +87,21 @@ export const BookCard = ({
         <div>
           {isRentable ? (
             <div>
-              <div className="text-[11px] text-gray-400 font-medium">Ижара (айына):</div>
+              <div className="text-[11px] text-gray-400 font-medium">
+                {t('units.rentPrice')}
+              </div>
               <div className="text-sm font-extrabold text-brand-600 dark:text-brand-400">
                 {formatKGS(book.rentPricePerMonth)}
-                <span className="text-[10px] font-normal text-gray-400"> /ай</span>
+                <span className="text-[10px] font-normal text-gray-400">
+                  {t('units.perMonth')}
+                </span>
               </div>
             </div>
           ) : (
             <div>
-              <div className="text-[11px] text-gray-400 font-medium">Сатуу баасы:</div>
+              <div className="text-[11px] text-gray-400 font-medium">
+                {t('units.buyPrice')}
+              </div>
               <div className="text-sm font-extrabold text-gray-900 dark:text-gray-100">
                 {formatKGS(book.price)}
               </div>
@@ -105,7 +113,7 @@ export const BookCard = ({
           type="button"
           onClick={() => onAddToCart && onAddToCart(book, isRentable ? 'RENT' : 'BUY', 9)}
           className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-brand-500 hover:text-white text-brand-700 dark:text-brand-300 transition-all cursor-pointer shadow-xs"
-          title="В корзину"
+          title={t('actions.addToCart')}
         >
           <ShoppingBag className="w-4 h-4" />
         </button>

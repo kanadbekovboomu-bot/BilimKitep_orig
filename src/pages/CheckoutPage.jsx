@@ -51,12 +51,12 @@ export const CheckoutPage = () => {
 
   const validate = () => {
     const errs = {};
-    if (!fullName.trim()) errs.fullName = 'Сураныч, аты-жөнүңүздү көрсөтүңүз';
+    if (!fullName.trim()) errs.fullName = t('errors.fullName');
     if (!phone || phone.replace(/\D/g, '').length < 9) {
-      errs.phone = 'Туура телефон номерин жазыңыз (мис. +996 700 123 456)';
+      errs.phone = t('errors.phone');
     }
     if (deliveryMethod === 'courier' && !address.trim()) {
-      errs.address = 'Курьер жеткирүү үчүн даректи жазыңыз';
+      errs.address = t('errors.address');
     }
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -76,8 +76,8 @@ export const CheckoutPage = () => {
         customerName: fullName.trim(),
         customerPhone: phone.trim(),
         city,
-        address: address.trim() || 'Самовывоз пунктунан',
-        deliveryMethod: deliveryMethod === 'courier' ? 'Курьер жеткирүү (150 сом)' : 'Самовывоз',
+        address: address.trim() || t('pickup'),
+        deliveryMethod: deliveryMethod === 'courier' ? t('courier') : t('pickup'),
         paymentMethod: paymentDetails.paymentMethod,
         transactionId: paymentDetails.transactionId,
         items,
@@ -123,17 +123,17 @@ export const CheckoutPage = () => {
 
         <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder text-left space-y-2 text-xs">
           <div className="flex justify-between">
-            <span className="text-gray-400">Заказ номери:</span>
+            <span className="text-gray-400">{t('orderNumber')}</span>
             <span className="font-mono font-bold text-gray-900 dark:text-gray-100">#{createdOrder.id}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-400">Жалпы сумма:</span>
-            <span className="font-bold text-brand-600">{createdOrder.totalAmount} сом</span>
+            <span className="text-gray-400">{t('totalAmount')}</span>
+            <span className="font-bold text-brand-600">{formatKGS(createdOrder.totalAmount)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-400">Telegram кабарлама:</span>
+            <span className="text-gray-400">{t('telegramSent')}</span>
             <span className="font-semibold text-emerald-600 flex items-center gap-1">
-              <Send className="w-3 h-3" /> Жөнөтүлдү
+              <Send className="w-3 h-3" />
             </span>
           </div>
         </div>
@@ -157,7 +157,7 @@ export const CheckoutPage = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-      <Breadcrumbs items={[{ label: 'Себет', to: '/cart' }, { label: t('title') }]} />
+      <Breadcrumbs items={[{ label: t('title', { ns: 'cart' }), to: '/cart' }, { label: t('title') }]} />
 
       <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
         {t('title')}
@@ -238,7 +238,7 @@ export const CheckoutPage = () => {
                   <span>{t('pickup')}</span>
                 </div>
                 <p className="text-[11px] text-gray-400 mt-1">
-                  Бишкек шаары, Чүй проспектиси 205 (Билим Hub)
+                  {t('pickupPoint')}
                 </p>
               </button>
 
@@ -256,7 +256,7 @@ export const CheckoutPage = () => {
                   <span>{t('courier')}</span>
                 </div>
                 <p className="text-[11px] text-gray-400 mt-1">
-                  Эртеси күнү эшигиңизге чейин жеткирип беребиз
+                  {t('courierDesc')}
                 </p>
               </button>
             </div>

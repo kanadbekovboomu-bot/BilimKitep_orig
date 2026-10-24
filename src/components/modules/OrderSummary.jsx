@@ -20,7 +20,7 @@ export const OrderSummary = ({
   return (
     <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-6 shadow-sm space-y-5">
       <h3 className="font-bold text-base text-gray-900 dark:text-gray-100 pb-3 border-b border-gray-100 dark:border-darkBorder">
-        Заказдын наркы (Итого заказа)
+        {t('orderCost')}
       </h3>
 
       <div className="space-y-3 text-xs text-gray-600 dark:text-gray-300">
@@ -35,7 +35,7 @@ export const OrderSummary = ({
           <div className="flex justify-between items-center text-emerald-700 dark:text-emerald-400 bg-emerald-50/60 dark:bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-200/50 dark:border-emerald-800/30">
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 shrink-0" />
-              <span>{t('totalDeposit')} (100% кайтарылат):</span>
+              <span>{t('totalDeposit')} {t('depositGuaranteed')}:</span>
             </div>
             <span className="font-bold">{formatKGS(depositAmount)}</span>
           </div>
@@ -43,9 +43,9 @@ export const OrderSummary = ({
 
         {isCheckoutPage && (
           <div className="flex justify-between">
-            <span>Жеткирүү акысы:</span>
+            <span>{t('shippingFee')}</span>
             <span className="font-semibold text-gray-900 dark:text-gray-100">
-              {shippingCost > 0 ? formatKGS(shippingCost) : 'Акысыз (Самовывоз)'}
+              {shippingCost > 0 ? formatKGS(shippingCost) : t('freePickup')}
             </span>
           </div>
         )}
@@ -73,7 +73,7 @@ export const OrderSummary = ({
       )}
 
       <p className="text-[11px] text-gray-400 text-center leading-relaxed">
-        * Заказды тастыктагандан кийин бардык шарттар жана кайтаруу мөөнөттөрү келишимде көрсөтүлөт.
+        {t('termsNote')}
       </p>
     </div>
   );

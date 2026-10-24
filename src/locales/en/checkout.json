@@ -26,5 +26,15 @@
   "successTitle": "Order Placed Successfully!",
   "successDesc": "Your order reference is #{{id}}. Notification has been dispatched to Telegram. Our coordinator will contact you shortly.",
   "backHome": "Back to Home",
-  "viewOrder": "View in Profile"
+  "viewOrder": "View in Profile",
+  "errors": {
+    "fullName": "Please enter your full name",
+    "phone": "Please enter a valid phone number (e.g. +996 700 123 456)",
+    "address": "Please enter an address for courier delivery"
+  },
+  "pickupPoint": "Bishkek, 205 Chuy Avenue (Bilim Hub)",
+  "courierDesc": "Doorstep delivery next business day",
+  "telegramSent": "Telegram Notification: Sent",
+  "orderNumber": "Order Reference:",
+  "totalAmount": "Total Amount:"
 }

@@ -54,7 +54,7 @@ export const ProfilePage = () => {
   }, [user]);
 
   const handleDeleteListing = async (bookId) => {
-    if (window.confirm('Бул китепти жарыялардан өчүрүүнү каалайсызбы?')) {
+    if (window.confirm(t('deleteListingConfirm'))) {
       await dispatch(deleteBook(bookId));
       setMyBooks((prev) => prev.filter((b) => b.id !== bookId));
     }
@@ -86,9 +86,9 @@ export const ProfilePage = () => {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">
-                {user?.name || 'Колдонуучу'}
+                {user?.name || t('defaultUser')}
               </h1>
-              <ShieldCheck className="w-5 h-5 text-brand-500" title="Верифицирован" />
+              <ShieldCheck className="w-5 h-5 text-brand-500" title={t('seller.verified', { ns: 'common' })} />
               {user?.authProvider === 'GOOGLE' && (
                 <span className="text-[10px] bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full font-bold border border-blue-200 dark:border-blue-800">
                   Google ID
@@ -104,12 +104,12 @@ export const ProfilePage = () => {
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <Link to="/add-book" className="flex-1 sm:flex-none">
             <Button variant="primary" size="sm" icon={PlusCircle} className="w-full">
-              Китеп кошуу
+              {t('addBookBtn')}
             </Button>
           </Link>
 
           <Button variant="outline" size="sm" icon={LogOut} onClick={handleLogout}>
-            Чыгуу
+            {t('logoutBtn')}
           </Button>
         </div>
       </div>
@@ -167,13 +167,13 @@ export const ProfilePage = () => {
               <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-12 text-center space-y-3">
                 <Package className="w-12 h-12 text-gray-300 mx-auto" />
                 <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">
-                  Азырынча активдүү буйрутмалар жок
+                  {t('noOrders')}
                 </h3>
                 <p className="text-xs text-gray-500 max-w-sm mx-auto">
-                  Каталогдон керектүү окуу китептерин тандап, ижарага алыңыз.
+                  {t('emptyDesc', { ns: 'cart' })}
                 </p>
                 <Link to="/catalog">
-                  <Button variant="primary" size="sm">Каталогго өтүү</Button>
+                  <Button variant="primary" size="sm">{t('goToCatalog', { ns: 'cart' })}</Button>
                 </Link>
               </div>
             )}
@@ -195,14 +195,14 @@ export const ProfilePage = () => {
               <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-12 text-center space-y-3">
                 <BookOpen className="w-12 h-12 text-gray-300 mx-auto" />
                 <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">
-                  Сизде жарыяланган китептер жок
+                  {t('noListings')}
                 </h3>
                 <p className="text-xs text-gray-500 max-w-sm mx-auto">
-                  Үйдөгү окуу китептериңизди ижарага берип же сатып, киреше табыңыз.
+                  {t('addBookSubtitle')}
                 </p>
                 <Link to="/add-book">
                   <Button variant="primary" size="sm" icon={PlusCircle}>
-                    Китеп жарыялоо
+                    {t('addBookBtn')}
                   </Button>
                 </Link>
               </div>

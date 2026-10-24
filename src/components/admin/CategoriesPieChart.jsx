@@ -1,13 +1,15 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 
 export const CategoriesPieChart = ({ data = [] }) => {
+  const { t } = useTranslation('admin');
   const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6', '#ec4899'];
 
   return (
     <div className="h-80 w-full p-5 bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder">
       <h3 className="text-sm font-bold text-gray-800 dark:text-gray-100 mb-2">
-        Распределение каталога по предметам
+        {t('charts.categoriesTitle')}
       </h3>
       <ResponsiveContainer width="100%" height="85%">
         <PieChart>
@@ -32,7 +34,7 @@ export const CategoriesPieChart = ({ data = [] }) => {
               color: '#fff',
               fontSize: '12px'
             }}
-            formatter={(value) => [`${value}%`, 'Доля']}
+            formatter={(value) => [`${value}%`]}
           />
           <Legend
             verticalAlign="bottom"

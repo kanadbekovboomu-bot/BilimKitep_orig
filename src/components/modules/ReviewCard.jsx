@@ -1,8 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RatingStars } from '../common/RatingStars';
-import { User } from 'lucide-react';
 
 export const ReviewCard = ({ review }) => {
+  const { t } = useTranslation('profile');
+
   return (
     <div className="bg-gray-50 dark:bg-darkBorder/30 rounded-2xl p-4 space-y-2 border border-gray-100 dark:border-darkBorder">
       <div className="flex items-center justify-between">
@@ -11,7 +13,7 @@ export const ReviewCard = ({ review }) => {
             {review.user ? review.user.charAt(0) : 'U'}
           </div>
           <span className="text-xs font-bold text-gray-900 dark:text-gray-100">
-            {review.user || 'Колдонуучу'}
+            {review.user || t('defaultUser')}
           </span>
         </div>
         <span className="text-[11px] text-gray-400">{review.date}</span>

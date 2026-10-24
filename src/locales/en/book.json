@@ -23,5 +23,26 @@
     "reviews": "Ratings & Reviews",
     "addReview": "Write a Review",
     "noReviews": "No reviews yet. Be the first to review this textbook!"
+  },
+  "reviewModal": {
+    "title": "Review This Textbook",
+    "ratingLabel": "Your Rating:",
+    "nameLabel": "Your Name:",
+    "namePlaceholder": "e.g. Aigul Kasymova",
+    "commentLabel": "Your Review & Textbook Condition:",
+    "commentPlaceholder": "Tell us about page conditions, delivery, and rental experience...",
+    "submitBtn": "Publish Review",
+    "errorName": "Please enter your name",
+    "errorComment": "Please write a comment"
+  },
+  "notFound": {
+    "title": "Textbook Not Found",
+    "desc": "This book may have been sold out, rented, or removed from the catalog.",
+    "backBtn": "Return to Catalog",
+    "loading": "Loading textbook details..."
+  },
+  "buySection": {
+    "title": "Purchase Price (Full Ownership):",
+    "buyBtn": "Buy Now"
   }
 }

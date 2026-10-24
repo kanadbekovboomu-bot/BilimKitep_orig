@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { formatKGS } from '../../utils/formatters';
 
 export const PriceSlider = ({
   value = 2000,
@@ -7,12 +9,14 @@ export const PriceSlider = ({
   onChange,
   className = '',
 }) => {
+  const { t } = useTranslation(['catalog', 'common']);
+
   return (
     <div className={`space-y-2 ${className}`}>
       <div className="flex justify-between items-center text-xs">
-        <span className="text-gray-500 font-medium">Максимальная цена:</span>
+        <span className="text-gray-500 font-medium">{t('filters.priceRange')}:</span>
         <span className="font-bold text-brand-600 dark:text-brand-400">
-          {value} сом
+          {formatKGS(value)}
         </span>
       </div>
       <input

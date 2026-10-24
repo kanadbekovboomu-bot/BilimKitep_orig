@@ -29,7 +29,7 @@ export const CartPage = () => {
   };
 
   const handleClear = () => {
-    if (window.confirm('Себетти толугу менен тазалоону каалайсызбы?')) {
+    if (window.confirm(t('confirmClear'))) {
       dispatch(clearCart());
     }
   };
@@ -96,7 +96,7 @@ export const CartPage = () => {
               className="inline-flex items-center gap-2 text-xs font-bold text-brand-600 hover:text-brand-700"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Каталогго кайтып, дагы китеп тандоо</span>
+              <span>{t('returnToCatalog')}</span>
             </Link>
           </div>
         </div>

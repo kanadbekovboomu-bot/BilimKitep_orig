@@ -25,7 +25,7 @@ export const RegisterPage = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !password) {
-      setError('Бардык талааларды толтуруңуз');
+      setError(t('errorAllRequired'));
       return;
     }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Filter, RotateCcw, Check } from 'lucide-react';
 import { Button } from '../common/Button';
+import { formatKGS } from '../../utils/formatters';
 
 export const SidebarFilter = ({
   filters,
@@ -9,28 +10,28 @@ export const SidebarFilter = ({
   onReset,
   className = '',
 }) => {
-  const { t } = useTranslation('catalog');
+  const { t } = useTranslation(['catalog', 'common']);
 
   const grades = [
     { value: 'all', label: t('filters.allGrades') },
-    { value: '1', label: '1-класс' },
-    { value: '2', label: '2-класс' },
-    { value: '3', label: '3-класс' },
-    { value: '4', label: '4-класс' },
-    { value: '5', label: '5-класс' },
-    { value: '6', label: '6-класс' },
-    { value: '7', label: '7-класс' },
-    { value: '8', label: '8-класс' },
-    { value: '9', label: '9-класс' },
-    { value: '10', label: '10-класс' },
-    { value: '11', label: '11-класс / ОРТ' },
+    { value: '1', label: t('units.grade', { count: 1, ns: 'common' }) },
+    { value: '2', label: t('units.grade', { count: 2, ns: 'common' }) },
+    { value: '3', label: t('units.grade', { count: 3, ns: 'common' }) },
+    { value: '4', label: t('units.grade', { count: 4, ns: 'common' }) },
+    { value: '5', label: t('units.grade', { count: 5, ns: 'common' }) },
+    { value: '6', label: t('units.grade', { count: 6, ns: 'common' }) },
+    { value: '7', label: t('units.grade', { count: 7, ns: 'common' }) },
+    { value: '8', label: t('units.grade', { count: 8, ns: 'common' }) },
+    { value: '9', label: t('units.grade', { count: 9, ns: 'common' }) },
+    { value: '10', label: t('units.grade', { count: 10, ns: 'common' }) },
+    { value: '11', label: `${t('units.grade', { count: 11, ns: 'common' })} / ОРТ` },
   ];
 
   const languages = [
     { value: 'all', label: t('filters.allLanguages') },
-    { value: 'KG', label: 'Кыргыз тилинде (KG)' },
-    { value: 'RU', label: 'Русский язык (RU)' },
-    { value: 'EN', label: 'English (EN)' },
+    { value: 'KG', label: t('filters.langKG') },
+    { value: 'RU', label: t('filters.langRU') },
+    { value: 'EN', label: t('filters.langEN') },
   ];
 
   const dealTypes = [
@@ -72,7 +73,7 @@ export const SidebarFilter = ({
                 key={type.value}
                 type="button"
                 onClick={() => onChange('dealType', type.value)}
-                className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left ${
+                className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left cursor-pointer ${
                   isSelected
                     ? 'bg-brand-50 dark:bg-emerald-950/60 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800/40'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-darkBorder/40 border border-transparent'
@@ -94,7 +95,7 @@ export const SidebarFilter = ({
         <select
           value={filters.grade}
           onChange={(e) => onChange('grade', e.target.value)}
-          className="w-full text-xs font-medium rounded-xl border border-gray-200 dark:border-darkBorder bg-white dark:bg-darkBg text-gray-900 dark:text-gray-100 p-2.5 focus:ring-2 focus:ring-brand-500"
+          className="w-full text-xs font-medium rounded-xl border border-gray-200 dark:border-darkBorder bg-white dark:bg-darkBg text-gray-900 dark:text-gray-100 p-2.5 focus:ring-2 focus:ring-brand-500 cursor-pointer"
         >
           {grades.map((g) => (
             <option key={g.value} value={g.value}>
@@ -117,7 +118,7 @@ export const SidebarFilter = ({
                 key={lang.value}
                 type="button"
                 onClick={() => onChange('language', lang.value)}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-left ${
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
                   isSelected
                     ? 'bg-brand-50 dark:bg-emerald-950/60 text-brand-700 dark:text-brand-300 font-semibold'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-darkBorder/40'
@@ -138,7 +139,7 @@ export const SidebarFilter = ({
             {t('filters.priceRange')}
           </label>
           <span className="text-xs font-bold text-brand-600 dark:text-brand-400">
-            до {filters.maxPrice || 2000} сом
+            {formatKGS(filters.maxPrice || 2000)}
           </span>
         </div>
         <input
@@ -151,9 +152,9 @@ export const SidebarFilter = ({
           className="w-full accent-brand-500 cursor-pointer"
         />
         <div className="flex justify-between text-[11px] text-gray-400">
-          <span>50 сом</span>
-          <span>1000 сом</span>
-          <span>2000 сом</span>
+          <span>{formatKGS(50)}</span>
+          <span>{formatKGS(1000)}</span>
+          <span>{formatKGS(2000)}</span>
         </div>
       </div>
 

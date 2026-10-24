@@ -24,6 +24,9 @@
   },
   "results": {
     "found": "Books found",
+    "foundCount": "Found {{count}} textbooks",
+    "sortLabel": "Sort By:",
+    "filterButton": "Filters",
     "emptyTitle": "No textbooks match your search",
     "emptyDesc": "Try adjusting your search terms or clearing applied filters.",
     "resetBtn": "Reset Filters"

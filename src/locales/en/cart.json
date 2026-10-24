@@ -11,5 +11,14 @@
   "total": "Total Amount",
   "clearCart": "Clear Cart",
   "proceedToCheckout": "Proceed to Checkout",
-  "months": "mo."
+  "months": "mo.",
+  "orderCost": "Order Summary",
+  "shippingFee": "Shipping Fee:",
+  "freePickup": "Free (Self-Pickup)",
+  "depositGuaranteed": "(100% Refundable)",
+  "termsNote": "* All terms, conditions, and return deadlines will be fixed in your rental agreement upon confirmation.",
+  "returnToCatalog": "Return to catalog to choose more books",
+  "confirmClear": "Are you sure you want to completely clear your cart?",
+  "removeTooltip": "Remove from cart",
+  "inclDeposit": "incl. deposit"
 }

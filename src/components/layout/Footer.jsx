@@ -25,7 +25,7 @@ export const Footer = () => {
             </p>
             <div className="flex items-center gap-2 text-xs font-semibold text-brand-600 dark:text-brand-400">
               <Shield className="w-4 h-4" />
-              <span>100% кепилденген залог системасы</span>
+              <span>{t('footer.guarantee')}</span>
             </div>
           </div>
 
@@ -37,27 +37,27 @@ export const Footer = () => {
             <ul className="space-y-2 text-xs text-gray-600 dark:text-gray-400">
               <li>
                 <Link to="/catalog?grade=primary" className="hover:text-brand-500 transition-colors">
-                  Башталгыч класстар (1-4 класс)
+                  {t('footer.primary')}
                 </Link>
               </li>
               <li>
                 <Link to="/catalog?grade=middle" className="hover:text-brand-500 transition-colors">
-                  Орто мектеп (5-9 класс)
+                  {t('footer.middle')}
                 </Link>
               </li>
               <li>
                 <Link to="/catalog?grade=senior" className="hover:text-brand-500 transition-colors">
-                  Жогорку класстар (10-11 класс)
+                  {t('footer.senior')}
                 </Link>
               </li>
               <li>
                 <Link to="/catalog?dealType=RENT" className="hover:text-brand-500 transition-colors">
-                  Учебники в аренду (3, 5, 9 месяцев)
+                  {t('footer.rentLiterature')}
                 </Link>
               </li>
               <li>
                 <Link to="/catalog?search=ОРТ" className="hover:text-brand-500 transition-colors">
-                  ЖРТ / ОРТ колдонмолору
+                  {t('footer.ortPrep')}
                 </Link>
               </li>
             </ul>
@@ -79,7 +79,7 @@ export const Footer = () => {
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="w-3.5 h-3.5 text-brand-500 shrink-0 mt-0.5" />
-                <span>Бишкек шаары, Чүй проспектиси 205 (Билим Hub)</span>
+                <span>{t('footer.address')}</span>
               </li>
             </ul>
           </div>
@@ -87,13 +87,13 @@ export const Footer = () => {
           {/* Diploma Specs */}
           <div className="space-y-3 bg-gray-50 dark:bg-darkBorder/40 p-4 rounded-2xl">
             <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wider">
-              Дипломдук долбоор 2026
+              {t('footer.diploma')}
             </h4>
             <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
-              Тема: «Разработка веб-платформы шеринга, аренды и покупки учебников BilimKitep».
+              «BilimKitep» Web Platform.
             </p>
             <div className="text-[11px] font-mono text-gray-500 dark:text-gray-400 pt-1">
-              Стек: React 18, Vite, Tailwind CSS, Redux Toolkit, i18n, Recharts, Cloudinary & Telegram Bot.
+              Stack: React 18, Vite, Tailwind CSS, Redux Toolkit, i18n, Neon Postgres, Cloudinary, Telegram.
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ export const BookGallery = ({ images = [] }) => {
       <div className="w-full h-80 sm:h-96 bg-gray-100 dark:bg-darkBorder rounded-2xl overflow-hidden border border-gray-100 dark:border-darkBorder shadow-xs">
         <img
           src={activeImage}
-          alt="Учебник"
+          alt=""
           className="w-full h-full object-cover transition-all duration-300"
         />
       </div>
@@ -32,7 +32,7 @@ export const BookGallery = ({ images = [] }) => {
                   : 'border-transparent opacity-60 hover:opacity-100'
               }`}
             >
-              <img src={img} alt={`Превью ${idx + 1}`} className="w-full h-full object-cover" />
+              <img src={img} alt="" className="w-full h-full object-cover" />
             </button>
           ))}
         </div>

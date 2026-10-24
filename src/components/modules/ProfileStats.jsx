@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { BookOpen, PiggyBank, PlusCircle, ShieldCheck } from 'lucide-react';
 import { formatKGS } from '../../utils/formatters';
 
@@ -8,32 +9,34 @@ export const ProfileStats = ({
   myListingsCount = 3,
   depositHolding = 650,
 }) => {
+  const { t } = useTranslation('profile');
+
   const cards = [
     {
-      label: 'Ижарадагы китептер',
-      value: `${activeRentals} даана`,
-      sub: 'Учурда колдонууда',
+      label: t('stats.activeRentals'),
+      value: `${activeRentals}`,
+      sub: t('stats.activeRentals'),
       icon: BookOpen,
       color: 'text-blue-600 bg-blue-50 dark:bg-blue-950/40',
     },
     {
-      label: 'Үнөмдөлгөн каражат',
+      label: t('stats.savedMoney'),
       value: formatKGS(savedMoney),
-      sub: 'Жаңы китеп сатып алууга салыштырмалуу',
+      sub: t('stats.savedMoney'),
       icon: PiggyBank,
       color: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40',
     },
     {
-      label: 'Менин жарыяларым',
-      value: `${myListingsCount} китеп`,
-      sub: 'Платформада жайгашкан',
+      label: t('stats.myListings'),
+      value: `${myListingsCount}`,
+      sub: t('stats.myListings'),
       icon: PlusCircle,
       color: 'text-purple-600 bg-purple-50 dark:bg-purple-950/40',
     },
     {
-      label: 'Кайтарылуучу күрөө',
+      label: t('stats.depositHolding'),
       value: formatKGS(depositHolding),
-      sub: 'Китепти тапшырганда кайтарылат',
+      sub: t('stats.depositHolding'),
       icon: ShieldCheck,
       color: 'text-amber-600 bg-amber-50 dark:bg-amber-950/40',
     },

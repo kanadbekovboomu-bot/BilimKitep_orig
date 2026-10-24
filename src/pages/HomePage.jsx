@@ -36,38 +36,38 @@ export const HomePage = () => {
 
   const handleAddToCart = (book, type = 'RENT', months = 9) => {
     dispatch(addToCart({ book, type, months }));
-    setToastMessage(`«${book.title}» себетке кошулду!`);
+    setToastMessage(t('toast.addedSimple', { ns: 'common', title: book.title }));
     setShowToast(true);
   };
 
   const gradeCards = [
     {
-      title: 'Башталгыч мектеп',
-      gradeText: '1 - 4 класстар',
-      desc: 'Алиппе, Эне тили, Математика, Табият таануу',
+      title: t('gradeCards.primaryTitle'),
+      gradeText: t('gradeCards.primaryGrade'),
+      desc: t('gradeCards.primaryDesc'),
       to: '/catalog?grade=1',
-      badge: 'Эң популярдуу',
+      badge: t('gradeCards.primaryBadge'),
     },
     {
-      title: 'Орто мектеп',
-      gradeText: '5 - 9 класстар',
-      desc: 'Алгебра, Геометрия, Физика, Химия, Кыргыз тили',
+      title: t('gradeCards.middleTitle'),
+      gradeText: t('gradeCards.middleGrade'),
+      desc: t('gradeCards.middleDesc'),
       to: '/catalog?grade=8',
-      badge: '70% үнөмдөө',
+      badge: t('gradeCards.middleBadge'),
     },
     {
-      title: 'Жогорку класстар',
-      gradeText: '10 - 11 класстар',
-      desc: 'Профилдик сабактар, тарых, дүйнөлүк адабият',
+      title: t('gradeCards.seniorTitle'),
+      gradeText: t('gradeCards.seniorGrade'),
+      desc: t('gradeCards.seniorDesc'),
       to: '/catalog?grade=10',
-      badge: 'Аренда 9 ай',
+      badge: t('gradeCards.seniorBadge'),
     },
     {
-      title: 'ЖРТ (ОРТ) даярдык',
-      gradeText: 'Абитуриенттер үчүн',
-      desc: 'Аналогиялар, математика, кыргыз жана орус тили',
+      title: t('gradeCards.ortTitle'),
+      gradeText: t('gradeCards.ortGrade'),
+      desc: t('gradeCards.ortDesc'),
       to: '/catalog?search=ОРТ',
-      badge: 'Алтын Сертификат',
+      badge: t('gradeCards.ortBadge'),
     },
   ];
 
@@ -123,7 +123,7 @@ export const HomePage = () => {
                 <div className="text-[11px] sm:text-xs text-gray-500">{t('hero.statsSaved')}</div>
               </div>
               <div>
-                <div className="text-base sm:text-xl font-extrabold text-brand-600 dark:text-brand-400">7 Облус</div>
+                <div className="text-base sm:text-xl font-extrabold text-brand-600 dark:text-brand-400">7</div>
                 <div className="text-[11px] sm:text-xs text-gray-500">{t('hero.statsRegions')}</div>
               </div>
             </div>
@@ -188,7 +188,7 @@ export const HomePage = () => {
             {t('grades.title')}
           </h2>
           <p className="text-xs sm:text-sm text-gray-500">
-            Кыргызстандын мектептеринин окуу программасы боюнча керектүү классты тандаңыз
+            {t('featured.subtitle')}
           </p>
         </div>
 

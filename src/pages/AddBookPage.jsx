@@ -38,7 +38,7 @@ export const AddBookPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title.trim() || !author.trim()) {
-      setError('Китептин аталышын жана авторун толтуруңуз');
+      setError(t('bookForm.title') + ' & ' + t('bookForm.author'));
       return;
     }
 
@@ -58,7 +58,7 @@ export const AddBookPage = () => {
         deposit: Number(deposit),
         condition,
         year: Number(year),
-        description: description.trim() || 'Китеп жакшы абалда, барактары толук.',
+        description: description.trim() || 'Good condition, intact pages.',
         images: images.length > 0 ? images : undefined,
         owner: {
           id: user?.id || 'u_502',
@@ -72,7 +72,7 @@ export const AddBookPage = () => {
       await dispatch(createBookListing(bookPayload)).unwrap();
       navigate('/catalog');
     } catch (err) {
-      setError(err || 'Ошибка добавления книги');
+      setError(err || 'Error adding book listing');
     } finally {
       setLoading(false);
     }
@@ -80,13 +80,13 @@ export const AddBookPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-      <Breadcrumbs items={[{ label: 'Жаңы китеп кошуу' }]} />
+      <Breadcrumbs items={[{ label: t('addBookTitle') }]} />
 
       <div className="bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder p-6 sm:p-10 shadow-xs space-y-8">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-brand-700 dark:text-brand-300 text-xs font-bold mb-2">
             <Sparkles className="w-3.5 h-3.5 text-brand-500" />
-            <span>Эко-шеринг жана киреше табуу</span>
+            <span>{t('ecoSharing')}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
             {t('addBookTitle')}
@@ -149,17 +149,17 @@ export const AddBookPage = () => {
               value={grade}
               onChange={(e) => setGrade(e.target.value)}
               options={[
-                { value: '1', label: '1-класс' },
-                { value: '2', label: '2-класс' },
-                { value: '3', label: '3-класс' },
-                { value: '4', label: '4-класс' },
-                { value: '5', label: '5-класс' },
-                { value: '6', label: '6-класс' },
-                { value: '7', label: '7-класс' },
-                { value: '8', label: '8-класс' },
-                { value: '9', label: '9-класс' },
-                { value: '10', label: '10-класс' },
-                { value: '11', label: '11-класс / ЖРТ' },
+                { value: '1', label: t('units.grade', { count: 1, ns: 'common' }) },
+                { value: '2', label: t('units.grade', { count: 2, ns: 'common' }) },
+                { value: '3', label: t('units.grade', { count: 3, ns: 'common' }) },
+                { value: '4', label: t('units.grade', { count: 4, ns: 'common' }) },
+                { value: '5', label: t('units.grade', { count: 5, ns: 'common' }) },
+                { value: '6', label: t('units.grade', { count: 6, ns: 'common' }) },
+                { value: '7', label: t('units.grade', { count: 7, ns: 'common' }) },
+                { value: '8', label: t('units.grade', { count: 8, ns: 'common' }) },
+                { value: '9', label: t('units.grade', { count: 9, ns: 'common' }) },
+                { value: '10', label: t('units.grade', { count: 10, ns: 'common' }) },
+                { value: '11', label: `${t('units.grade', { count: 11, ns: 'common' })} / ОРТ` },
               ]}
             />
 
@@ -168,9 +168,9 @@ export const AddBookPage = () => {
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
               options={[
-                { value: 'KG', label: 'Кыргыз тилинде' },
-                { value: 'RU', label: 'Орус тилинде' },
-                { value: 'EN', label: 'Англис тилинде' },
+                { value: 'KG', label: t('filters.langKG', { ns: 'catalog' }) },
+                { value: 'RU', label: t('filters.langRU', { ns: 'catalog' }) },
+                { value: 'EN', label: t('filters.langEN', { ns: 'catalog' }) },
               ]}
             />
           </div>

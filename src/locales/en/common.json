@@ -4,12 +4,12 @@
   "currency": "KGS",
   "nav": {
     "home": "Home",
-    "catalog": "Catalog",
+    "catalog": "Textbook Catalog",
     "rent": "Rentals",
-    "howItWorks": "How it Works",
-    "addBook": "List a Book",
+    "howItWorks": "How It Works",
+    "addBook": "List / Sell Books",
     "cart": "Cart",
-    "profile": "Dashboard",
+    "profile": "My Dashboard",
     "myListings": "My Listings",
     "admin": "Admin Panel",
     "login": "Sign In",
@@ -25,15 +25,17 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit",
-    "viewDetails": "View Details",
+    "viewDetails": "Details",
     "quickView": "Quick View",
     "addToCart": "Add to Cart",
-    "rentBook": "Rent Book",
-    "buyBook": "Buy Book",
-    "checkout": "Proceed to Checkout",
+    "rentBook": "Rent",
+    "buyBook": "Buy",
+    "checkout": "Checkout",
     "back": "Back",
     "loading": "Loading...",
-    "close": "Close"
+    "close": "Close",
+    "refresh": "Refresh",
+    "confirmDelete": "Are you sure you want to delete this item?"
   },
   "status": {
     "available": "Available",
@@ -42,21 +44,74 @@
     "sold": "Sold"
   },
   "dealType": {
-    "rent": "Rental",
-    "buy": "Purchase",
-    "both": "Rental & Sale"
+    "rent": "Rent",
+    "buy": "Buy",
+    "both": "Rent or Buy"
   },
   "condition": {
-    "new": "Brand New",
+    "new": "New (Pristine)",
     "excellent": "Excellent",
     "good": "Good",
     "fair": "Fair"
   },
+  "units": {
+    "grade": "Grade {{count}}",
+    "perMonth": " /mo",
+    "monthCount": "{{count}} mo.",
+    "rentPrice": "Rent (per month):",
+    "buyPrice": "Purchase Price:",
+    "total": "Total:",
+    "deposit": "Deposit:"
+  },
+  "toast": {
+    "addedRent": "«{{title}}» ({{months}} mo. rental) added to cart!",
+    "addedBuy": "«{{title}}» (purchase) added to cart!",
+    "addedSimple": "«{{title}}» added to cart!",
+    "reviewAdded": "Your review has been successfully submitted!"
+  },
+  "months": {
+    "3": "3 months (quarter)",
+    "5": "5 months (semester)",
+    "9": "9 months (academic year)"
+  },
   "footer": {
-    "about": "BilimKitep is the first ecosystem for sharing school and university textbooks in Kyrgyzstan. We make education accessible for every family.",
-    "links": "Navigation",
-    "contacts": "Contact Us",
+    "about": "BilimKitep is Kyrgyzstan's first sharing ecosystem for school and university educational literature, making quality learning affordable for every family.",
+    "links": "Sections",
+    "contacts": "Contacts",
     "help": "Parent & Student Support",
-    "rights": "All rights reserved. Diploma Project 2026."
+    "rights": "All rights reserved. Diploma Project 2026.",
+    "guarantee": "100% Guaranteed Deposit Return",
+    "primary": "Primary School (Grades 1-4)",
+    "middle": "Middle School (Grades 5-9)",
+    "senior": "High School (Grades 10-11)",
+    "rentLiterature": "Rentals (3, 5, 9 Months)",
+    "ortPrep": "ORT / JRT Test Prep",
+    "address": "Bishkek, 205 Chuy Avenue (Bilim Hub)",
+    "diploma": "Diploma Project 2026"
+  },
+  "paymentModal": {
+    "title": "Demo Payment Gateway",
+    "processing": "Processing payment...",
+    "processingDesc": "Your banking transaction is being securely handled. Please wait.",
+    "success": "Payment successful!",
+    "successDesc": "Digital receipt and escrow agreement confirmed. Preparing order...",
+    "amountToPay": "Amount due:",
+    "chooseMethod": "Select payment provider (Kyrgyzstan):",
+    "mbankDesc": "0% Fee • Instant QR Payment",
+    "cardDesc": "All bank cards (Elkart, Visa, MC)",
+    "walletDesc": "E-wallets (O!Dengi, MegaPay)",
+    "payButton": "Pay {{amount}} (Demo)"
+  },
+  "schedule": {
+    "title": "Rental Period & Return Schedule",
+    "startDate": "Start Date:",
+    "endDate": "Due Date for Return:",
+    "note": "* Return the textbook before {{date}} to receive 100% of your deposit back."
+  },
+  "seller": {
+    "verified": "Verified Seller",
+    "location": "City / Region:",
+    "contact": "Contact:",
+    "hiddenUntilOrder": "Contact details unlocked after order confirmation"
   }
 }

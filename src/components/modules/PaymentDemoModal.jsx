@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { CreditCard, QrCode, Smartphone, CheckCircle, Loader2 } from 'lucide-react';
@@ -10,6 +11,7 @@ export const PaymentDemoModal = ({
   totalAmount = 0,
   onPaymentSuccess,
 }) => {
+  const { t } = useTranslation('common');
   const [method, setMethod] = useState('mbank');
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState('select'); // 'select' | 'processing' | 'success'
@@ -33,15 +35,15 @@ export const PaymentDemoModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Төлөм шлюзу (Demo Payment Gateway)" maxWidth="max-w-md">
+    <Modal isOpen={isOpen} onClose={onClose} title={t('paymentModal.title')} maxWidth="max-w-md">
       {step === 'processing' ? (
         <div className="py-12 text-center space-y-4">
           <Loader2 className="w-12 h-12 text-brand-500 animate-spin mx-auto" />
           <h4 className="font-bold text-base text-gray-900 dark:text-gray-100">
-            Төлөм иштетилүүдө...
+            {t('paymentModal.processing')}
           </h4>
           <p className="text-xs text-gray-500">
-            Банктык транзакция коопсуз өткөрүлүп жатат. Сураныч, күтө туруңуз.
+            {t('paymentModal.processingDesc')}
           </p>
         </div>
       ) : step === 'success' ? (
@@ -50,16 +52,16 @@ export const PaymentDemoModal = ({
             <CheckCircle className="w-10 h-10" />
           </div>
           <h4 className="font-bold text-lg text-gray-900 dark:text-gray-100">
-            Төлөм ийгиликтүү өттү!
+            {t('paymentModal.success')}
           </h4>
           <p className="text-xs text-gray-500">
-            Чек жана келишим маалыматы сакталды. Заказ таризделүүдө...
+            {t('paymentModal.successDesc')}
           </p>
         </div>
       ) : (
         <div className="space-y-5">
           <div className="p-4 rounded-xl bg-gray-50 dark:bg-darkBorder/40 flex justify-between items-center">
-            <span className="text-xs text-gray-500">Төлөнүүчү сумма:</span>
+            <span className="text-xs text-gray-500">{t('paymentModal.amountToPay')}</span>
             <span className="text-xl font-black text-brand-600 dark:text-brand-400">
               {formatKGS(totalAmount)}
             </span>
@@ -67,7 +69,7 @@ export const PaymentDemoModal = ({
 
           <div className="space-y-2">
             <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-              Төлөм системасын тандаңыз (Кыргызстан):
+              {t('paymentModal.chooseMethod')}
             </label>
 
             {/* MBank */}
@@ -85,8 +87,8 @@ export const PaymentDemoModal = ({
                   M
                 </div>
                 <div className="text-left">
-                  <div className="text-xs font-bold text-gray-900 dark:text-gray-100">MBank QR / Номер аркылуу</div>
-                  <div className="text-[11px] text-gray-400">Комиссия 0% • Ыкчам төлөм</div>
+                  <div className="text-xs font-bold text-gray-900 dark:text-gray-100">MBank QR / Телефон</div>
+                  <div className="text-[11px] text-gray-400">{t('paymentModal.mbankDesc')}</div>
                 </div>
               </div>
               <QrCode className="w-5 h-5 text-gray-400" />
@@ -108,7 +110,7 @@ export const PaymentDemoModal = ({
                 </div>
                 <div className="text-left">
                   <div className="text-xs font-bold text-gray-900 dark:text-gray-100">Элкарт / Visa / Mastercard</div>
-                  <div className="text-[11px] text-gray-400">Бардык банктык карталар</div>
+                  <div className="text-[11px] text-gray-400">{t('paymentModal.cardDesc')}</div>
                 </div>
               </div>
             </button>
@@ -129,7 +131,7 @@ export const PaymentDemoModal = ({
                 </div>
                 <div className="text-left">
                   <div className="text-xs font-bold text-gray-900 dark:text-gray-100">О!Деньги / MegaPay</div>
-                  <div className="text-[11px] text-gray-400">Электрондук капчыктар</div>
+                  <div className="text-[11px] text-gray-400">{t('paymentModal.walletDesc')}</div>
                 </div>
               </div>
             </button>
@@ -143,7 +145,7 @@ export const PaymentDemoModal = ({
               loading={loading}
               onClick={handlePay}
             >
-              {formatKGS(totalAmount)} төлөө (Демо)
+              {t('paymentModal.payButton', { amount: formatKGS(totalAmount) })}
             </Button>
           </div>
         </div>

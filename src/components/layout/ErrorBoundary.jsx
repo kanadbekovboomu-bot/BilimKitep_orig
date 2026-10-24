@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import i18n from '../../i18n';
 
 export class ErrorBoundary extends Component {
   constructor(props) {
@@ -28,26 +29,26 @@ export class ErrorBoundary extends Component {
               <AlertTriangle className="w-8 h-8" />
             </div>
             <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-              Күтүлбөгөн ката кетти / Произошла ошибка
+              {i18n.t('errorBoundary.title', { ns: 'common', defaultValue: 'Произошла непредвиденная ошибка' })}
             </h2>
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
-              Тиркемеде техникалык мүчүлүштүк болду. Баракчаны жаңылап же башкы бетке кайтып көрүңүз.
+              {i18n.t('errorBoundary.desc', { ns: 'common', defaultValue: 'В приложении произошла техническая неполадка. Обновите страницу или вернитесь на главную.' })}
             </p>
             <div className="flex items-center justify-center gap-3">
               <button
                 type="button"
                 onClick={this.handleReload}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold transition-all cursor-pointer"
               >
                 <RefreshCw className="w-4 h-4" />
-                Жаңылоо (Обновить)
+                {i18n.t('actions.refresh', { ns: 'common', defaultValue: 'Обновить' })}
               </button>
               <a
                 href="/"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-darkBorder text-gray-700 dark:text-gray-200 text-xs font-semibold hover:bg-gray-50 dark:hover:bg-darkBorder transition-all"
               >
                 <Home className="w-4 h-4" />
-                Башкы бет
+                {i18n.t('nav.home', { ns: 'common', defaultValue: 'Главная' })}
               </a>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { UploadCloud, X, Loader2, Image as ImageIcon } from 'lucide-react';
 import { uploadBookImage } from '../../services/cloudinary';
 
@@ -7,8 +8,25 @@ export const ImageDropzone = ({
   onChange,
   maxImages = 4,
 }) => {
+  const { t, i18n } = useTranslation(['profile', 'common']);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+
+  const isEn = i18n.language === 'en';
+  const isKg = i18n.language === 'kg';
+
+  const uploadText = isEn
+    ? 'Uploading images to Cloudinary...'
+    : (isKg ? 'Сүрөттөр Cloudinary булутуна жүктөлүүдө...' : 'Загрузка фотографий в Cloudinary...');
+  const clickToSelect = isEn
+    ? 'Click to choose files'
+    : (isKg ? 'Сүрөттү тандоо үчүн басыңыз' : 'Нажмите для выбора фото');
+  const orDrag = isEn
+    ? ' or drag & drop here'
+    : (isKg ? ' же бул жакка сүйрөңүз' : ' или перетащите их сюда');
+  const formatHint = isEn
+    ? `PNG, JPG, WEBP (up to ${maxImages} images)`
+    : (isKg ? `PNG, JPG, WEBP (максимум ${maxImages} сүрөт)` : `PNG, JPG, WEBP (до ${maxImages} фото)`);
 
   const handleFiles = async (fileList) => {
     if (!fileList || fileList.length === 0) return;
@@ -23,7 +41,7 @@ export const ImageDropzone = ({
       const urls = await Promise.all(uploadPromises);
       onChange([...images, ...urls]);
     } catch (err) {
-      setError(err.message || 'Ошибка загрузки изображений');
+      setError(err.message || 'Image upload error');
     } finally {
       setUploading(false);
     }
@@ -61,7 +79,7 @@ export const ImageDropzone = ({
           <div className="flex flex-col items-center justify-center py-4 space-y-2">
             <Loader2 className="w-8 h-8 text-brand-500 animate-spin" />
             <span className="text-xs text-gray-500 font-medium">
-              Сүрөттөр Cloudinary булутуна жүктөлүүдө...
+              {uploadText}
             </span>
           </div>
         ) : (
@@ -71,12 +89,12 @@ export const ImageDropzone = ({
             </div>
             <div>
               <span className="text-xs font-bold text-brand-600 dark:text-brand-400">
-                Сүрөттү тандоо үчүн басыңыз
+                {clickToSelect}
               </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400"> же бул жакка сүйрөңүз</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">{orDrag}</span>
             </div>
             <p className="text-[11px] text-gray-400">
-              PNG, JPG, WEBP (максимум {maxImages} сүрөт)
+              {formatHint}
             </p>
           </div>
         )}
@@ -88,16 +106,15 @@ export const ImageDropzone = ({
       {images.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {images.map((url, idx) => (
-            <div key={idx} className="relative group rounded-xl overflow-hidden border border-gray-100 dark:border-darkBorder h-24">
-              <img src={url} alt={`Сүрөт ${idx + 1}`} className="w-full h-full object-cover" />
+            <div key={idx} className="relative aspect-3/4 rounded-xl overflow-hidden group bg-gray-100 dark:bg-darkBorder">
+              <img src={url} alt="" className="w-full h-full object-cover" />
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleRemove(idx);
                 }}
-                className="absolute top-1 right-1 p-1 rounded-lg bg-black/60 text-white hover:bg-red-500 transition-colors cursor-pointer"
-                title="Сүрөттү өчүрүү"
+                className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
               >
                 <X className="w-3.5 h-3.5" />
               </button>

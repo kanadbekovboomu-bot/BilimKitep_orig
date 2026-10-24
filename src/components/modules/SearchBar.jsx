@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Search, X } from 'lucide-react';
 
 export const SearchBar = ({
   value = '',
   onChange,
-  placeholder = 'Поиск учебников (Геометрия 8, Бекбоев, ОРТ)...',
+  placeholder,
   className = '',
 }) => {
+  const { t } = useTranslation('catalog');
+  const activePlaceholder = placeholder || t('searchPlaceholder');
   const [localVal, setLocalVal] = useState(value);
 
   useEffect(() => {
@@ -31,7 +34,7 @@ export const SearchBar = ({
         type="text"
         value={localVal}
         onChange={(e) => setLocalVal(e.target.value)}
-        placeholder={placeholder}
+        placeholder={activePlaceholder}
         className="block w-full rounded-2xl border border-gray-200 dark:border-darkBorder bg-white dark:bg-darkCard text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 pl-11 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 shadow-xs transition-colors"
       />
       {localVal && (

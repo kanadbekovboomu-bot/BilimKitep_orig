@@ -24,5 +24,36 @@
     "colCustomer": "Кардар",
     "colType": "Бүтүм түрү",
     "colAmount": "Суммасы"
+  },
+  "sidebar": {
+    "title": "Админ-панель",
+    "role": "SuperAdmin КР",
+    "dashboard": "Аналитика жана Дашборд",
+    "catalog": "Сайттагы каталог",
+    "profile": "Колдонуучу көрүнүшү",
+    "backHome": "Башкы бетке кайтуу"
+  },
+  "metricsSub": {
+    "revenueGrowth": "+18% өткөн айга караганда",
+    "rentalsPeriods": "3, 5 жана 9 айлык мөөнөттөр",
+    "booksCoverage": "1-11 класс + ЖРТ колдонмолору",
+    "depositGuarantee": "100% кепилдик менен",
+    "contracts": "келишим",
+    "booksCount": "китеп"
+  },
+  "orderModal": {
+    "title": "Заказ #{{id}}",
+    "status": "Статус:",
+    "time": "Убактысы:",
+    "customer": "Кардар:",
+    "phone": "Тел:",
+    "address": "Дареги:",
+    "items": "Буйрутмадагы китептер:",
+    "rentMonths": "Ижара ({{months}} ай)",
+    "buy": "Сатып алуу",
+    "subtotal": "Заказдын суммасы:",
+    "deposit": "Кайтарылуучу күрөө:",
+    "shipping": "Жеткирүү:",
+    "total": "Жалпы:"
   }
 }

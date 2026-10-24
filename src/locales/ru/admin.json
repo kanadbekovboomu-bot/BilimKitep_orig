@@ -24,5 +24,36 @@
     "colCustomer": "Клиент",
     "colType": "Тип сделки",
     "colAmount": "Сумма"
+  },
+  "sidebar": {
+    "title": "Админ-панель",
+    "role": "SuperAdmin КР",
+    "dashboard": "Аналитика и Дашборд",
+    "catalog": "Каталог на сайте",
+    "profile": "Пользовательский вид",
+    "backHome": "Вернуться на сайт"
+  },
+  "metricsSub": {
+    "revenueGrowth": "+18% к прошлому месяцу",
+    "rentalsPeriods": "3, 5 и 9-месячные сроки",
+    "booksCoverage": "1-11 класс + пособия ОРТ",
+    "depositGuarantee": "100% гарантия возврата",
+    "contracts": "договоров",
+    "booksCount": "книг"
+  },
+  "orderModal": {
+    "title": "Заказ #{{id}}",
+    "status": "Статус:",
+    "time": "Время:",
+    "customer": "Клиент:",
+    "phone": "Тел:",
+    "address": "Адрес:",
+    "items": "Учебники в заказе:",
+    "rentMonths": "Аренда ({{months}} мес.)",
+    "buy": "Покупка",
+    "subtotal": "Сумма заказа:",
+    "deposit": "Возвратный залог:",
+    "shipping": "Доставка:",
+    "total": "Итого:"
   }
 }
