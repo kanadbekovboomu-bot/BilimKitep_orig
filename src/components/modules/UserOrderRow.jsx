@@ -6,7 +6,7 @@ import { Modal } from '../common/Modal';
 import { CourierDeliveryMap } from './CourierDeliveryMap';
 
 export const UserOrderRow = ({ order }) => {
-  const { t } = useTranslation(['profile', 'common']);
+  const { t } = useTranslation(['profile', 'common', 'checkout']);
   const [showTracking, setShowTracking] = useState(false);
 
   return (
@@ -59,10 +59,10 @@ export const UserOrderRow = ({ order }) => {
           type="button"
           onClick={() => setShowTracking(true)}
           className="px-3 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 border border-emerald-200/50 dark:border-emerald-800/40"
-          title="Курьердин картасын ачуу"
+          title={t('map.whereCourier', { ns: 'checkout' })}
         >
           <Truck className="w-4 h-4 text-emerald-600" />
-          <span>Карта</span>
+          <span>{t('map.whereCourier', { ns: 'checkout' })}</span>
         </button>
       </div>
 
@@ -71,7 +71,7 @@ export const UserOrderRow = ({ order }) => {
         <Modal
           isOpen={showTracking}
           onClose={() => setShowTracking(false)}
-          title={`Курьерди көзөмөлдөө • Заказ #${order.id}`}
+          title={`${t('map.title', { ns: 'checkout' })} • #${order.id}`}
           maxWidth="max-w-4xl"
         >
           <CourierDeliveryMap

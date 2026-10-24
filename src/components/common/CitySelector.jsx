@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MapPin, ChevronDown, Check, Search, Sparkles } from 'lucide-react';
 
 export const KYRGYZ_CITIES = [
@@ -147,9 +148,16 @@ export const CitySelector = ({
   label = 'Город / Населенный пункт',
   error,
 }) => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language || 'ru';
+
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
   const containerRef = useRef(null);
+
+  const getCityName = (c) => lang === 'kg' ? c.nameKg : (lang === 'en' ? c.nameEn : c.nameRu);
+  const getCityRegion = (c) => lang === 'kg' ? c.regionKg : (lang === 'en' ? c.regionEn : c.regionRu);
+  const getCityBadge = (c) => lang === 'kg' ? c.badgeKg : (lang === 'en' ? c.badgeEn : c.badgeRu);
 
   // Match active city object
   const selectedCity = KYRGYZ_CITIES.find(
@@ -180,6 +188,7 @@ export const CitySelector = ({
     return (
       c.nameRu.toLowerCase().includes(q) ||
       c.nameKg.toLowerCase().includes(q) ||
+      c.nameEn.toLowerCase().includes(q) ||
       c.regionRu.toLowerCase().includes(q) ||
       c.regionKg.toLowerCase().includes(q)
     );
@@ -194,7 +203,7 @@ export const CitySelector = ({
         </label>
         <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
           <Sparkles className="w-3 h-3" />
-          {selectedCity.badgeRu}
+          {getCityBadge(selectedCity)}
         </span>
       </div>
 
@@ -213,7 +222,7 @@ export const CitySelector = ({
                   : 'bg-gray-100 dark:bg-darkBorder hover:bg-gray-200 dark:hover:bg-darkBorder/80 text-gray-700 dark:text-gray-300'
               }`}
             >
-              {c.nameRu}
+              {getCityName(c)}
             </button>
           );
         })}
@@ -238,13 +247,13 @@ export const CitySelector = ({
             </div>
             <div>
               <div className="font-bold text-sm text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                <span>{selectedCity.nameRu}</span>
+                <span>{getCityName(selectedCity)}</span>
                 <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${selectedCity.badgeColor}`}>
-                  {selectedCity.badgeRu}
+                  {getCityBadge(selectedCity)}
                 </span>
               </div>
               <p className="text-[11px] text-gray-500 dark:text-gray-400">
-                {selectedCity.regionRu}
+                {getCityRegion(selectedCity)}
               </p>
             </div>
           </div>
@@ -266,7 +275,7 @@ export const CitySelector = ({
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Поиск города..."
+                placeholder={lang === 'kg' ? 'Шаарды издөө...' : (lang === 'en' ? 'Search city...' : 'Поиск города...')}
                 className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl bg-gray-50 dark:bg-darkBorder/60 border border-gray-200 dark:border-darkBorder text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-brand-500"
                 autoFocus
               />
@@ -299,13 +308,13 @@ export const CitySelector = ({
                       </div>
                       <div>
                         <div className="text-xs font-bold flex items-center gap-1.5">
-                          <span>{city.nameRu}</span>
+                          <span>{getCityName(city)}</span>
                           <span className={`text-[10px] font-semibold px-1.5 py-0.2 rounded ${city.badgeColor}`}>
-                            {city.badgeRu}
+                            {getCityBadge(city)}
                           </span>
                         </div>
                         <span className="text-[10px] text-gray-400 block">
-                          {city.regionRu}
+                          {getCityRegion(city)}
                         </span>
                       </div>
                     </div>
@@ -319,7 +328,7 @@ export const CitySelector = ({
 
               {filteredCities.length === 0 && (
                 <div className="p-4 text-center text-xs text-gray-400">
-                  Город не найден
+                  {lang === 'kg' ? 'Шаар табылган жок' : (lang === 'en' ? 'No city found' : 'Город не найден')}
                 </div>
               )}
             </div>

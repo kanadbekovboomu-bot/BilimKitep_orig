@@ -223,13 +223,13 @@ export const CheckoutPage = () => {
                     className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 flex items-center gap-1 cursor-pointer transition-colors"
                   >
                     <MapPin className="w-3.5 h-3.5" />
-                    <span>{showDeliveryMap ? 'Картаны жашыруу' : 'Картаны ачуу'}</span>
+                    <span>{showDeliveryMap ? t('map.hideMap') : t('map.openMap')}</span>
                   </button>
                 </div>
                 <Input
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Көчө, үй/батир номери (же төмөндөгү картадан белгилеңиз)"
+                  placeholder={t('address')}
                   error={errors.address}
                 />
               </div>
