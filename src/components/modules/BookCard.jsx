@@ -20,6 +20,34 @@ export const BookCard = ({
     ? book.images[0]
     : '/covers/geometry-8.svg';
 
+  const getSubjectStyle = (subject = '') => {
+    const s = subject.toLowerCase();
+    if (s.includes('математик') || s.includes('алгебр') || s.includes('геометр')) {
+      return { bg: 'bg-blue-50 dark:bg-blue-950/60', text: 'text-blue-700 dark:text-blue-300', border: 'border-blue-200/80 dark:border-blue-800/40', icon: '📐' };
+    }
+    if (s.includes('кыргыз') || s.includes('адабият') || s.includes('тили')) {
+      return { bg: 'bg-emerald-50 dark:bg-emerald-950/60', text: 'text-emerald-700 dark:text-emerald-300', border: 'border-emerald-200/80 dark:border-emerald-800/40', icon: '🇰🇬' };
+    }
+    if (s.includes('физик') || s.includes('астроном')) {
+      return { bg: 'bg-indigo-50 dark:bg-indigo-950/60', text: 'text-indigo-700 dark:text-indigo-300', border: 'border-indigo-200/80 dark:border-indigo-800/40', icon: '⚡' };
+    }
+    if (s.includes('хим') || s.includes('биолог')) {
+      return { bg: 'bg-teal-50 dark:bg-teal-950/60', text: 'text-teal-700 dark:text-teal-300', border: 'border-teal-200/80 dark:border-teal-800/40', icon: '🧪' };
+    }
+    if (s.includes('тарых') || s.includes('географ')) {
+      return { bg: 'bg-amber-50 dark:bg-amber-950/60', text: 'text-amber-800 dark:text-amber-300', border: 'border-amber-200/80 dark:border-amber-800/40', icon: '🏛️' };
+    }
+    if (s.includes('англ') || s.includes('english')) {
+      return { bg: 'bg-rose-50 dark:bg-rose-950/60', text: 'text-rose-700 dark:text-rose-300', border: 'border-rose-200/80 dark:border-rose-800/40', icon: '🇬🇧' };
+    }
+    if (s.includes('информ') || s.includes('ит')) {
+      return { bg: 'bg-violet-50 dark:bg-violet-950/60', text: 'text-violet-700 dark:text-violet-300', border: 'border-violet-200/80 dark:border-violet-800/40', icon: '💻' };
+    }
+    return { bg: 'bg-slate-50 dark:bg-slate-900/60', text: 'text-slate-700 dark:text-slate-300', border: 'border-slate-200/80 dark:border-slate-800/40', icon: '📚' };
+  };
+
+  const subjectStyle = getSubjectStyle(book.subject);
+
   const handleCardClick = (e) => {
     // Prevent navigation if clicking interactive buttons
     if (e.target.closest('button')) {
@@ -39,7 +67,7 @@ export const BookCard = ({
           navigate(`/books/${book.id}`);
         }
       }}
-      className="group bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-4 flex flex-col justify-between hover:shadow-xl hover:border-brand-300 dark:hover:border-brand-700 transition-all duration-300 cursor-pointer text-left"
+      className="group bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-4 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 hover:border-brand-300 dark:hover:border-brand-700 transition-all duration-300 cursor-pointer text-left"
     >
       <div>
         {/* Clean Book Cover Picture - No text or badges overlapping the image */}
@@ -77,10 +105,13 @@ export const BookCard = ({
           </Badge>
         </div>
 
-        {/* Content */}
-        <div className="space-y-1">
-          <div className="flex items-center justify-between text-xs text-gray-400">
-            <span className="truncate font-medium">{book.subject}</span>
+        {/* Content with OnlineMektep-styled Subject Badge */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-xs gap-2">
+            <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold border max-w-[70%] truncate ${subjectStyle.bg} ${subjectStyle.text} ${subjectStyle.border}`}>
+              <span>{subjectStyle.icon}</span>
+              <span className="truncate">{book.subject}</span>
+            </span>
             <RatingStars rating={book.rating || 5} showNumber />
           </div>
 

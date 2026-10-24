@@ -2,133 +2,190 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 /**
- * Premium Vector Brand Mark for BilimKitep
- * Combines an open book of wisdom, Kyrgyz Tündük solar wheel, and Ala-Too mountain rays.
+ * Lively, Natural 3D-styled Educational Mascot & Brand Mark for BilimKitep
+ * An organic, open book bursting with knowledge, rising Kyrgyz solar Tündük,
+ * dynamic fluttering pages, cascading bookmark ribbon, and warm magical sparkles.
  */
-export const BrandLogoIcon = ({ size = 40, className = '' }) => {
+export const BrandLogoIcon = ({ size = 42, className = '' }) => {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 64 64"
+      viewBox="0 0 80 80"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`shrink-0 transition-transform duration-300 group-hover:scale-105 ${className}`}
-      aria-label="BilimKitep Logo"
+      className={`shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-md ${className}`}
+      aria-label="BilimKitep Lively Mascot Logo"
     >
       <defs>
-        {/* Emerald knowledge gradient */}
-        <linearGradient id="emeraldGrad" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+        {/* Rich dimensional Emerald Gradient for Cover */}
+        <linearGradient id="liveCoverGrad" x1="6" y1="20" x2="74" y2="76" gradientUnits="userSpaceOnUse">
           <stop stopColor="#10B981" />
-          <stop offset="0.5" stopColor="#059669" />
+          <stop offset="0.4" stopColor="#059669" />
           <stop offset="1" stopColor="#047857" />
         </linearGradient>
 
-        {/* Golden Tündük Sun gradient */}
-        <linearGradient id="goldSunGrad" x1="16" y1="8" x2="48" y2="40" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FDE047" />
-          <stop offset="0.5" stopColor="#F59E0B" />
+        {/* Warm Golden Sun Gradient */}
+        <linearGradient id="liveSunGrad" x1="24" y1="8" x2="56" y2="40" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FEF08A" />
+          <stop offset="0.3" stopColor="#FBBF24" />
+          <stop offset="0.8" stopColor="#F59E0B" />
           <stop offset="1" stopColor="#D97706" />
         </linearGradient>
 
-        {/* Soft shadow for depth */}
-        <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#059669" floodOpacity="0.25" />
+        {/* Shading for Curved Pages */}
+        <linearGradient id="leftPageGrad" x1="10" y1="34" x2="40" y2="58" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FFFFFF" />
+          <stop offset="0.85" stopColor="#F8FAFC" />
+          <stop offset="1" stopColor="#E2E8F0" />
+        </linearGradient>
+
+        <linearGradient id="rightPageGrad" x1="70" y1="34" x2="40" y2="58" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FFFFFF" />
+          <stop offset="0.85" stopColor="#F8FAFC" />
+          <stop offset="1" stopColor="#CBD5E1" />
+        </linearGradient>
+
+        {/* Silk Bookmark Ribbon Gradient */}
+        <linearGradient id="ribbonGrad" x1="36" y1="50" x2="46" y2="74" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F43F5E" />
+          <stop offset="0.7" stopColor="#E11D48" />
+          <stop offset="1" stopColor="#BE123C" />
+        </linearGradient>
+
+        {/* Soft shadow filter */}
+        <filter id="softShadow" x="-10%" y="-10%" width="120%" height="130%">
+          <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#047857" floodOpacity="0.28" />
         </filter>
       </defs>
 
-      {/* Rounded squircle emblem container */}
-      <rect
-        x="2"
-        y="2"
-        width="60"
-        height="60"
-        rx="16"
-        fill="url(#emeraldGrad)"
-        filter="url(#logoGlow)"
-      />
+      {/* Floating Ambient Glow */}
+      <circle cx="40" cy="40" r="34" fill="#10B981" fillOpacity="0.12" filter="blur(8px)" />
 
-      {/* Outer subtle decorative border */}
-      <rect
-        x="3"
-        y="3"
-        width="58"
-        height="58"
-        rx="15"
-        stroke="#FFFFFF"
-        strokeOpacity="0.2"
-        strokeWidth="1.5"
-      />
+      <g filter="url(#softShadow)">
+        {/* --- 1. RISING RADIANT KYRGYZ TUNDUK SUN --- */}
+        {/* Dynamic Sun Rays */}
+        <g stroke="url(#liveSunGrad)" strokeWidth="2.2" strokeLinecap="round" opacity="0.95">
+          <line x1="40" y1="6" x2="40" y2="12" />
+          <line x1="28" y1="10" x2="31" y2="15" />
+          <line x1="52" y1="10" x2="49" y2="15" />
+          <line x1="18" y1="19" x2="24" y2="22" />
+          <line x1="62" y1="19" x2="56" y2="22" />
+        </g>
 
-      {/* Rising Sun Rays behind Tündük */}
-      <g stroke="url(#goldSunGrad)" strokeWidth="1.75" strokeLinecap="round" opacity="0.9">
-        <line x1="32" y1="9" x2="32" y2="13" />
-        <line x1="22" y1="13" x2="25" y2="16" />
-        <line x1="42" y1="13" x2="39" y2="16" />
-        <line x1="15" y1="21" x2="19" y2="23" />
-        <line x1="49" y1="21" x2="45" y2="23" />
+        {/* Solar Disk */}
+        <circle cx="40" cy="22" r="12.5" fill="url(#liveSunGrad)" />
+        <circle cx="40" cy="22" r="12" stroke="#FFFBEB" strokeWidth="1.2" opacity="0.8" />
+        
+        {/* Internal Tyndyk Rim */}
+        <circle cx="40" cy="22" r="9.5" stroke="#B45309" strokeWidth="1.2" strokeDasharray="3,2" opacity="0.75" />
+
+        {/* Crossed Tyndyk curved bars */}
+        <path d="M 31 20 Q 40 24 49 20" stroke="#78350F" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M 31 25 Q 40 29 49 25" stroke="#78350F" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M 36 14 Q 40 22 36 30" stroke="#78350F" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M 44 14 Q 40 22 44 30" stroke="#78350F" strokeWidth="1.8" strokeLinecap="round" />
+
+        {/* Central Sun Spark */}
+        <circle cx="40" cy="22" r="2.2" fill="#FFFBEB" />
+
+        {/* --- 2. BACK HARDCOVER BASE (3D Dynamic Angle) --- */}
+        {/* Left Cover Leaf */}
+        <path
+          d="M 40 59 C 29 55 16 55 6 60 L 6 46 C 16 41 29 41 40 45 Z"
+          fill="#064E3B"
+        />
+        {/* Right Cover Leaf */}
+        <path
+          d="M 40 59 C 51 55 64 55 74 60 L 74 46 C 64 41 51 41 40 45 Z"
+          fill="#065F46"
+        />
+
+        {/* Golden Foil Edge on Cover */}
+        <path
+          d="M 6 60 C 16 55 29 55 40 59 C 51 55 64 55 74 60"
+          stroke="#F59E0B"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+
+        {/* --- 3. CURVED FLUTTERING PAGES (LIVELY 3D VOLUME) --- */}
+        {/* Left Lower Page Stack */}
+        <path
+          d="M 40 56 C 30 52 18 52 8 57 L 8 43 C 18 38 30 38 40 42 Z"
+          fill="#E2E8F0"
+        />
+        {/* Right Lower Page Stack */}
+        <path
+          d="M 40 56 C 50 52 62 52 72 57 L 72 43 C 62 38 50 38 40 42 Z"
+          fill="#CBD5E1"
+        />
+
+        {/* Left Main Plump Page */}
+        <path
+          d="M 40 53 C 28 47 17 48 8 52 L 9 37 C 18 33 29 33 40 38 Z"
+          fill="url(#leftPageGrad)"
+        />
+        {/* Right Main Plump Page */}
+        <path
+          d="M 40 53 C 52 47 63 48 72 52 L 71 37 C 62 33 51 33 40 38 Z"
+          fill="url(#rightPageGrad)"
+        />
+
+        {/* Top Floating Page Edge (Fluttering with life) */}
+        <path
+          d="M 40 40 C 31 35 21 35 12 39"
+          stroke="#94A3B8"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          opacity="0.6"
+        />
+        <path
+          d="M 40 40 C 49 35 59 35 68 39"
+          stroke="#94A3B8"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          opacity="0.6"
+        />
+
+        {/* Text Lines on Left Page (Knowledge lines) */}
+        <line x1="16" y1="41" x2="32" y2="40" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+        <line x1="15" y1="45" x2="29" y2="44" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+        <line x1="18" y1="49" x2="26" y2="48" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+
+        {/* Text Lines on Right Page (Knowledge lines) */}
+        <line x1="48" y1="40" x2="64" y2="41" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+        <line x1="51" y1="44" x2="65" y2="45" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+        <line x1="54" y1="48" x2="62" y2="49" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+
+        {/* Center Spine Crease */}
+        <path
+          d="M 40 38 L 40 56"
+          stroke="#047857"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
+
+        {/* --- 4. FLOWING SILK BOOKMARK RIBBON --- */}
+        <path
+          d="M 38 54 Q 40 64 45 68 L 48 64 L 51 69 Q 44 65 42 54 Z"
+          fill="url(#ribbonGrad)"
+        />
+        {/* Golden Tassel Edge */}
+        <path
+          d="M 45 68 L 48 64 L 51 69"
+          stroke="#F59E0B"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </g>
 
-      {/* Sacred Kyrgyz Tündük (Түндүк) Sun Disk */}
-      <circle cx="32" cy="22" r="10.5" fill="#FEF3C7" fillOpacity="0.15" />
-      <circle cx="32" cy="22" r="10" stroke="url(#goldSunGrad)" strokeWidth="2" />
-      <circle cx="32" cy="22" r="8" stroke="url(#goldSunGrad)" strokeWidth="1" strokeDasharray="2.5,2" opacity="0.8" />
-      
-      {/* Curved crossed bars of Tündük */}
-      <path d="M 25 20 Q 32 23 39 20" stroke="url(#goldSunGrad)" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M 25 24 Q 32 27 39 24" stroke="url(#goldSunGrad)" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M 29 16 Q 32 23 29 30" stroke="url(#goldSunGrad)" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M 35 16 Q 32 23 35 30" stroke="url(#goldSunGrad)" strokeWidth="1.5" strokeLinecap="round" />
-      
-      {/* Central Star Spark */}
-      <circle cx="32" cy="22" r="1.5" fill="#F59E0B" />
-
-      {/* Open Book Pages (Wings of Knowledge) */}
-      {/* Left Page (Back layer) */}
-      <path
-        d="M 32 46 C 26 43 18 43 12 45 L 12 36 C 18 34 26 34 32 37 Z"
-        fill="#FFFFFF"
-        fillOpacity="0.3"
-      />
-      {/* Right Page (Back layer) */}
-      <path
-        d="M 32 46 C 38 43 46 43 52 45 L 52 36 C 46 34 38 34 32 37 Z"
-        fill="#FFFFFF"
-        fillOpacity="0.3"
-      />
-
-      {/* Left Main Page */}
-      <path
-        d="M 32 49 C 25 45 17 45 10 48 L 10 38 C 17 35 25 35 32 39 Z"
-        fill="#FFFFFF"
-      />
-      {/* Right Main Page */}
-      <path
-        d="M 32 49 C 39 45 47 45 54 48 L 54 38 C 47 35 39 35 32 39 Z"
-        fill="#F8FAFC"
-      />
-
-      {/* Book Spine / Binding Center */}
-      <path
-        d="M 32 37 L 32 50"
-        stroke="#047857"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-
-      {/* Lines on Left Page representing Wisdom text */}
-      <line x1="16" y1="41" x2="26" y2="40" stroke="#059669" strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
-      <line x1="16" y1="44" x2="24" y2="43" stroke="#059669" strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
-
-      {/* Lines on Right Page representing Wisdom text */}
-      <line x1="38" y1="40" x2="48" y2="41" stroke="#059669" strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
-      <line x1="40" y1="43" x2="48" y2="44" stroke="#059669" strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
-
-      {/* Bottom Golden Bookmark Ribbon */}
-      <path
-        d="M 30 50 L 32 54 L 34 50 Z"
-        fill="#F59E0B"
-      />
+      {/* --- 5. LIVELY MAGICAL SPARKLES --- */}
+      <circle cx="10" cy="24" r="1.8" fill="#FBBF24" className="animate-pulse" />
+      <circle cx="70" cy="24" r="1.8" fill="#FBBF24" className="animate-pulse" />
+      <path d="M 68 12 L 70 14 L 68 16 L 66 14 Z" fill="#F59E0B" />
+      <path d="M 12 14 L 14 16 L 12 18 L 10 16 Z" fill="#10B981" />
     </svg>
   );
 };
@@ -143,21 +200,21 @@ export const BrandLogo = ({
   linkTo = '/',
 }) => {
   const sizeMap = {
-    sm: { icon: 34, text: 'text-lg', badge: 'text-[9px] px-1 py-0.2', sub: 'text-[9px]' },
-    md: { icon: 42, text: 'text-xl', badge: 'text-[10px] px-1.5 py-0.5', sub: 'text-[10px]' },
-    lg: { icon: 50, text: 'text-2xl', badge: 'text-[11px] px-2 py-0.5', sub: 'text-xs' },
-    xl: { icon: 60, text: 'text-3xl', badge: 'text-xs px-2.5 py-0.5', sub: 'text-xs' },
+    sm: { icon: 36, text: 'text-lg', badge: 'text-[9px] px-1 py-0.2', sub: 'text-[9px]' },
+    md: { icon: 46, text: 'text-xl sm:text-2xl', badge: 'text-[10px] px-1.5 py-0.5', sub: 'text-[10px]' },
+    lg: { icon: 56, text: 'text-2xl sm:text-3xl', badge: 'text-[11px] px-2 py-0.5', sub: 'text-xs' },
+    xl: { icon: 68, text: 'text-3xl sm:text-4xl', badge: 'text-xs px-2.5 py-0.5', sub: 'text-xs' },
   };
 
   const currentSize = sizeMap[size] || sizeMap.md;
 
   const content = (
     <div className={`flex items-center gap-3 shrink-0 group ${className}`}>
-      {/* Vector Icon Mark */}
+      {/* Lively Mascot Icon Mark */}
       <div className="relative">
         <BrandLogoIcon size={currentSize.icon} />
-        {/* Subtle ambient pulse ring on hover */}
-        <div className="absolute inset-0 rounded-2xl bg-brand-400 opacity-0 group-hover:opacity-20 blur-md transition-opacity pointer-events-none" />
+        {/* Dynamic aura pulse on hover */}
+        <div className="absolute inset-0 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-30 blur-lg transition-opacity pointer-events-none" />
       </div>
 
       {/* Brand Typography */}

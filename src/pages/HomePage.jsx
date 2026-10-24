@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { BookGrid } from '../components/modules/BookGrid';
 import { QuickViewModal } from '../components/modules/QuickViewModal';
+import { EdTechSubjectBar } from '../components/modules/EdTechSubjectBar';
 import { Button } from '../components/common/Button';
 import { ToastNotification } from '../components/common/ToastNotification';
 import { TyndykEmblem, KochkorMuyuzPattern, KyrgyzCultureBadge } from '../components/common/KyrgyzOrnament';
@@ -140,6 +141,58 @@ export const HomePage = () => {
         {/* Kyrgyz National Ornament Runner */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 opacity-25">
           <KochkorMuyuzPattern className="h-4 text-emerald-600 dark:text-emerald-400" />
+        </div>
+      </section>
+
+      {/* OnlineMektep-inspired Interactive Subjects Bar */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white dark:bg-darkCard rounded-3xl p-5 border border-gray-100 dark:border-darkBorder shadow-xs">
+          <EdTechSubjectBar />
+        </div>
+      </section>
+
+      {/* OnlineMektep-inspired Gamified Impact & Trust Stats */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-200/50 dark:border-blue-900/30 flex items-center gap-3.5 hover:scale-102 transition-transform shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-blue-500 text-white flex items-center justify-center font-black text-xl shadow-md shadow-blue-500/20">
+              🎓
+            </div>
+            <div>
+              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">85 000+</div>
+              <div className="text-xs text-gray-500 font-semibold">Окуучулар колдонууда</div>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border border-emerald-200/50 dark:border-emerald-900/30 flex items-center gap-3.5 hover:scale-102 transition-transform shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black text-xl shadow-md shadow-emerald-500/20">
+              📚
+            </div>
+            <div>
+              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">12 400+</div>
+              <div className="text-xs text-gray-500 font-semibold">Текшерилген окуу китептер</div>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-amber-500/10 to-yellow-500/5 border border-amber-200/50 dark:border-amber-900/30 flex items-center gap-3.5 hover:scale-102 transition-transform shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-black text-xl shadow-md shadow-amber-500/20">
+              💰
+            </div>
+            <div>
+              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">4.8 млн сом</div>
+              <div className="text-xs text-gray-500 font-semibold">Бюджет үнөмдөлдү</div>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-rose-500/10 to-red-500/5 border border-rose-200/50 dark:border-rose-900/30 flex items-center gap-3.5 hover:scale-102 transition-transform shadow-xs">
+            <div className="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center font-black text-xl shadow-md shadow-rose-500/20">
+              🚚
+            </div>
+            <div>
+              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">7 Облус</div>
+              <div className="text-xs text-gray-500 font-semibold">24 саатта жеткирүү</div>
+            </div>
+          </div>
         </div>
       </section>
 

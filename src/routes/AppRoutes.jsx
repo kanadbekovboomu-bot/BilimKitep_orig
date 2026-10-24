@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { AdminRoute } from './AdminRoute';
+import { CreativePageLoader } from '../components/common/CreativePageLoader';
 
 // Lazy loaded page components (Section 2 modular loading)
 const HomePage = lazy(() => import('../pages/HomePage'));
@@ -17,9 +18,7 @@ const AddBookPage = lazy(() => import('../pages/AddBookPage'));
 const AdminDashboardPage = lazy(() => import('../pages/AdminDashboardPage'));
 
 const PageLoader = () => (
-  <div className="min-h-[50vh] flex items-center justify-center">
-    <div className="w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin" />
-  </div>
+  <CreativePageLoader duration={500} />
 );
 
 export const AppRoutes = () => {

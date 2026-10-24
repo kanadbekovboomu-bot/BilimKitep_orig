@@ -10,6 +10,7 @@ import { FilterChips } from '../components/modules/FilterChips';
 import { BookGrid } from '../components/modules/BookGrid';
 import { Pagination } from '../components/common/Pagination';
 import { QuickViewModal } from '../components/modules/QuickViewModal';
+import { EdTechSubjectBar } from '../components/modules/EdTechSubjectBar';
 import { ToastNotification } from '../components/common/ToastNotification';
 import { TyndykEmblem, KochkorMuyuzPattern } from '../components/common/KyrgyzOrnament';
 import { fetchBooks } from '../features/books/booksSlice';
@@ -108,6 +109,14 @@ export const CatalogPage = () => {
         onRemove={handleRemoveChip}
         onClearAll={handleResetFilters}
       />
+
+      {/* OnlineMektep-styled Subject Filter Bar */}
+      <div className="bg-white dark:bg-darkCard rounded-3xl p-4 border border-gray-100 dark:border-darkBorder shadow-xs">
+        <EdTechSubjectBar
+          selectedSubject={filterState.search}
+          onSelectSubject={(subj) => handleSearchChange(subj)}
+        />
+      </div>
 
       {/* Main Layout: Sidebar Filter + Book Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
