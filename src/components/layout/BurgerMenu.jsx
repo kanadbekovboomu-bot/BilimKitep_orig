@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { X, BookOpen, ShoppingBag, PlusCircle, User, ShieldCheck, LogIn, LogOut } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { LangSwitcher } from '../common/LangSwitcher';
+import { BrandLogo } from '../common/BrandLogo';
 
 export const BurgerMenu = ({ isOpen, onClose, cartCount, user, onLogout }) => {
   const { t } = useTranslation('common');
@@ -12,19 +13,17 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount, user, onLogout }) => {
 
   return (
     <div className="fixed inset-0 z-50 lg:hidden">
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-xs" onClick={onClose} />
-      <div className="fixed inset-y-0 right-0 w-full max-w-xs bg-white dark:bg-darkCard p-6 shadow-2xl flex flex-col justify-between overflow-y-auto">
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose} />
+      <div className="fixed inset-y-0 right-0 w-[88vw] max-w-sm bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl p-5 sm:p-6 shadow-2xl border-l border-slate-200/80 dark:border-slate-800/80 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-250">
         <div>
           <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-darkBorder">
-            <Link to="/" onClick={onClose} className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-brand-500 flex items-center justify-center text-white font-bold">
-                B
-              </div>
-              <span className="font-bold text-lg text-gray-900 dark:text-gray-100">BilimKitep</span>
-            </Link>
+            <div onClick={onClose} className="cursor-pointer">
+              <BrandLogo size="sm" showTagline={false} linkTo="/" />
+            </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-darkBorder"
+              className="p-2 rounded-xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              aria-label="Close menu"
             >
               <X className="w-5 h-5" />
             </button>

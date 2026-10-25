@@ -12,7 +12,8 @@ import {
   Landmark,
   Globe,
   Laptop,
-  BookOpen
+  BookOpen,
+  GraduationCap
 } from 'lucide-react';
 import { DealBadge } from './DealBadge';
 import { Badge } from '../common/Badge';
@@ -80,11 +81,20 @@ export const BookCard = ({
           navigate(`/books/${book.id}`);
         }
       }}
-      className="group bg-white/90 dark:bg-slate-900/85 backdrop-blur-md rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-4 flex flex-col justify-between hover:shadow-[0_16px_36px_rgba(16,185,129,0.16)] hover:-translate-y-1.5 hover:border-emerald-400/80 dark:hover:border-emerald-500/80 transition-all duration-300 cursor-pointer text-left"
+      className="group relative bg-white/92 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-4 sm:p-4.5 flex flex-col justify-between hover:shadow-[0_22px_44px_-10px_rgba(16,185,129,0.22)] hover:-translate-y-2 hover:rotate-[0.35deg] hover:border-emerald-400/90 dark:hover:border-emerald-500/90 transition-all duration-300 ease-out cursor-pointer text-left overflow-hidden before:absolute before:left-0 before:top-6 before:bottom-6 before:w-1.5 before:rounded-r-full before:bg-gradient-to-b before:from-emerald-400 before:via-teal-500 before:to-emerald-600 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity"
     >
       <div>
-        {/* Clean Book Cover Picture - No text or badges overlapping the image */}
-        <div className="relative w-full h-56 bg-gray-50/80 dark:bg-darkBorder/40 rounded-2xl overflow-hidden mb-3 flex items-center justify-center p-2.5 border border-gray-100 dark:border-darkBorder">
+        {/* 3D Textbook Cover Frame with Physical Book Spine & Page Edges */}
+        <div className="relative w-full h-52 sm:h-56 bg-gradient-to-b from-slate-100/90 via-slate-50 to-slate-100/60 dark:from-slate-800/60 dark:via-darkBorder/40 dark:to-slate-800/30 rounded-2xl overflow-hidden mb-3.5 flex items-center justify-center p-3 border border-slate-200/70 dark:border-slate-700/60 shadow-[2px_3px_0px_rgba(0,0,0,0.04),4px_5px_0px_rgba(0,0,0,0.02)] dark:shadow-[2px_3px_0px_rgba(255,255,255,0.03)] group-hover:shadow-[4px_6px_0px_rgba(16,185,129,0.12)] transition-shadow">
+          {/* Left Embossed Book Spine Edge */}
+          <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-r from-black/15 via-white/10 to-transparent pointer-events-none border-r border-black/5" />
+
+          {/* Official Kyrgyz School Standard Seal Badge */}
+          <div className="absolute top-2 left-3 bg-emerald-600/90 dark:bg-emerald-500/90 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 backdrop-blur-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse" />
+            <span>КР Мектеп</span>
+          </div>
+
           <img
             src={coverImage}
             alt={book.title}
@@ -99,7 +109,7 @@ export const BookCard = ({
               e.stopPropagation();
               onQuickView && onQuickView(book);
             }}
-            className="absolute bottom-2 right-2 bg-white/95 dark:bg-slate-900/95 hover:bg-white dark:hover:bg-slate-800 text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 hover:brightness-110 hover:shadow-md transition-all cursor-pointer flex items-center gap-1 text-xs font-semibold border border-slate-200/70 dark:border-slate-700/70"
+            className="absolute bottom-2.5 right-2.5 bg-white/95 dark:bg-slate-900/95 hover:bg-white dark:hover:bg-slate-800 text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 hover:brightness-110 hover:shadow-md transition-all cursor-pointer flex items-center gap-1 text-xs font-semibold border border-slate-200/70 dark:border-slate-700/70"
             title={t('actions.quickView')}
           >
             <Eye className="w-3.5 h-3.5 text-brand-600" />
@@ -110,9 +120,10 @@ export const BookCard = ({
         {/* Clean Meta Badges below the image */}
         <div className="flex items-center gap-1.5 flex-wrap pb-2">
           <DealBadge dealType={book.dealType} />
-          <Badge variant="default" size="sm">
-            {t('units.grade', { count: book.grade })}
-          </Badge>
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/80">
+            <GraduationCap className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+            <span>{t('units.grade', { count: book.grade })}</span>
+          </span>
           <Badge variant="primary" size="sm">
             {book.language}
           </Badge>
@@ -153,27 +164,27 @@ export const BookCard = ({
         </div>
       </div>
 
-      {/* Pricing & Actions */}
-      <div className="pt-4 mt-3 border-t border-gray-100 dark:border-darkBorder flex items-center justify-between gap-2">
+      {/* MBANK Fintech Pricing & Actions Pod */}
+      <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 bg-slate-50/80 dark:bg-slate-800/40 p-2.5 rounded-2xl border border-slate-200/50 dark:border-slate-700/40 group-hover:border-emerald-300/60 dark:group-hover:border-emerald-700/60 transition-colors">
         <div>
           {isRentable ? (
             <div>
-              <div className="text-[11px] text-gray-400 font-medium">
+              <div className="text-[10px] text-gray-400 dark:text-gray-400 font-semibold uppercase tracking-wider">
                 {t('units.rentPrice')}
               </div>
-              <div className="text-sm font-extrabold text-brand-600 dark:text-brand-400">
+              <div className="text-sm font-black text-emerald-600 dark:text-emerald-400 leading-tight">
                 {formatKGS(book.rentPricePerMonth)}
-                <span className="text-[10px] font-normal text-gray-400">
+                <span className="text-[10px] font-normal text-gray-400 ml-1">
                   {t('units.perMonth')}
                 </span>
               </div>
             </div>
           ) : (
             <div>
-              <div className="text-[11px] text-gray-400 font-medium">
+              <div className="text-[10px] text-gray-400 dark:text-gray-400 font-semibold uppercase tracking-wider">
                 {t('units.buyPrice')}
               </div>
-              <div className="text-sm font-extrabold text-gray-900 dark:text-gray-100">
+              <div className="text-sm font-black text-gray-900 dark:text-gray-100 leading-tight">
                 {formatKGS(book.price)}
               </div>
             </div>
@@ -186,7 +197,7 @@ export const BookCard = ({
             e.stopPropagation();
             onAddToCart && onAddToCart(book, isRentable ? 'RENT' : 'BUY', 9);
           }}
-          className="p-2.5 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white hover:brightness-125 hover:shadow-[0_0_16px_rgba(16,185,129,0.55)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-xs"
+          className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:brightness-125 hover:shadow-[0_0_18px_rgba(16,185,129,0.6)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-md shadow-emerald-500/25 shrink-0"
           title={t('actions.addToCart')}
         >
           <ShoppingBag className="w-4 h-4" />

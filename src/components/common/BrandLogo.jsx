@@ -229,7 +229,7 @@ export const BrandLogo = ({
         </div>
 
         {showTagline && (
-          <span className={`font-semibold text-gray-500 dark:text-gray-400 tracking-wider mt-1 flex items-center gap-1 ${currentSize.sub}`}>
+          <span className={`font-semibold text-gray-500 dark:text-gray-400 tracking-wider mt-1 hidden sm:flex items-center gap-1 ${currentSize.sub}`}>
             <span>Кыргызстан</span>
             <span className="text-amber-500">•</span>
             <span>Окуу китептер дүкөнү</span>

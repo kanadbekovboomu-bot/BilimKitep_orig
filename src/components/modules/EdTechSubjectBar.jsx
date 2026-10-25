@@ -13,6 +13,7 @@ import {
   Laptop,
   Target
 } from 'lucide-react';
+import { TyndykEmblem } from '../common/KyrgyzOrnament';
 
 export const EDTECH_SUBJECTS = [
   { id: 'all', label: 'Баары', Icon: BookOpen, search: '', color: 'from-emerald-500 to-teal-600', badge: '100+' },
@@ -52,13 +53,15 @@ export const EdTechSubjectBar = ({
             Сабактар боюнча окуу китептери
           </span>
         </div>
-        <span className="text-[11px] font-bold text-gray-400 dark:text-gray-500">
-          Жалпы республикалык стандарт 🇰🇬
+        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-gray-400 dark:text-gray-500">
+          <TyndykEmblem size={12} className="text-amber-500" />
+          <span className="hidden sm:inline">Жалпы республикалык стандарт</span>
+          <span className="sm:hidden">КР Стандарты</span>
         </span>
       </div>
 
       {/* Horizontal Scrolling Pill Track with MBANK Bright Glow */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 scrollbar-none no-scrollbar">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 scrollbar-none no-scrollbar touch-pan-x scroll-smooth">
         {EDTECH_SUBJECTS.map((item) => {
           const isSelected = selectedSubject.toLowerCase() === item.search.toLowerCase() ||
             (!selectedSubject && item.id === 'all');

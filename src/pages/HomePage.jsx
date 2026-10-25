@@ -35,7 +35,7 @@ export const HomePage = () => {
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchBooks({ limit: 8, sort: 'newest' }));
+    dispatch(fetchBooks({ limit: 12, sort: 'newest' }));
   }, [dispatch]);
 
   const handleAddToCart = (book, type = 'RENT', months = 9) => {
@@ -307,7 +307,7 @@ export const HomePage = () => {
         </div>
 
         <BookGrid
-          books={books.slice(0, 8)}
+          books={books.slice(0, 12)}
           loading={loading}
           onQuickView={(b) => setSelectedQuickBook(b)}
           onAddToCart={handleAddToCart}
