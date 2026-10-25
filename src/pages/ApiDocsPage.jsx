@@ -22,11 +22,15 @@ import {
   Terminal,
   Zap,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  CalendarCheck
 } from 'lucide-react';
 import { TyndykEmblem, KochkorMuyuzPattern } from '../components/common/KyrgyzOrnament';
 
-const MOCKAPI_BASE = 'https://6add823cfa5e73d4ab2dff52.mockapi.io/api/v1';
+// MockAPI.io Cloud API Endpoints across 2 registered accounts
+export const MOCKAPI_ACCOUNT_1 = 'https://6add823cfa5e73d4ab2dff52.mockapi.io/api/v1'; // Books (26) & Users (6)
+export const MOCKAPI_ACCOUNT_2 = 'https://69dbb1d2560857310a07ed0a.mockapi.io/api/v1'; // Orders (5) & Bookings (5)
+const MOCKAPI_BASE = MOCKAPI_ACCOUNT_1;
 
 export const ApiDocsPage = () => {
   const { t } = useTranslation('common');
@@ -54,6 +58,7 @@ export const ApiDocsPage = () => {
       method: 'GET',
       path: '/api/books',
       mockApiPath: '/books',
+      mockApiBase: MOCKAPI_ACCOUNT_1,
       description: 'Возвращает массив учебников Кыргызстана с поддержкой поиска, фильтрации по классам, языку и типу сделки.',
       queryParams: [
         { name: 'search', default: '', desc: 'Поиск по названию, автору или предмету (напр. Математика, ОРТ)' },
@@ -74,6 +79,7 @@ export const ApiDocsPage = () => {
       method: 'GET',
       path: '/api/books/b0101000-7c2a-41e9-9011-000000000101',
       mockApiPath: '/books/b_101',
+      mockApiBase: MOCKAPI_ACCOUNT_1,
       description: 'Возвращает полную карточку учебника со всеми метаданными, состоянием и продавцом по стандартному RFC 4122 UUID.',
       queryParams: [],
       sampleBody: null
@@ -86,6 +92,7 @@ export const ApiDocsPage = () => {
       method: 'POST',
       path: '/api/books',
       mockApiPath: '/books',
+      mockApiBase: MOCKAPI_ACCOUNT_1,
       description: 'Публикует новый учебник в каталог с генерацией уникального RFC 4122 v4 UUID.',
       queryParams: [],
       sampleBody: JSON.stringify({
@@ -114,6 +121,7 @@ export const ApiDocsPage = () => {
       method: 'PUT',
       path: '/api/books/b0101000-7c2a-41e9-9011-000000000101',
       mockApiPath: '/books/b_101',
+      mockApiBase: MOCKAPI_ACCOUNT_1,
       description: 'Обновляет существующее объявление по уникальному UUID.',
       queryParams: [],
       sampleBody: JSON.stringify({
@@ -130,6 +138,7 @@ export const ApiDocsPage = () => {
       method: 'DELETE',
       path: '/api/books/b0102000-7c2a-41e9-9011-000000000102',
       mockApiPath: '/books/b_102',
+      mockApiBase: MOCKAPI_ACCOUNT_1,
       description: 'Удаляет учебник из базы по уникальному UUID.',
       queryParams: [],
       sampleBody: null
@@ -180,7 +189,7 @@ export const ApiDocsPage = () => {
       }, null, 2)
     },
 
-    // USERS
+    // USERS (MockAPI Account 1)
     {
       id: 'users_get_all',
       category: 'users',
@@ -189,6 +198,7 @@ export const ApiDocsPage = () => {
       method: 'GET',
       path: '/api/users',
       mockApiPath: '/users',
+      mockApiBase: MOCKAPI_ACCOUNT_1,
       description: 'Возвращает профили пользователей (администратор, покупатели, продавцы книг) с UUID и рейтингами.',
       queryParams: [],
       sampleBody: null
@@ -201,6 +211,7 @@ export const ApiDocsPage = () => {
       method: 'GET',
       path: '/api/users/a0010000-7c2a-41e9-9011-000000000001',
       mockApiPath: '/users/1',
+      mockApiBase: MOCKAPI_ACCOUNT_1,
       description: 'Возвращает контактную информацию, город, рейтинг и статус продавца по уникальному UUID пользователя.',
       queryParams: [],
       sampleBody: null
@@ -213,6 +224,7 @@ export const ApiDocsPage = () => {
       method: 'POST',
       path: '/api/users',
       mockApiPath: '/users',
+      mockApiBase: MOCKAPI_ACCOUNT_1,
       description: 'Регистрирует нового пользователя с генерацией персонального UUID.',
       queryParams: [],
       sampleBody: JSON.stringify({
@@ -225,15 +237,16 @@ export const ApiDocsPage = () => {
       }, null, 2)
     },
 
-    // ORDERS
+    // ORDERS (MockAPI Account 2: Astromy)
     {
       id: 'orders_get_all',
       category: 'orders',
-      title: 'Список всех заказов и доставок с UUID',
+      title: 'Список всех заказов и доставок (со стандартом UUID)',
       titleKg: 'Бардык буйрутмалардын жана жеткирүүлөрдүн тизмеси (UUID)',
       method: 'GET',
       path: '/api/orders',
-      mockApiPath: null,
+      mockApiPath: '/orders',
+      mockApiBase: MOCKAPI_ACCOUNT_2,
       description: 'Возвращает список оформленных заказов с UUID, адресом доставки и выбранным способом оплаты (MBANK, ЭЛСОМ, Наличные).',
       queryParams: [],
       sampleBody: null
@@ -244,8 +257,9 @@ export const ApiDocsPage = () => {
       title: 'Получить заказ по UUID трекинга',
       titleKg: 'Буйрутманы UUID трек номери боюнча көрүү',
       method: 'GET',
-      path: '/api/orders/d0010000-7c2a-41e9-9011-000000001001',
-      mockApiPath: null,
+      path: '/api/orders/ord00001-7c2a-41e9-9011-000000000001',
+      mockApiPath: '/orders/1',
+      mockApiBase: MOCKAPI_ACCOUNT_2,
       description: 'Возвращает статус доставки, трек-UUID и детализацию товаров.',
       queryParams: [],
       sampleBody: null
@@ -257,25 +271,78 @@ export const ApiDocsPage = () => {
       titleKg: 'Жаңы буйрутма түзүү (UUID)',
       method: 'POST',
       path: '/api/orders',
-      mockApiPath: null,
+      mockApiPath: '/orders',
+      mockApiBase: MOCKAPI_ACCOUNT_2,
       description: 'Создает новый заказ в системе с расчетом суммы, времени курьерской доставки и выдачей UUID заказа.',
       queryParams: [],
       sampleBody: JSON.stringify({
         customerName: "Канат Асанов",
         customerPhone: "+996 708 990 011",
+        customerEmail: "kanat.a@gmail.com",
         city: "Бишкек",
-        address: "7-кичи район, 15-үй",
+        deliveryAddress: "7-кичи район, 15-үй",
         paymentMethod: "MBANK",
-        dealType: "BUY",
-        items: [
-          {
-            bookUuid: "b0101000-7c2a-41e9-9011-000000000101",
-            title: "Алиппе 1-класс",
-            price: 350,
-            quantity: 1
-          }
-        ],
+        bookTitle: "Кыргыз тили. 10-11 класс",
+        bookId: "b0101000-7c2a-41e9-9011-000000000101",
+        quantity: 1,
         totalAmount: 350
+      }, null, 2)
+    },
+
+    // BOOKINGS / RENTALS (MockAPI Account 2: Astromy)
+    {
+      id: 'bookings_get_all',
+      category: 'bookings',
+      title: 'Список всех активных броней и аренды учебников (UUID)',
+      titleKg: 'Бардык активдүү ижара жана ээлөөлөрдүн тизмеси (UUID)',
+      method: 'GET',
+      path: '/api/bookings',
+      mockApiPath: '/bookings',
+      mockApiBase: MOCKAPI_ACCOUNT_2,
+      description: 'Возвращает список школьных учебников, оформленных в долгосрочную или семестровую аренду по школам Кыргызстана.',
+      queryParams: [],
+      sampleBody: null
+    },
+    {
+      id: 'bookings_get_one',
+      category: 'bookings',
+      title: 'Получить данные бронирования по UUID',
+      titleKg: 'Ижара ээлөөсүн UUID боюнча көрүү',
+      method: 'GET',
+      path: '/api/bookings/b00k0001-7c2a-41e9-9011-000000000001',
+      mockApiPath: '/bookings/1',
+      mockApiBase: MOCKAPI_ACCOUNT_2,
+      description: 'Возвращает карточку аренды, данные школы, сумму залога и срок возврата учебника.',
+      queryParams: [],
+      sampleBody: null
+    },
+    {
+      id: 'bookings_post',
+      category: 'bookings',
+      title: 'Оформить бронирование аренды учебника на учебный год (генерация UUID)',
+      titleKg: 'Окуу жылына китепти ижарага ээлөө (UUID генерациясы)',
+      method: 'POST',
+      path: '/api/bookings',
+      mockApiPath: '/bookings',
+      mockApiBase: MOCKAPI_ACCOUNT_2,
+      description: 'Бронирует учебник с расчетом аренды и депозита и выдачей уникального RFC 4122 v4 UUID.',
+      queryParams: [],
+      sampleBody: JSON.stringify({
+        bookId: "b0101000-7c2a-41e9-9011-000000000101",
+        bookTitle: "Кыргыз тили. 10-11 класс",
+        userName: "Каныкей Асанбекова",
+        userPhone: "+996 770 889 900",
+        userEmail: "kanykey.a@gmail.com",
+        school: "Школа-гимназия №70 (Бишкек)",
+        city: "Бишкек",
+        grade: "10 класс",
+        startDate: "2026-11-01",
+        endDate: "2027-05-25",
+        duration: "7 месяцев",
+        rentalFee: 115,
+        deposit: 200,
+        paymentMethod: "MBANK",
+        status: "ACTIVE"
       }, null, 2)
     },
 
@@ -406,7 +473,7 @@ export const ApiDocsPage = () => {
 
       // If user selected mockapi and endpoint supports it
       if (targetServer === 'mockapi' && selectedEndpoint?.mockApiPath) {
-        finalUrl = `${MOCKAPI_BASE}${selectedEndpoint.mockApiPath}`;
+        finalUrl = `${selectedEndpoint.mockApiBase || MOCKAPI_ACCOUNT_1}${selectedEndpoint.mockApiPath}`;
       }
 
       const options = {
@@ -452,7 +519,7 @@ export const ApiDocsPage = () => {
 
   const generateCurlCommand = () => {
     let url = targetServer === 'mockapi' && selectedEndpoint?.mockApiPath
-      ? `${MOCKAPI_BASE}${selectedEndpoint.mockApiPath}`
+      ? `${selectedEndpoint.mockApiBase || MOCKAPI_ACCOUNT_1}${selectedEndpoint.mockApiPath}`
       : `${window.location.origin}${requestUrl}`;
 
     let cmd = `curl -X ${requestMethod} "${url}" \\\n  -H "Accept: application/json"`;
@@ -477,11 +544,12 @@ export const ApiDocsPage = () => {
   };
 
   const categories = [
-    { id: 'all', label: 'Все API (22+)', icon: Code2, count: ENDPOINTS.length },
+    { id: 'all', label: `Все API (${ENDPOINTS.length})`, icon: Code2, count: ENDPOINTS.length },
     { id: 'books', label: 'Учебники (/books)', icon: BookOpen, count: 5 },
     { id: 'categories', label: 'Категории (/categories)', icon: FolderTree, count: 3 },
     { id: 'users', label: 'Пользователи (/users)', icon: Users, count: 3 },
     { id: 'orders', label: 'Заказы (/orders)', icon: ShoppingBag, count: 3 },
+    { id: 'bookings', label: 'Бронь и Аренда (/bookings)', icon: CalendarCheck, count: 3 },
     { id: 'reviews', label: 'Отзывы (/reviews)', icon: Star, count: 2 },
     { id: 'cities', label: 'Города (/cities)', icon: MapPin, count: 1 },
     { id: 'stats', label: 'Статистика (/stats)', icon: BarChart3, count: 1 },
@@ -565,52 +633,101 @@ export const ApiDocsPage = () => {
           </div>
         </div>
 
-        {/* CLOUD MOCKAPI INFO BANNER */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-200/80 dark:border-darkBorder shadow-xs space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        {/* CLOUD MOCKAPI INFO BANNER (2 MULTI-ACCOUNT CLUSTERS) */}
+        <div className="p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-200/80 dark:border-darkBorder shadow-xs space-y-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold text-sm shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold text-sm shrink-0">
                 API
               </div>
               <div>
                 <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                  Облачный MockAPI.io REST Сервер
+                  Облачный MockAPI.io REST Кластер (2 Аккаунта)
                   <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400">
-                    Активен
+                    4 Облачных Ресурса Онлайн
                   </span>
                 </h3>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Базовый URL: <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-slate-800 text-sky-600 dark:text-sky-400 font-mono text-[11px] select-all">{MOCKAPI_BASE}</code>
+                  Все сущности синхронизированы со стандартом RFC 4122 v4 UUID и реальными учебными данными школ Кыргызстана.
                 </p>
               </div>
             </div>
+          </div>
 
-            <div className="flex items-center gap-2">
-              <a
-                href={`${MOCKAPI_BASE}/books`}
-                target="_blank"
-                rel="noreferrer"
-                className="px-3 py-1.5 rounded-xl bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5 transition-colors"
-              >
-                <span>/books JSON</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-              <a
-                href={`${MOCKAPI_BASE}/users`}
-                target="_blank"
-                rel="noreferrer"
-                className="px-3 py-1.5 rounded-xl bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-1.5 transition-colors"
-              >
-                <span>/users JSON</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+            {/* Account 1 */}
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-darkBorder space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Аккаунт 1: Каталог и Профили
+                </span>
+                <span className="text-[10px] text-gray-400 font-mono">kanadbekovboomu</span>
+              </div>
+              <div className="text-[11px] text-gray-500 dark:text-gray-400 font-mono truncate select-all">
+                {MOCKAPI_ACCOUNT_1}
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <a
+                  href={`${MOCKAPI_ACCOUNT_1}/books`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 px-2.5 py-1.5 rounded-lg bg-white dark:bg-darkCard hover:bg-gray-100 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-darkBorder flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>/books (26 книг)</span>
+                  <ExternalLink className="w-3 h-3 text-sky-500" />
+                </a>
+                <a
+                  href={`${MOCKAPI_ACCOUNT_1}/users`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 px-2.5 py-1.5 rounded-lg bg-white dark:bg-darkCard hover:bg-gray-100 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-darkBorder flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>/users (6 польз.)</span>
+                  <ExternalLink className="w-3 h-3 text-sky-500" />
+                </a>
+              </div>
+            </div>
+
+            {/* Account 2 */}
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-darkBorder space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Аккаунт 2: Заказы и Аренда
+                </span>
+                <span className="text-[10px] text-gray-400 font-mono">astromy33</span>
+              </div>
+              <div className="text-[11px] text-gray-500 dark:text-gray-400 font-mono truncate select-all">
+                {MOCKAPI_ACCOUNT_2}
+              </div>
+              <div className="flex items-center gap-2 pt-1">
+                <a
+                  href={`${MOCKAPI_ACCOUNT_2}/orders`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 px-2.5 py-1.5 rounded-lg bg-white dark:bg-darkCard hover:bg-gray-100 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-darkBorder flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>/orders (5 заказов)</span>
+                  <ExternalLink className="w-3 h-3 text-sky-500" />
+                </a>
+                <a
+                  href={`${MOCKAPI_ACCOUNT_2}/bookings`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 px-2.5 py-1.5 rounded-lg bg-white dark:bg-darkCard hover:bg-gray-100 dark:hover:bg-slate-700 text-xs font-semibold text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-darkBorder flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <span>/bookings (5 броней)</span>
+                  <ExternalLink className="w-3 h-3 text-sky-500" />
+                </a>
+              </div>
             </div>
           </div>
 
-          <div className="text-xs text-gray-500 dark:text-gray-400 bg-amber-50/60 dark:bg-amber-950/20 p-3 rounded-xl border border-amber-200/60 dark:border-amber-900/40 flex items-start gap-2.5">
-            <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+          <div className="text-xs text-gray-500 dark:text-gray-400 bg-sky-50/60 dark:bg-sky-950/20 p-3 rounded-xl border border-sky-200/60 dark:border-sky-900/40 flex items-start gap-2.5">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
             <p className="leading-relaxed">
-              <strong className="text-amber-800 dark:text-amber-300 font-semibold">Важное замечание по MockAPI:</strong> Бесплатный тариф сервиса MockAPI.io строго ограничен максимум 2 ресурсами (при создании 3-го сервис возвращает <code className="font-mono text-[11px]">HTTP 402 Payment Required</code>). Поэтому мы создали <strong className="text-gray-900 dark:text-gray-100">встроенный серверный REST API движок</strong> в нашем проекте, который предоставляет <strong className="text-brand-600 dark:text-brand-400">22+ полноценных эндпоинта</strong> (категории, заказы, отзывы, города, аналитику, аутентификацию) абсолютно без ограничений!
+              <strong className="text-sky-900 dark:text-sky-200 font-semibold">Архитектура распределенного облака:</strong> Сервис MockAPI.io ограничивает бесплатный тариф максимум 2 ресурсами на аккаунт. Объединив 2 аккаунта в единую экосистему, мы обеспечили 100% покрытие всех бизнес-ресурсов (<code className="font-mono text-[11px]">/books</code>, <code className="font-mono text-[11px]">/users</code>, <code className="font-mono text-[11px]">/orders</code>, <code className="font-mono text-[11px]">/bookings</code>) в реальном облаке, а встроенный локальный Vite REST API дополнительно предоставляет категории, отзывы, города, статистику и аутентификацию (всего <strong className="text-emerald-600 dark:text-emerald-400 font-semibold">{ENDPOINTS.length}+ эндпоинтов</strong>)!
             </p>
           </div>
         </div>
@@ -731,13 +848,14 @@ export const ApiDocsPage = () => {
                       <button
                         type="button"
                         onClick={() => setTargetServer('mockapi')}
-                        className={`px-3 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                        className={`px-3 py-1 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                           targetServer === 'mockapi'
                             ? 'bg-sky-600 text-white shadow-xs'
                             : 'bg-white dark:bg-darkCard text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-darkBorder'
                         }`}
                       >
-                        Облако MockAPI.io
+                        <Globe className="w-3 h-3" />
+                        <span>Облако MockAPI ({selectedEndpoint.mockApiBase === MOCKAPI_ACCOUNT_2 ? 'Аккаунт 2' : 'Аккаунт 1'})</span>
                       </button>
                     </div>
                   </div>

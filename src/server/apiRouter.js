@@ -169,6 +169,119 @@ let reviewsStore = [
   { uuid: "f0040000-7c2a-41e9-9011-000000000004", id: "f0040000-7c2a-41e9-9011-000000000004", legacyId: "rev_4", bookUuid: "b0105000-7c2a-41e9-9011-000000000105", bookId: "b0105000-7c2a-41e9-9011-000000000105", user: "Нурбек К.", rating: 5, date: "12.10.2025", comment: "ЖРТ боюнча мыкты колдонмо, математика бөлүмүн түшүндүрүү абдан түшүнүктүү экен." }
 ];
 
+let bookingsStore = [
+  {
+    uuid: "b00k0001-7c2a-41e9-9011-000000000001",
+    id: "b00k0001-7c2a-41e9-9011-000000000001",
+    legacyId: "1",
+    bookId: "b0101000-7c2a-41e9-9011-000000000101",
+    bookTitle: "Кыргыз тили. 10-11 класс",
+    userName: "Нурлан Исаков",
+    userPhone: "+996 702 112 233",
+    userEmail: "nurlan.isak@gmail.com",
+    school: "Школа-гимназия №6 им. И.В. Панфилова",
+    city: "Бишкек",
+    grade: "10 класс",
+    startDate: "2026-09-01",
+    endDate: "2027-05-25",
+    duration: "Учебный год (9 мес.)",
+    rentalFee: 120,
+    deposit: 200,
+    paymentMethod: "MBANK",
+    status: "ACTIVE",
+    notes: "Состояние отличное, комплект с диском",
+    createdAt: "2026-09-01T08:30:00.000Z"
+  },
+  {
+    uuid: "b00k0002-7c2a-41e9-9011-000000000002",
+    id: "b00k0002-7c2a-41e9-9011-000000000002",
+    legacyId: "2",
+    bookId: "b0104000-7c2a-41e9-9011-000000000104",
+    bookTitle: "Физика. 9-класс",
+    userName: "Мээрим Асанова",
+    userPhone: "+996 550 445 566",
+    userEmail: "meerim.as@mail.ru",
+    school: "УВК ШГ №12",
+    city: "Бишкек",
+    grade: "9 класс",
+    startDate: "2026-09-01",
+    endDate: "2027-05-25",
+    duration: "Учебный год (9 мес.)",
+    rentalFee: 150,
+    deposit: 250,
+    paymentMethod: "MBANK",
+    status: "ACTIVE",
+    notes: "В обложке, аккуратное использование",
+    createdAt: "2026-09-01T09:15:00.000Z"
+  },
+  {
+    uuid: "b00k0003-7c2a-41e9-9011-000000000003",
+    id: "b00k0003-7c2a-41e9-9011-000000000003",
+    legacyId: "3",
+    bookId: "b0105000-7c2a-41e9-9011-000000000105",
+    bookTitle: "Химия. 8-9 класс",
+    userName: "Эркин Токтосунов",
+    userPhone: "+996 777 889 900",
+    userEmail: "erkin.t@gmail.com",
+    school: "Школа №3 им. М.В. Ломоносова",
+    city: "Ош",
+    grade: "8 класс",
+    startDate: "2026-09-10",
+    endDate: "2027-05-25",
+    duration: "Учебный год (9 мес.)",
+    rentalFee: 130,
+    deposit: 200,
+    paymentMethod: "ЭЛСОМ",
+    status: "ACTIVE",
+    notes: "Школьный формуляр №442",
+    createdAt: "2026-09-10T11:00:00.000Z"
+  },
+  {
+    uuid: "b00k0004-7c2a-41e9-9011-000000000004",
+    id: "b00k0004-7c2a-41e9-9011-000000000004",
+    legacyId: "4",
+    bookId: "b0108000-7c2a-41e9-9011-000000000108",
+    bookTitle: "Англис тили. 8-класс",
+    userName: "Гульназ Маматова",
+    userPhone: "+996 505 334 455",
+    userEmail: "gulnaz.m@gmail.com",
+    school: "Гимназия №1 им. Ленина",
+    city: "Каракол",
+    grade: "8 класс",
+    startDate: "2026-10-01",
+    endDate: "2027-05-25",
+    duration: "8 месяцев",
+    rentalFee: 140,
+    deposit: 200,
+    paymentMethod: "MBANK",
+    status: "CONFIRMED",
+    notes: "Требуется аудиоприложение",
+    createdAt: "2026-10-01T15:20:00.000Z"
+  },
+  {
+    uuid: "b00k0005-7c2a-41e9-9011-000000000005",
+    id: "b00k0005-7c2a-41e9-9011-000000000005",
+    legacyId: "5",
+    bookId: "b0110000-7c2a-41e9-9011-000000000110",
+    bookTitle: "Биология (Жалпы биология). 10-11 класс",
+    userName: "Азамат Бекбоев",
+    userPhone: "+996 708 667 788",
+    userEmail: "azamat.b@gmail.com",
+    school: "Авторская школа-комплекс",
+    city: "Бишкек",
+    grade: "10 класс",
+    startDate: "2026-10-15",
+    endDate: "2027-05-25",
+    duration: "7 месяцев",
+    rentalFee: 110,
+    deposit: 180,
+    paymentMethod: "MBANK",
+    status: "ACTIVE",
+    notes: "Продление аренды со скидкой 10%",
+    createdAt: "2026-10-15T12:00:00.000Z"
+  }
+];
+
 // Helper to read JSON request body
 function parseBody(req) {
   return new Promise((resolve, reject) => {
@@ -216,12 +329,13 @@ export function handleRestApi(req, res) {
       description: "Официальный REST API интернет-магазина и сервиса аренды учебников Кыргызстана",
       status: "ONLINE",
       version: "2.0.0",
-      totalEndpoints: 22,
+      totalEndpoints: 25,
       endpoints: {
         books: "/api/books",
         categories: "/api/categories",
         users: "/api/users",
         orders: "/api/orders",
+        bookings: "/api/bookings",
         reviews: "/api/reviews",
         cities: "/api/cities",
         stats: "/api/stats",
@@ -244,7 +358,8 @@ export function handleRestApi(req, res) {
       },
       servers: [
         { url: "http://localhost:5173", description: "Vite Built-in REST API Server" },
-        { url: "https://6add823cfa5e73d4ab2dff52.mockapi.io/api/v1", description: "MockAPI.io Cloud Engine" }
+        { url: "https://6add823cfa5e73d4ab2dff52.mockapi.io/api/v1", description: "MockAPI.io Cloud Engine (Account 1: Books & Users)" },
+        { url: "https://69dbb1d2560857310a07ed0a.mockapi.io/api/v1", description: "MockAPI.io Cloud Engine (Account 2: Orders & Bookings)" }
       ],
       paths: {
         "/api/books": {
@@ -506,6 +621,50 @@ export function handleRestApi(req, res) {
         ordersStore[index] = { ...ordersStore[index], ...data, uuid: ordersStore[index].uuid, id: ordersStore[index].id };
         return sendJson(res, 200, { success: true, order: ordersStore[index] });
       });
+    }
+  }
+
+  // --- 4.5. BOOKINGS / RENTALS ENDPOINTS (/api/bookings) ---
+  if (pathname === '/api/bookings') {
+    if (method === 'GET') {
+      return sendJson(res, 200, {
+        total: bookingsStore.length,
+        items: bookingsStore
+      });
+    }
+    if (method === 'POST') {
+      return parseBody(req).then(data => {
+        const uuid = data.uuid || generateUuid();
+        const newBooking = {
+          uuid,
+          id: data.id || uuid,
+          createdAt: new Date().toISOString(),
+          status: 'ACTIVE',
+          ...data,
+          uuid,
+          id: data.id || uuid
+        };
+        bookingsStore.unshift(newBooking);
+        return sendJson(res, 201, { success: true, booking: newBooking });
+      });
+    }
+  }
+
+  const bookingMatch = pathname.match(/^\/api\/bookings\/([^\/]+)$/);
+  if (bookingMatch) {
+    const idOrUuid = bookingMatch[1];
+    const index = bookingsStore.findIndex(b => b.uuid === idOrUuid || b.id === idOrUuid || b.legacyId === idOrUuid);
+    if (index === -1) return sendJson(res, 404, { error: 'Бронь/аренда не найдена' });
+    if (method === 'GET') return sendJson(res, 200, bookingsStore[index]);
+    if (method === 'PUT') {
+      return parseBody(req).then(data => {
+        bookingsStore[index] = { ...bookingsStore[index], ...data, uuid: bookingsStore[index].uuid, id: bookingsStore[index].id };
+        return sendJson(res, 200, { success: true, booking: bookingsStore[index] });
+      });
+    }
+    if (method === 'DELETE') {
+      const deleted = bookingsStore.splice(index, 1)[0];
+      return sendJson(res, 200, { success: true, deletedUuid: deleted.uuid, deletedId: deleted.id, item: deleted });
     }
   }
 
