@@ -9,7 +9,8 @@ import {
   User,
   ShieldCheck,
   Menu,
-  GraduationCap
+  GraduationCap,
+  Code2
 } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { LangSwitcher } from '../common/LangSwitcher';
@@ -58,6 +59,16 @@ export const Header = ({ onOpenDefenseModal }) => {
             >
               <PlusCircle className="w-4 h-4 text-brand-500" />
               {t('nav.addBook')}
+            </Link>
+
+            <Link
+              to="/api-docs"
+              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/50 hover:bg-sky-100 dark:hover:bg-sky-900/60 transition-all flex items-center gap-1.5 cursor-pointer ml-0.5"
+              title="REST API Explorer (22+ Endpoints)"
+            >
+              <Code2 className="w-3.5 h-3.5 text-sky-500" />
+              <span>REST API</span>
+              <span className="text-[10px] bg-emerald-500 text-white px-1.5 py-0.2 rounded-full font-bold">22+</span>
             </Link>
 
             {/* Quick Diploma Defense Presentation Guide Button */}

@@ -16,6 +16,7 @@ const ProfilePage = lazy(() => import('../pages/ProfilePage'));
 const MyListingsPage = lazy(() => import('../pages/MyListingsPage'));
 const AddBookPage = lazy(() => import('../pages/AddBookPage'));
 const AdminDashboardPage = lazy(() => import('../pages/AdminDashboardPage'));
+const ApiDocsPage = lazy(() => import('../pages/ApiDocsPage'));
 
 const PageLoader = () => (
   <CreativePageLoader duration={500} />
@@ -33,6 +34,7 @@ export const AppRoutes = () => {
           <Route path="/catalog" element={<CatalogPage />} />
           <Route path="/books/:id" element={<BookDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/api-docs" element={<ApiDocsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
