@@ -62,10 +62,11 @@ export const AddBookPage = () => {
         description: description.trim() || 'Good condition, intact pages.',
         images: images.length > 0 ? images : undefined,
         owner: {
-          id: user?.id || 'u_502',
+          uuid: user?.uuid || user?.id || 'a0020000-7c2a-41e9-9011-000000000002',
+          id: user?.id || user?.uuid || 'a0020000-7c2a-41e9-9011-000000000002',
           name: user?.name || 'Айбек Нурланов',
           phone: user?.phone || '+996 700 123 456',
-          city: 'Бишкек',
+          city: user?.city || 'Бишкек',
           rating: 5.0,
         },
       };

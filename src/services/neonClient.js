@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { generateUuid } from '../utils/uuid';
 
 // Resolve connection string from environment
 const getConnectionString = () => {
@@ -27,7 +28,8 @@ export const isNeonAvailable = () => !!sql;
 
 // Helper to map DB row to frontend Book model
 const mapBookRow = (row) => ({
-  id: row.id,
+  uuid: row.uuid || row.id,
+  id: row.id || row.uuid,
   title: row.title,
   author: row.author,
   subject: row.subject,
@@ -133,7 +135,7 @@ export const neonService = {
 
   async createBook(b) {
     if (!sql) throw new Error('Neon database is not configured');
-    const id = b.id || `b_${Date.now()}`;
+    const id = b.uuid || b.id || generateUuid();
     const images = JSON.stringify(b.images && b.images.length > 0 ? b.images : ["/covers/geometry-8.svg"]);
     const owner = JSON.stringify(b.owner || {});
     const reviews = JSON.stringify(b.reviews || []);
@@ -204,7 +206,7 @@ export const neonService = {
 
   async createOrder(orderData) {
     if (!sql) throw new Error('Neon database is not configured');
-    const id = orderData.id || `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+    const id = orderData.uuid || orderData.id || generateUuid();
 
     await sql.query(
       `INSERT INTO orders (
@@ -230,8 +232,11 @@ export const neonService = {
     );
 
     return {
+      uuid: id,
       id,
       ...orderData,
+      uuid: id,
+      id,
       createdAt: new Date().toISOString(),
     };
   },
@@ -240,7 +245,8 @@ export const neonService = {
     if (!sql) throw new Error('Neon database is not configured');
     const rows = await sql.query('SELECT * FROM orders ORDER BY created_at DESC');
     return rows.map((r) => ({
-      id: r.id,
+      uuid: r.uuid || r.id,
+      id: r.id || r.uuid,
       customerName: r.customer_name,
       customerPhone: r.customer_phone,
       city: r.city,

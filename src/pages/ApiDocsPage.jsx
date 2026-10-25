@@ -69,24 +69,24 @@ export const ApiDocsPage = () => {
     {
       id: 'books_get_one',
       category: 'books',
-      title: 'Получить детальную информацию об учебнике',
-      titleKg: 'Бир китеп жөнүндө толук маалымат алуу',
+      title: 'Получить детальную информацию об учебнике по UUID',
+      titleKg: 'Бир китеп жөнүндө толук маалымат алуу (UUID боюнча)',
       method: 'GET',
-      path: '/api/books/b_101',
+      path: '/api/books/b0101000-7c2a-41e9-9011-000000000101',
       mockApiPath: '/books/b_101',
-      description: 'Возвращает полную карточку учебника со всеми метаданными, состоянием и продавцом.',
+      description: 'Возвращает полную карточку учебника со всеми метаданными, состоянием и продавцом по стандартному RFC 4122 UUID.',
       queryParams: [],
       sampleBody: null
     },
     {
       id: 'books_post',
       category: 'books',
-      title: 'Создать новое объявление об учебнике',
-      titleKg: 'Жаңы китеп жарыясын кошуу',
+      title: 'Создать новое объявление об учебнике (генерация UUID)',
+      titleKg: 'Жаңы китеп жарыясын кошуу (UUID генерациясы менен)',
       method: 'POST',
       path: '/api/books',
       mockApiPath: '/books',
-      description: 'Публикует новый учебник в каталог с валидацией обязательных полей.',
+      description: 'Публикует новый учебник в каталог с генерацией уникального RFC 4122 v4 UUID.',
       queryParams: [],
       sampleBody: JSON.stringify({
         title: "Кыргыз тили жана окуу 4-класс",
@@ -100,6 +100,7 @@ export const ApiDocsPage = () => {
         city: "Бишкек",
         description: "Жаңы стандарт боюнча оригинал китеп, таза сакталган.",
         seller: {
+          uuid: "a0020000-7c2a-41e9-9011-000000000002",
           name: "Айгүл Бакирова",
           phone: "+996 701 445 566"
         }
@@ -108,12 +109,12 @@ export const ApiDocsPage = () => {
     {
       id: 'books_put',
       category: 'books',
-      title: 'Обновить данные учебника',
-      titleKg: 'Китептин маалыматын өзгөртүү',
+      title: 'Обновить данные учебника по UUID',
+      titleKg: 'Китептин маалыматын UUID боюнча өзгөртүү',
       method: 'PUT',
-      path: '/api/books/b_101',
+      path: '/api/books/b0101000-7c2a-41e9-9011-000000000101',
       mockApiPath: '/books/b_101',
-      description: 'Обновляет существующее объявление по уникальному ID.',
+      description: 'Обновляет существующее объявление по уникальному UUID.',
       queryParams: [],
       sampleBody: JSON.stringify({
         price: 320,
@@ -124,12 +125,12 @@ export const ApiDocsPage = () => {
     {
       id: 'books_delete',
       category: 'books',
-      title: 'Удалить учебник из каталога',
-      titleKg: 'Китепти каталогдон өчүрүү',
+      title: 'Удалить учебник из каталога по UUID',
+      titleKg: 'Китепти каталогдон өчүрүү (UUID)',
       method: 'DELETE',
-      path: '/api/books/b_102',
+      path: '/api/books/b0102000-7c2a-41e9-9011-000000000102',
       mockApiPath: '/books/b_102',
-      description: 'Удаляет учебник из базы по ID.',
+      description: 'Удаляет учебник из базы по уникальному UUID.',
       queryParams: [],
       sampleBody: null
     },
@@ -150,24 +151,24 @@ export const ApiDocsPage = () => {
     {
       id: 'categories_get_one',
       category: 'categories',
-      title: 'Получить категорию по ID или slug',
-      titleKg: 'Категорияны ID же slug боюнча алуу',
+      title: 'Получить категорию по UUID или slug',
+      titleKg: 'Категорияны UUID же slug боюнча алуу',
       method: 'GET',
-      path: '/api/categories/1',
+      path: '/api/categories/c0010000-7c2a-41e9-9011-000000000001',
       mockApiPath: null,
-      description: 'Возвращает название на кыргызском, русском, иконку и диапазон классов предмета.',
+      description: 'Возвращает название на кыргызском, русском, иконку и диапазон классов предмета по UUID.',
       queryParams: [],
       sampleBody: null
     },
     {
       id: 'categories_post',
       category: 'categories',
-      title: 'Создать новую категорию предметов',
-      titleKg: 'Жаңы категория кошуу',
+      title: 'Создать новую категорию предметов (генерация UUID)',
+      titleKg: 'Жаңы категория кошуу (UUID генерациясы)',
       method: 'POST',
       path: '/api/categories',
       mockApiPath: null,
-      description: 'Добавляет новый школьный предмет или раздел (для администратора).',
+      description: 'Добавляет новый школьный предмет с уникальным RFC 4122 UUID.',
       queryParams: [],
       sampleBody: JSON.stringify({
         name: "Адам жана коом (Человек и общество)",
@@ -183,36 +184,36 @@ export const ApiDocsPage = () => {
     {
       id: 'users_get_all',
       category: 'users',
-      title: 'Список пользователей платформы',
-      titleKg: 'Колдонуучулардын тизмеси',
+      title: 'Список пользователей платформы (со стандартом UUID)',
+      titleKg: 'Колдонуучулардын тизмеси (UUID стандарты менен)',
       method: 'GET',
       path: '/api/users',
       mockApiPath: '/users',
-      description: 'Возвращает профили пользователей (администратор, покупатели, продавцы книг) с рейтингами.',
+      description: 'Возвращает профили пользователей (администратор, покупатели, продавцы книг) с UUID и рейтингами.',
       queryParams: [],
       sampleBody: null
     },
     {
       id: 'users_get_one',
       category: 'users',
-      title: 'Получить профиль пользователя по ID',
-      titleKg: 'Колдонуучунун профилин ID боюнча алуу',
+      title: 'Получить профиль пользователя по UUID',
+      titleKg: 'Колдонуучунун профилин UUID боюнча алуу',
       method: 'GET',
-      path: '/api/users/1',
+      path: '/api/users/a0010000-7c2a-41e9-9011-000000000001',
       mockApiPath: '/users/1',
-      description: 'Возвращает контактную информацию, город, рейтинг и статус продавца.',
+      description: 'Возвращает контактную информацию, город, рейтинг и статус продавца по уникальному UUID пользователя.',
       queryParams: [],
       sampleBody: null
     },
     {
       id: 'users_post',
       category: 'users',
-      title: 'Создать нового пользователя',
-      titleKg: 'Жаңы колдонуучу каттоого алуу',
+      title: 'Создать нового пользователя (генерация UUID)',
+      titleKg: 'Жаңы колдонуучу каттоого алуу (UUID)',
       method: 'POST',
       path: '/api/users',
       mockApiPath: '/users',
-      description: 'Регистрирует нового пользователя с городом и контактами.',
+      description: 'Регистрирует нового пользователя с генерацией персонального UUID.',
       queryParams: [],
       sampleBody: JSON.stringify({
         name: "Нурбек Жумабеков",
@@ -228,36 +229,36 @@ export const ApiDocsPage = () => {
     {
       id: 'orders_get_all',
       category: 'orders',
-      title: 'Список всех заказов и доставок',
-      titleKg: 'Бардык буйрутмалардын жана жеткирүүлөрдүн тизмеси',
+      title: 'Список всех заказов и доставок с UUID',
+      titleKg: 'Бардык буйрутмалардын жана жеткирүүлөрдүн тизмеси (UUID)',
       method: 'GET',
       path: '/api/orders',
       mockApiPath: null,
-      description: 'Возвращает список оформленных заказов с информацией о покупателе, адресе доставки и выбранном способе оплаты (MBANK, ЭЛСОМ, Наличные).',
+      description: 'Возвращает список оформленных заказов с UUID, адресом доставки и выбранным способом оплаты (MBANK, ЭЛСОМ, Наличные).',
       queryParams: [],
       sampleBody: null
     },
     {
       id: 'orders_get_one',
       category: 'orders',
-      title: 'Получить заказ по номеру трекинга',
-      titleKg: 'Буйрутманы трек номери боюнча көрүү',
+      title: 'Получить заказ по UUID трекинга',
+      titleKg: 'Буйрутманы UUID трек номери боюнча көрүү',
       method: 'GET',
-      path: '/api/orders/ord_1001',
+      path: '/api/orders/d0010000-7c2a-41e9-9011-000000001001',
       mockApiPath: null,
-      description: 'Возвращает статус доставки, трек-номер и детализацию товаров.',
+      description: 'Возвращает статус доставки, трек-UUID и детализацию товаров.',
       queryParams: [],
       sampleBody: null
     },
     {
       id: 'orders_post',
       category: 'orders',
-      title: 'Оформить новый заказ',
-      titleKg: 'Жаңы буйрутма түзүү',
+      title: 'Оформить новый заказ (генерация UUID)',
+      titleKg: 'Жаңы буйрутма түзүү (UUID)',
       method: 'POST',
       path: '/api/orders',
       mockApiPath: null,
-      description: 'Создает новый заказ в системе с расчетом суммы и времени курьерской доставки.',
+      description: 'Создает новый заказ в системе с расчетом суммы, времени курьерской доставки и выдачей UUID заказа.',
       queryParams: [],
       sampleBody: JSON.stringify({
         customerName: "Канат Асанов",
@@ -268,7 +269,7 @@ export const ApiDocsPage = () => {
         dealType: "BUY",
         items: [
           {
-            bookId: "b_101",
+            bookUuid: "b0101000-7c2a-41e9-9011-000000000101",
             title: "Алиппе 1-класс",
             price: 350,
             quantity: 1
@@ -282,29 +283,29 @@ export const ApiDocsPage = () => {
     {
       id: 'reviews_get_all',
       category: 'reviews',
-      title: 'Отзывы и рейтинги к учебникам',
-      titleKg: 'Китептерге сын-пикирлер жана баалоолор',
+      title: 'Отзывы и рейтинги к учебникам по UUID книги',
+      titleKg: 'Китептерге сын-пикирлер жана баалоолор (китептин UUID боюнча)',
       method: 'GET',
-      path: '/api/reviews?bookId=b_101',
+      path: '/api/reviews?bookUuid=b0101000-7c2a-41e9-9011-000000000101',
       mockApiPath: null,
-      description: 'Возвращает отзывы проверенных родителей и учеников Кыргызстана.',
+      description: 'Возвращает отзывы проверенных родителей и учеников Кыргызстана по UUID книги.',
       queryParams: [
-        { name: 'bookId', default: 'b_101', desc: 'ID книги для выборки отзывов' }
+        { name: 'bookUuid', default: 'b0101000-7c2a-41e9-9011-000000000101', desc: 'UUID книги для выборки отзывов' }
       ],
       sampleBody: null
     },
     {
       id: 'reviews_post',
       category: 'reviews',
-      title: 'Оставить отзыв о книге или продавце',
-      titleKg: 'Китепке же сатуучуга пикир калтыруу',
+      title: 'Оставить отзыв о книге (генерация UUID отзыва)',
+      titleKg: 'Китепке пикир калтыруу (UUID)',
       method: 'POST',
       path: '/api/reviews',
       mockApiPath: null,
-      description: 'Добавляет отзыв с оценкой от 1 до 5 звезд.',
+      description: 'Добавляет отзыв с оценкой от 1 до 5 звезд и уникальным UUID.',
       queryParams: [],
       sampleBody: JSON.stringify({
-        bookId: "b_101",
+        bookUuid: "b0101000-7c2a-41e9-9011-000000000101",
         userName: "Мээрим Т.",
         rating: 5,
         comment: "Китеп абдан жакшы абалда экен, сатуучуга чоң рахмат!",
@@ -514,14 +515,14 @@ export const ApiDocsPage = () => {
           <div className="relative z-10 space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-semibold backdrop-blur-md">
               <Zap className="w-3.5 h-3.5 animate-pulse text-amber-400" />
-              <span>BilimKitep REST API Engine v2.0 • 22+ Эндпоинта</span>
+              <span>BilimKitep REST API Engine v2.0 • 22+ Эндпоинта • RFC 4122 v4 UUID</span>
             </div>
 
             <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-display">
               Интерактивная REST API Документация & Тестировщик
             </h1>
             <p className="max-w-3xl text-sm sm:text-base text-slate-300 leading-relaxed">
-              Полноценная серверная архитектура платформы BilimKitep с поддержкой полного цикла CRUD, фильтрации школьных учебников Кыргызстана, геолокаций доставки, заказов, отзывов и JWT-аутентификации.
+              Полноценная серверная архитектура платформы BilimKitep со стандартом первичных ключей <strong>RFC 4122 v4 UUID</strong>, поддержкой полного цикла CRUD, фильтрации школьных учебников Кыргызстана, геолокаций доставки, заказов, отзывов и JWT-аутентификации.
             </p>
 
             {/* Quick Status Bar */}
@@ -538,10 +539,10 @@ export const ApiDocsPage = () => {
               </div>
 
               <div className="p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xs flex items-center gap-2.5">
-                <Globe className="w-4 h-4 text-sky-400 shrink-0" />
+                <Key className="w-4 h-4 text-sky-400 shrink-0" />
                 <div>
-                  <div className="text-[10px] text-slate-400 uppercase font-medium">Облачный MockAPI.io</div>
-                  <div className="font-bold text-sky-300">Подключен (Users, Books)</div>
+                  <div className="text-[10px] text-slate-400 uppercase font-medium">Идентификаторы</div>
+                  <div className="font-bold text-sky-300">RFC 4122 v4 UUID</div>
                 </div>
               </div>
 

@@ -10,6 +10,7 @@ import { Select } from '../components/common/Select';
 import { Button } from '../components/common/Button';
 import { BrandLogo } from '../components/common/BrandLogo';
 import { registerUser } from '../features/auth/authSlice';
+import { generateUuid } from '../utils/uuid';
 
 export const RegisterPage = () => {
   const { t } = useTranslation('auth');
@@ -30,8 +31,10 @@ export const RegisterPage = () => {
       return;
     }
 
+    const uuid = generateUuid();
     const newUser = {
-      id: `u_${Date.now()}`,
+      uuid,
+      id: uuid,
       name: name.trim(),
       email: email.trim(),
       phone: phone.trim(),

@@ -1,16 +1,20 @@
 // Full-featured REST API Router for BilimKitep Web Platform
 // Supports 20+ endpoints: /api/books, /api/users, /api/categories, /api/orders,
 // /api/reviews, /api/cities, /api/stats, /api/auth/* with full CRUD & search
+// All entities are standardized on RFC 4122 v4 UUID primary identifiers
 
 import { INITIAL_BOOKS } from '../services/api.js';
 import { KYRGYZ_CITIES } from '../utils/citiesData.js';
+import { generateUuid } from '../utils/uuid.js';
 
 // In-memory data store for the live REST API
 let booksStore = [...INITIAL_BOOKS];
 
 let usersStore = [
   {
-    id: "1",
+    uuid: "a0010000-7c2a-41e9-9011-000000000001",
+    id: "a0010000-7c2a-41e9-9011-000000000001",
+    legacyId: "1",
     name: "Администратор BilimKitep",
     email: "admin@bilimkitep.kg",
     phone: "+996 700 000 001",
@@ -21,7 +25,9 @@ let usersStore = [
     createdAt: "2026-01-10T08:00:00.000Z"
   },
   {
-    id: "2",
+    uuid: "a0020000-7c2a-41e9-9011-000000000002",
+    id: "a0020000-7c2a-41e9-9011-000000000002",
+    legacyId: "2",
     name: "Айбек Нурланов",
     email: "aibek.n@gmail.com",
     phone: "+996 700 123 456",
@@ -32,7 +38,9 @@ let usersStore = [
     createdAt: "2026-02-15T10:30:00.000Z"
   },
   {
-    id: "3",
+    uuid: "a0030000-7c2a-41e9-9011-000000000003",
+    id: "a0030000-7c2a-41e9-9011-000000000003",
+    legacyId: "3",
     name: "Чынара Касымова",
     email: "chynara.k@gmail.com",
     phone: "+996 555 987 654",
@@ -43,7 +51,9 @@ let usersStore = [
     createdAt: "2026-03-01T12:00:00.000Z"
   },
   {
-    id: "4",
+    uuid: "a0040000-7c2a-41e9-9011-000000000004",
+    id: "a0040000-7c2a-41e9-9011-000000000004",
+    legacyId: "4",
     name: "Эркин Садыков",
     email: "erkin.s@gmail.com",
     phone: "+996 777 555 444",
@@ -54,7 +64,9 @@ let usersStore = [
     createdAt: "2026-03-12T09:15:00.000Z"
   },
   {
-    id: "5",
+    uuid: "a0050000-7c2a-41e9-9011-000000000005",
+    id: "a0050000-7c2a-41e9-9011-000000000005",
+    legacyId: "5",
     name: "Каныкей Асанбекова",
     email: "kanykei.a@gmail.com",
     phone: "+996 770 889 900",
@@ -65,7 +77,9 @@ let usersStore = [
     createdAt: "2026-03-20T14:45:00.000Z"
   },
   {
-    id: "6",
+    uuid: "a0060000-7c2a-41e9-9011-000000000006",
+    id: "a0060000-7c2a-41e9-9011-000000000006",
+    legacyId: "6",
     name: "Бектур Токтогулов",
     email: "bektur.t@gmail.com",
     phone: "+996 702 331 122",
@@ -78,22 +92,24 @@ let usersStore = [
 ];
 
 let categoriesStore = [
-  { id: "1", name: "Математика жана Алгебра", nameKg: "Математика", slug: "math", icon: "Calculator", gradeRange: "1-11 класс", booksCount: 4 },
-  { id: "2", name: "Кыргыз тили", nameKg: "Кыргыз тили", slug: "kyrgyz", icon: "Globe", gradeRange: "1-11 класс", booksCount: 3 },
-  { id: "3", name: "Кыргыз адабияты", nameKg: "Адабият", slug: "literature", icon: "BookMarked", gradeRange: "1-11 класс", booksCount: 3 },
-  { id: "4", name: "Физика жана Астрономия", nameKg: "Физика", slug: "physics", icon: "Zap", gradeRange: "7-11 класс", booksCount: 2 },
-  { id: "5", name: "Химия", nameKg: "Химия", slug: "chemistry", icon: "FlaskConical", gradeRange: "8-11 класс", booksCount: 2 },
-  { id: "6", name: "Биология жана Табият таануу", nameKg: "Биология", slug: "biology", icon: "Leaf", gradeRange: "6-11 класс", booksCount: 1 },
-  { id: "7", name: "Кыргызстан жана Дүйнө тарыхы", nameKg: "Тарых", slug: "history", icon: "Landmark", gradeRange: "5-11 класс", booksCount: 2 },
-  { id: "8", name: "Кыргызстандын географиясы", nameKg: "География", slug: "geography", icon: "Compass", gradeRange: "6-11 класс", booksCount: 1 },
-  { id: "9", name: "Англис тили", nameKg: "English", slug: "english", icon: "Languages", gradeRange: "1-11 класс", booksCount: 2 },
-  { id: "10", name: "Информатика жана ИКТ", nameKg: "Информатика", slug: "it", icon: "Laptop", gradeRange: "5-11 класс", booksCount: 2 },
-  { id: "11", name: "ОРТ / ЖРТ Даярдоо", nameKg: "ЖРТ Грант", slug: "ort", icon: "Target", gradeRange: "10-11 класс / ОРТ", booksCount: 3 }
+  { uuid: "c0010000-7c2a-41e9-9011-000000000001", id: "c0010000-7c2a-41e9-9011-000000000001", legacyId: "1", name: "Математика жана Алгебра", nameKg: "Математика", slug: "math", icon: "Calculator", gradeRange: "1-11 класс", booksCount: 4 },
+  { uuid: "c0020000-7c2a-41e9-9011-000000000002", id: "c0020000-7c2a-41e9-9011-000000000002", legacyId: "2", name: "Кыргыз тили", nameKg: "Кыргыз тили", slug: "kyrgyz", icon: "Globe", gradeRange: "1-11 класс", booksCount: 3 },
+  { uuid: "c0030000-7c2a-41e9-9011-000000000003", id: "c0030000-7c2a-41e9-9011-000000000003", legacyId: "3", name: "Кыргыз адабияты", nameKg: "Адабият", slug: "literature", icon: "BookMarked", gradeRange: "1-11 класс", booksCount: 3 },
+  { uuid: "c0040000-7c2a-41e9-9011-000000000004", id: "c0040000-7c2a-41e9-9011-000000000004", legacyId: "4", name: "Физика жана Астрономия", nameKg: "Физика", slug: "physics", icon: "Zap", gradeRange: "7-11 класс", booksCount: 2 },
+  { uuid: "c0050000-7c2a-41e9-9011-000000000005", id: "c0050000-7c2a-41e9-9011-000000000005", legacyId: "5", name: "Химия", nameKg: "Химия", slug: "chemistry", icon: "FlaskConical", gradeRange: "8-11 класс", booksCount: 2 },
+  { uuid: "c0060000-7c2a-41e9-9011-000000000006", id: "c0060000-7c2a-41e9-9011-000000000006", legacyId: "6", name: "Биология жана Табият таануу", nameKg: "Биология", slug: "biology", icon: "Leaf", gradeRange: "6-11 класс", booksCount: 1 },
+  { uuid: "c0070000-7c2a-41e9-9011-000000000007", id: "c0070000-7c2a-41e9-9011-000000000007", legacyId: "7", name: "Кыргызстан жана Дүйнө тарыхы", nameKg: "Тарых", slug: "history", icon: "Landmark", gradeRange: "5-11 класс", booksCount: 2 },
+  { uuid: "c0080000-7c2a-41e9-9011-000000000008", id: "c0080000-7c2a-41e9-9011-000000000008", legacyId: "8", name: "Кыргызстандын географиясы", nameKg: "География", slug: "geography", icon: "Compass", gradeRange: "6-11 класс", booksCount: 1 },
+  { uuid: "c0090000-7c2a-41e9-9011-000000000009", id: "c0090000-7c2a-41e9-9011-000000000009", legacyId: "9", name: "Англис тили", nameKg: "English", slug: "english", icon: "Languages", gradeRange: "1-11 класс", booksCount: 2 },
+  { uuid: "c0100000-7c2a-41e9-9011-000000000010", id: "c0100000-7c2a-41e9-9011-000000000010", legacyId: "10", name: "Информатика жана ИКТ", nameKg: "Информатика", slug: "it", icon: "Laptop", gradeRange: "5-11 класс", booksCount: 2 },
+  { uuid: "c0110000-7c2a-41e9-9011-000000000011", id: "c0110000-7c2a-41e9-9011-000000000011", legacyId: "11", name: "ОРТ / ЖРТ Даярдоо", nameKg: "ЖРТ Грант", slug: "ort", icon: "Target", gradeRange: "10-11 класс / ОРТ", booksCount: 3 }
 ];
 
 let ordersStore = [
   {
-    id: "ord_1001",
+    uuid: "d0010000-7c2a-41e9-9011-000000001001",
+    id: "d0010000-7c2a-41e9-9011-000000001001",
+    legacyId: "ord_1001",
     customerName: "Айбек Нурланов",
     customerPhone: "+996 700 123 456",
     city: "Бишкек",
@@ -104,12 +120,14 @@ let ordersStore = [
     depositAmount: 150,
     status: "DELIVERED",
     items: [
-      { bookId: "b_101", title: "Геометрия 8-класс", type: "RENT", months: 9, price: 360, deposit: 150 }
+      { bookUuid: "b0101000-7c2a-41e9-9011-000000000101", bookId: "b0101000-7c2a-41e9-9011-000000000101", title: "Геометрия 8-класс", type: "RENT", months: 9, price: 360, deposit: 150 }
     ],
     createdAt: "2026-10-20T14:30:00.000Z"
   },
   {
-    id: "ord_1002",
+    uuid: "d0020000-7c2a-41e9-9011-000000001002",
+    id: "d0020000-7c2a-41e9-9011-000000001002",
+    legacyId: "ord_1002",
     customerName: "Чынара Касымова",
     customerPhone: "+996 555 987 654",
     city: "Ош",
@@ -120,12 +138,14 @@ let ordersStore = [
     depositAmount: 150,
     status: "IN_TRANSIT",
     items: [
-      { bookId: "b_102", title: "Кыргыз тили 7-класс", type: "BUY", price: 280, deposit: 150 }
+      { bookUuid: "b0102000-7c2a-41e9-9011-000000000102", bookId: "b0102000-7c2a-41e9-9011-000000000102", title: "Кыргыз тили 7-класс", type: "BUY", price: 280, deposit: 150 }
     ],
     createdAt: "2026-10-24T10:15:00.000Z"
   },
   {
-    id: "ord_1003",
+    uuid: "d0030000-7c2a-41e9-9011-000000001003",
+    id: "d0030000-7c2a-41e9-9011-000000001003",
+    legacyId: "ord_1003",
     customerName: "Каныкей Асанбекова",
     customerPhone: "+996 770 889 900",
     city: "Каракол",
@@ -136,17 +156,17 @@ let ordersStore = [
     depositAmount: 200,
     status: "PROCESSING",
     items: [
-      { bookId: "b_123", title: "English Plus Grade 8", type: "RENT", months: 9, price: 450, deposit: 200 }
+      { bookUuid: "b0123000-7c2a-41e9-9011-000000000123", bookId: "b0123000-7c2a-41e9-9011-000000000123", title: "English Plus Grade 8", type: "RENT", months: 9, price: 450, deposit: 200 }
     ],
     createdAt: "2026-10-25T08:00:00.000Z"
   }
 ];
 
 let reviewsStore = [
-  { id: "rev_1", bookId: "b_101", user: "Гульмира М.", rating: 5, date: "15.09.2025", comment: "Китеп эң жакшы абалда экен, ижара абдан ыңгайлуу болду!" },
-  { id: "rev_2", bookId: "b_101", user: "Бакыт Т.", rating: 5, date: "20.09.2025", comment: "Таза, тыкан китеп. Күрөөнү кайтарып берүү да көйгөйсүз өттү." },
-  { id: "rev_3", bookId: "b_113", user: "Динара А.", rating: 5, date: "05.10.2025", comment: "Алиппе жаңы, барактары бүтүн, биринчи класска эң сонун туура келди!" },
-  { id: "rev_4", bookId: "b_105", user: "Нурбек К.", rating: 5, date: "12.10.2025", comment: "ЖРТ боюнча мыкты колдонмо, математика бөлүмүн түшүндүрүү абдан түшүнүктүү экен." }
+  { uuid: "f0010000-7c2a-41e9-9011-000000000001", id: "f0010000-7c2a-41e9-9011-000000000001", legacyId: "rev_1", bookUuid: "b0101000-7c2a-41e9-9011-000000000101", bookId: "b0101000-7c2a-41e9-9011-000000000101", user: "Гульмира М.", rating: 5, date: "15.09.2025", comment: "Китеп эң жакшы абалда экен, ижара абдан ыңгайлуу болду!" },
+  { uuid: "f0020000-7c2a-41e9-9011-000000000002", id: "f0020000-7c2a-41e9-9011-000000000002", legacyId: "rev_2", bookUuid: "b0101000-7c2a-41e9-9011-000000000101", bookId: "b0101000-7c2a-41e9-9011-000000000101", user: "Бакыт Т.", rating: 5, date: "20.09.2025", comment: "Таза, тыкан китеп. Күрөөнү кайтарып берүү да көйгөйсүз өттү." },
+  { uuid: "f0030000-7c2a-41e9-9011-000000000003", id: "f0030000-7c2a-41e9-9011-000000000003", legacyId: "rev_3", bookUuid: "b0113000-7c2a-41e9-9011-000000000113", bookId: "b0113000-7c2a-41e9-9011-000000000113", user: "Динара А.", rating: 5, date: "05.10.2025", comment: "Алиппе жаңы, барактары бүтүн, биринчи класска эң сонун туура келди!" },
+  { uuid: "f0040000-7c2a-41e9-9011-000000000004", id: "f0040000-7c2a-41e9-9011-000000000004", legacyId: "rev_4", bookUuid: "b0105000-7c2a-41e9-9011-000000000105", bookId: "b0105000-7c2a-41e9-9011-000000000105", user: "Нурбек К.", rating: 5, date: "12.10.2025", comment: "ЖРТ боюнча мыкты колдонмо, математика бөлүмүн түшүндүрүү абдан түшүнүктүү экен." }
 ];
 
 // Helper to read JSON request body
@@ -231,35 +251,35 @@ export function handleRestApi(req, res) {
           get: { summary: "Список учебников с фильтрами и пагинацией", tags: ["Books"] },
           post: { summary: "Добавить новый учебник", tags: ["Books"] }
         },
-        "/api/books/{id}": {
-          get: { summary: "Получить учебник по ID", tags: ["Books"] },
-          put: { summary: "Обновить учебник", tags: ["Books"] },
-          delete: { summary: "Удалить учебник", tags: ["Books"] }
+        "/api/books/{uuid}": {
+          get: { summary: "Получить учебник по UUID", tags: ["Books"] },
+          put: { summary: "Обновить учебник по UUID", tags: ["Books"] },
+          delete: { summary: "Удалить учебник по UUID", tags: ["Books"] }
         },
         "/api/categories": {
           get: { summary: "Список 11 школьных предметов КР", tags: ["Categories"] },
           post: { summary: "Создать категорию предметов", tags: ["Categories"] }
         },
-        "/api/categories/{id}": {
-          get: { summary: "Получить категорию по ID или slug", tags: ["Categories"] },
-          put: { summary: "Обновить категорию", tags: ["Categories"] },
-          delete: { summary: "Удалить категорию", tags: ["Categories"] }
+        "/api/categories/{uuid}": {
+          get: { summary: "Получить категорию по UUID или slug", tags: ["Categories"] },
+          put: { summary: "Обновить категорию по UUID", tags: ["Categories"] },
+          delete: { summary: "Удалить категорию по UUID", tags: ["Categories"] }
         },
         "/api/users": {
           get: { summary: "Список пользователей платформы", tags: ["Users"] },
           post: { summary: "Зарегистрировать пользователя", tags: ["Users"] }
         },
-        "/api/users/{id}": {
-          get: { summary: "Получить профиль пользователя по ID", tags: ["Users"] },
-          put: { summary: "Обновить профиль", tags: ["Users"] },
-          delete: { summary: "Удалить профиль", tags: ["Users"] }
+        "/api/users/{uuid}": {
+          get: { summary: "Получить профиль пользователя по UUID", tags: ["Users"] },
+          put: { summary: "Обновить профиль по UUID", tags: ["Users"] },
+          delete: { summary: "Удалить профиль по UUID", tags: ["Users"] }
         },
         "/api/orders": {
           get: { summary: "Список заказов и доставок", tags: ["Orders"] },
           post: { summary: "Оформить новый заказ", tags: ["Orders"] }
         },
-        "/api/orders/{id}": {
-          get: { summary: "Детали заказа по ID", tags: ["Orders"] },
+        "/api/orders/{uuid}": {
+          get: { summary: "Детали заказа по UUID", tags: ["Orders"] },
           put: { summary: "Обновить статус заказа", tags: ["Orders"] }
         },
         "/api/reviews": {
@@ -341,8 +361,11 @@ export function handleRestApi(req, res) {
 
     if (method === 'POST') {
       return parseBody(req).then(data => {
+        const uuid = data.uuid || generateUuid();
         const newBook = {
-          id: `b_${Date.now()}`,
+          uuid,
+          id: data.id || uuid,
+          legacyId: data.id || null,
           title: data.title || 'Новый учебник',
           author: data.author || 'Не указан',
           subject: data.subject || 'Общий',
@@ -367,29 +390,29 @@ export function handleRestApi(req, res) {
     }
   }
 
-  // Single Book: /api/books/:id
+  // Single Book: /api/books/:idOrUuid
   const bookMatch = pathname.match(/^\/api\/books\/([^\/]+)$/);
   if (bookMatch) {
-    const id = bookMatch[1];
-    const index = booksStore.findIndex(b => b.id === id);
+    const idOrUuid = bookMatch[1];
+    const index = booksStore.findIndex(b => b.uuid === idOrUuid || b.id === idOrUuid || b.legacyId === idOrUuid);
 
     if (method === 'GET') {
-      if (index === -1) return sendJson(res, 404, { error: `Книга с ID ${id} не найдена` });
+      if (index === -1) return sendJson(res, 404, { error: `Книга с UUID/ID ${idOrUuid} не найдена` });
       return sendJson(res, 200, booksStore[index]);
     }
 
     if (method === 'PUT') {
-      if (index === -1) return sendJson(res, 404, { error: `Книга с ID ${id} не найдена` });
+      if (index === -1) return sendJson(res, 404, { error: `Книга с UUID/ID ${idOrUuid} не найдена` });
       return parseBody(req).then(data => {
-        booksStore[index] = { ...booksStore[index], ...data, id };
+        booksStore[index] = { ...booksStore[index], ...data, uuid: booksStore[index].uuid, id: booksStore[index].id };
         return sendJson(res, 200, { success: true, item: booksStore[index] });
       });
     }
 
     if (method === 'DELETE') {
-      if (index === -1) return sendJson(res, 404, { error: `Книга с ID ${id} не найдена` });
+      if (index === -1) return sendJson(res, 404, { error: `Книга с UUID/ID ${idOrUuid} не найдена` });
       const deleted = booksStore.splice(index, 1)[0];
-      return sendJson(res, 200, { success: true, deletedId: id, item: deleted });
+      return sendJson(res, 200, { success: true, deletedUuid: deleted.uuid, deletedId: deleted.id, item: deleted });
     }
   }
 
@@ -403,18 +426,19 @@ export function handleRestApi(req, res) {
     }
     if (method === 'POST') {
       return parseBody(req).then(data => {
-        const newCat = { id: String(Date.now()), ...data };
+        const uuid = data.uuid || generateUuid();
+        const newCat = { uuid, id: data.id || uuid, ...data };
         categoriesStore.push(newCat);
         return sendJson(res, 201, newCat);
       });
     }
   }
 
-  // Single Category: /api/categories/:id
+  // Single Category: /api/categories/:idOrSlug
   const catMatch = pathname.match(/^\/api\/categories\/([^\/]+)$/);
   if (catMatch) {
     const idOrSlug = catMatch[1];
-    const cat = categoriesStore.find(c => c.id === idOrSlug || c.slug === idOrSlug);
+    const cat = categoriesStore.find(c => c.uuid === idOrSlug || c.id === idOrSlug || c.slug === idOrSlug || String(c.legacyId) === idOrSlug);
     if (!cat) return sendJson(res, 404, { error: 'Категория не найдена' });
     return sendJson(res, 200, cat);
   }
@@ -429,7 +453,8 @@ export function handleRestApi(req, res) {
     }
     if (method === 'POST') {
       return parseBody(req).then(data => {
-        const newUser = { id: String(Date.now()), createdAt: new Date().toISOString(), ...data };
+        const uuid = data.uuid || generateUuid();
+        const newUser = { uuid, id: data.id || uuid, createdAt: new Date().toISOString(), ...data };
         usersStore.push(newUser);
         return sendJson(res, 201, newUser);
       });
@@ -438,8 +463,8 @@ export function handleRestApi(req, res) {
 
   const userMatch = pathname.match(/^\/api\/users\/([^\/]+)$/);
   if (userMatch) {
-    const id = userMatch[1];
-    const user = usersStore.find(u => u.id === id);
+    const idOrUuid = userMatch[1];
+    const user = usersStore.find(u => u.uuid === idOrUuid || u.id === idOrUuid || String(u.legacyId) === idOrUuid);
     if (!user) return sendJson(res, 404, { error: 'Пользователь не найден' });
     return sendJson(res, 200, user);
   }
@@ -454,11 +479,15 @@ export function handleRestApi(req, res) {
     }
     if (method === 'POST') {
       return parseBody(req).then(data => {
+        const uuid = data.uuid || generateUuid();
         const newOrder = {
-          id: `ord_${Date.now()}`,
+          uuid,
+          id: data.id || uuid,
           createdAt: new Date().toISOString(),
           status: 'PROCESSING',
-          ...data
+          ...data,
+          uuid,
+          id: data.id || uuid
         };
         ordersStore.unshift(newOrder);
         return sendJson(res, 201, { success: true, order: newOrder });
@@ -468,13 +497,13 @@ export function handleRestApi(req, res) {
 
   const orderMatch = pathname.match(/^\/api\/orders\/([^\/]+)$/);
   if (orderMatch) {
-    const id = orderMatch[1];
-    const index = ordersStore.findIndex(o => o.id === id);
+    const idOrUuid = orderMatch[1];
+    const index = ordersStore.findIndex(o => o.uuid === idOrUuid || o.id === idOrUuid || o.legacyId === idOrUuid);
     if (index === -1) return sendJson(res, 404, { error: 'Заказ не найден' });
     if (method === 'GET') return sendJson(res, 200, ordersStore[index]);
     if (method === 'PUT') {
       return parseBody(req).then(data => {
-        ordersStore[index] = { ...ordersStore[index], ...data, id };
+        ordersStore[index] = { ...ordersStore[index], ...data, uuid: ordersStore[index].uuid, id: ordersStore[index].id };
         return sendJson(res, 200, { success: true, order: ordersStore[index] });
       });
     }
@@ -483,16 +512,24 @@ export function handleRestApi(req, res) {
   // --- 5. REVIEWS ENDPOINTS (/api/reviews) ---
   if (pathname === '/api/reviews') {
     if (method === 'GET') {
-      const bookId = searchParams.get('bookId');
-      const filtered = bookId ? reviewsStore.filter(r => r.bookId === bookId) : reviewsStore;
+      const bookUuid = searchParams.get('bookUuid') || searchParams.get('bookId');
+      const filtered = bookUuid
+        ? reviewsStore.filter(r => r.bookUuid === bookUuid || r.bookId === bookUuid)
+        : reviewsStore;
       return sendJson(res, 200, { total: filtered.length, items: filtered });
     }
     if (method === 'POST') {
       return parseBody(req).then(data => {
+        const uuid = data.uuid || generateUuid();
         const newRev = {
-          id: `rev_${Date.now()}`,
+          uuid,
+          id: data.id || uuid,
+          bookUuid: data.bookUuid || data.bookId || 'b0101000-7c2a-41e9-9011-000000000101',
+          bookId: data.bookId || data.bookUuid || 'b0101000-7c2a-41e9-9011-000000000101',
           date: new Date().toLocaleDateString('ru-RU'),
-          ...data
+          ...data,
+          uuid,
+          id: data.id || uuid
         };
         reviewsStore.unshift(newRev);
         return sendJson(res, 201, { success: true, review: newRev });
@@ -528,7 +565,7 @@ export function handleRestApi(req, res) {
       const user = usersStore.find(u => u.email === body.email) || usersStore[1];
       return sendJson(res, 200, {
         success: true,
-        token: `jwt_mock_${Date.now()}_${user.id}`,
+        token: `jwt_mock_${Date.now()}_${user.uuid || user.id}`,
         user
       });
     });
@@ -536,8 +573,10 @@ export function handleRestApi(req, res) {
 
   if (pathname === '/api/auth/register' && method === 'POST') {
     return parseBody(req).then(body => {
+      const uuid = body.uuid || generateUuid();
       const newUser = {
-        id: String(Date.now()),
+        uuid,
+        id: body.id || uuid,
         name: body.name || 'Новый пользователь',
         email: body.email || 'user@example.com',
         phone: body.phone || '+996 700 000 000',
@@ -549,7 +588,7 @@ export function handleRestApi(req, res) {
       usersStore.push(newUser);
       return sendJson(res, 201, {
         success: true,
-        token: `jwt_mock_${Date.now()}_${newUser.id}`,
+        token: `jwt_mock_${Date.now()}_${newUser.uuid || newUser.id}`,
         user: newUser
       });
     });

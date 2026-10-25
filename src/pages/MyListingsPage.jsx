@@ -22,7 +22,7 @@ export const MyListingsPage = () => {
       try {
         const res = await api.getBooks({ limit: 100 });
         const filtered = res.items.filter(
-          (b) => b.owner?.id === user?.id || b.owner?.id === 'u_502'
+          (b) => b.owner?.uuid === user?.uuid || b.owner?.id === user?.id || b.owner?.id === 'u_502' || b.owner?.uuid === 'a0020000-7c2a-41e9-9011-000000000002'
         );
         setMyBooks(filtered);
       } finally {

@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { api, INITIAL_BOOKS } from '../services/api';
+import { isUuid } from '../utils/uuid';
 
 describe('Mock REST API and Data Layer tests', () => {
   beforeEach(() => {
@@ -73,5 +74,27 @@ describe('Mock REST API and Data Layer tests', () => {
     const metrics = await api.getAdminMetrics();
     expect(metrics.totalRevenue).toBeGreaterThan(0);
     expect(metrics.chartData.length).toBeGreaterThan(0);
+  });
+
+  it('generates standard RFC 4122 UUID v4 for new textbooks and orders', async () => {
+    const created = await api.createBook({
+      title: 'UUID Test Book',
+      author: 'Test Author',
+      subject: 'Тест',
+      grade: 5,
+    });
+    expect(created.uuid).toBeTruthy();
+    expect(isUuid(created.uuid)).toBe(true);
+
+    const fetchedByUuid = await api.getBookById(created.uuid);
+    expect(fetchedByUuid.uuid).toBe(created.uuid);
+
+    const newOrder = await api.createOrder({
+      customerName: 'UUID Customer',
+      customerPhone: '+996 700 000 000',
+      totalAmount: 300,
+    });
+    expect(newOrder.uuid).toBeTruthy();
+    expect(isUuid(newOrder.uuid)).toBe(true);
   });
 });

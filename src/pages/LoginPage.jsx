@@ -9,6 +9,7 @@ import { Input } from '../components/common/Input';
 import { Button } from '../components/common/Button';
 import { BrandLogo, BrandLogoIcon } from '../components/common/BrandLogo';
 import { setCredentials } from '../features/auth/authSlice';
+import { generateUuid } from '../utils/uuid';
 
 export const LoginPage = () => {
   const { t } = useTranslation('auth');
@@ -40,8 +41,10 @@ export const LoginPage = () => {
       return;
     }
 
+    const uuid = generateUuid();
     const mockUser = {
-      id: 'u_user1',
+      uuid,
+      id: uuid,
       name: email.split('@')[0],
       email,
       role: email.includes('admin') ? 'ADMIN' : 'USER',
@@ -84,7 +87,8 @@ export const LoginPage = () => {
   const handleQuickDemo = (role) => {
     if (role === 'ADMIN') {
       const adminUser = {
-        id: 'u_admin_demo',
+        uuid: 'a0010000-7c2a-41e9-9011-000000000001',
+        id: 'a0010000-7c2a-41e9-9011-000000000001',
         name: 'Нурбек Садыков (Admin)',
         email: 'admin@bilimkitep.kg',
         role: 'ADMIN',
@@ -93,7 +97,8 @@ export const LoginPage = () => {
       triggerLoginEffect(adminUser, 'mock_jwt_admin_token', '/admin');
     } else if (role === 'GOOGLE') {
       const googleDemoUser = {
-        id: 'u_google_demo_101',
+        uuid: 'a0030000-7c2a-41e9-9011-000000000003',
+        id: 'a0030000-7c2a-41e9-9011-000000000003',
         name: 'Нурсултан Касымов',
         email: 'nursultan.kasymov@gmail.com',
         avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80',
@@ -105,7 +110,8 @@ export const LoginPage = () => {
       triggerLoginEffect(googleDemoUser, 'mock_jwt_google_token', '/profile');
     } else {
       const standardUser = {
-        id: 'u_502',
+        uuid: 'a0020000-7c2a-41e9-9011-000000000002',
+        id: 'a0020000-7c2a-41e9-9011-000000000002',
         name: 'Айбек Нурланов',
         email: 'aibek@gmail.com',
         role: 'USER',

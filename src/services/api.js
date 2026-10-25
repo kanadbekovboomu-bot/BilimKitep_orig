@@ -1,10 +1,11 @@
 // Hybrid REST API Service with Neon Postgres & LocalStorage fallback
 import { neonService, isNeonAvailable } from './neonClient';
+import { generateUuid } from '../utils/uuid';
 
 const STORAGE_KEY_BOOKS = 'bilimkitep_books_db';
 const STORAGE_KEY_ORDERS = 'bilimkitep_orders_db';
 
-export const INITIAL_BOOKS = [
+const RAW_INITIAL_BOOKS = [
   {
     id: "b_101",
     title: "Геометрия 8-класс",
@@ -738,6 +739,27 @@ export const INITIAL_BOOKS = [
   }
 ];
 
+export const INITIAL_BOOKS = RAW_INITIAL_BOOKS.map((b, idx) => {
+  const num = String(101 + idx).padStart(4, '0');
+  const uuid = `b${num}00-7c2a-41e9-9011-00000000${num}`;
+  return {
+    ...b,
+    uuid,
+    id: b.id || uuid,
+    legacyId: b.id,
+    owner: b.owner ? {
+      ...b.owner,
+      uuid: `a00${(idx % 5) + 1}0000-7c2a-41e9-9011-00000000000${(idx % 5) + 1}`,
+      id: b.owner.id || `a00${(idx % 5) + 1}0000-7c2a-41e9-9011-00000000000${(idx % 5) + 1}`
+    } : b.owner,
+    reviews: (b.reviews || []).map((r, rIdx) => ({
+      ...r,
+      uuid: `f00${idx + 1}0000-7c2a-41e9-9011-00000000000${rIdx + 1}`,
+      id: r.id || `f00${idx + 1}0000-7c2a-41e9-9011-00000000000${rIdx + 1}`
+    }))
+  };
+});
+
 const getStoredBooks = () => {
   if (typeof window === 'undefined') return INITIAL_BOOKS;
   try {
@@ -748,7 +770,8 @@ const getStoredBooks = () => {
     }
     const parsed = JSON.parse(raw);
     const hasOldImages = Array.isArray(parsed) && parsed.some(b => b.images?.[0]?.includes('unsplash.com'));
-    if (hasOldImages) {
+    const lacksUuids = Array.isArray(parsed) && parsed.some(b => !b.uuid);
+    if (hasOldImages || lacksUuids) {
       localStorage.setItem(STORAGE_KEY_BOOKS, JSON.stringify(INITIAL_BOOKS));
       return INITIAL_BOOKS;
     }
@@ -867,7 +890,7 @@ export const api = {
 
     await delay();
     const books = getStoredBooks();
-    const book = books.find(b => b.id === id);
+    const book = books.find(b => b.uuid === id || b.id === id || b.legacyId === id);
     if (!book) throw new Error(`Учебник с ID ${id} не найден`);
     return book;
   },
@@ -888,8 +911,11 @@ export const api = {
 
     await delay();
     const books = getStoredBooks();
+    const uuid = bookData.uuid || generateUuid();
     const newBook = {
-      id: `b_${Date.now()}`,
+      uuid,
+      id: bookData.id || uuid,
+      legacyId: bookData.id || null,
       status: 'AVAILABLE',
       rating: 5.0,
       reviewsCount: 0,
@@ -898,6 +924,8 @@ export const api = {
         ? bookData.images
         : ["/covers/geometry-8.svg"],
       ...bookData,
+      uuid,
+      id: bookData.id || uuid,
       grade: Number(bookData.grade) || 8,
       price: Number(bookData.price) || 300,
       rentPricePerMonth: Number(bookData.rentPricePerMonth) || 40,
@@ -913,7 +941,7 @@ export const api = {
       try {
         const updated = await neonService.updateBook(id, updateData);
         const books = getStoredBooks();
-        const index = books.findIndex(b => b.id === id);
+        const index = books.findIndex(b => b.uuid === id || b.id === id || b.legacyId === id);
         if (index > -1) {
           books[index] = updated;
           saveStoredBooks(books);
@@ -926,7 +954,7 @@ export const api = {
 
     await delay();
     const books = getStoredBooks();
-    const index = books.findIndex(b => b.id === id);
+    const index = books.findIndex(b => b.uuid === id || b.id === id || b.legacyId === id);
     if (index === -1) throw new Error(`Учебник с ID ${id} не найден`);
     books[index] = { ...books[index], ...updateData };
     saveStoredBooks(books);
@@ -944,7 +972,7 @@ export const api = {
 
     await delay();
     let books = getStoredBooks();
-    books = books.filter(b => b.id !== id);
+    books = books.filter(b => b.uuid !== id && b.id !== id && b.legacyId !== id);
     saveStoredBooks(books);
     return { success: true, id };
   },
@@ -961,12 +989,16 @@ export const api = {
 
     await delay();
     const books = getStoredBooks();
-    const book = books.find(b => b.id === bookId);
+    const book = books.find(b => b.uuid === bookId || b.id === bookId || b.legacyId === bookId);
     if (!book) throw new Error('Книга не найдена');
+    const revUuid = review.uuid || generateUuid();
     const newReview = {
-      id: `r_${Date.now()}`,
+      uuid: revUuid,
+      id: review.id || revUuid,
       date: new Date().toLocaleDateString('ru-RU'),
       ...review,
+      uuid: revUuid,
+      id: review.id || revUuid,
     };
     book.reviews = book.reviews || [];
     book.reviews.unshift(newReview);
@@ -993,11 +1025,15 @@ export const api = {
 
     await delay();
     const orders = getStoredOrders();
+    const ordUuid = orderData.uuid || generateUuid();
     const newOrder = {
-      id: `ORD-${Math.floor(100000 + Math.random() * 900000)}`,
+      uuid: ordUuid,
+      id: orderData.id || ordUuid,
       createdAt: new Date().toISOString(),
       status: 'CONFIRMED',
       ...orderData,
+      uuid: ordUuid,
+      id: orderData.id || ordUuid,
     };
     orders.unshift(newOrder);
     saveStoredOrders(orders);

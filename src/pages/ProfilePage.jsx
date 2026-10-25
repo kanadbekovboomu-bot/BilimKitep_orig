@@ -42,7 +42,7 @@ export const ProfilePage = () => {
         const allBooks = await api.getBooks({ limit: 100 });
         // Filter books owned by current user or mock owner
         const owned = allBooks.items.filter(
-          (b) => b.owner?.id === user?.id || b.owner?.id === 'u_502'
+          (b) => b.owner?.uuid === user?.uuid || b.owner?.id === user?.id || b.owner?.id === 'u_502' || b.owner?.uuid === 'a0020000-7c2a-41e9-9011-000000000002'
         );
         setMyBooks(owned);
       } catch (err) {
