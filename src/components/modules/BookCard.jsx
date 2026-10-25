@@ -19,6 +19,7 @@ import { DealBadge } from './DealBadge';
 import { Badge } from '../common/Badge';
 import { RatingStars } from '../common/RatingStars';
 import { formatKGS } from '../../utils/formatters';
+import { TyndykEmblem } from '../common/KyrgyzOrnament';
 
 export const BookCard = ({
   book,
@@ -81,8 +82,20 @@ export const BookCard = ({
           navigate(`/books/${book.id}`);
         }
       }}
-      className="group relative bg-white/92 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-4 sm:p-4.5 flex flex-col justify-between hover:shadow-[0_22px_44px_-10px_rgba(16,185,129,0.22)] hover:-translate-y-2 hover:rotate-[0.35deg] hover:border-emerald-400/90 dark:hover:border-emerald-500/90 transition-all duration-300 ease-out cursor-pointer text-left overflow-hidden before:absolute before:left-0 before:top-6 before:bottom-6 before:w-1.5 before:rounded-r-full before:bg-gradient-to-b before:from-emerald-400 before:via-teal-500 before:to-emerald-600 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity"
+      className="group relative bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl border border-slate-200/90 dark:border-slate-800/80 p-4 sm:p-4.5 flex flex-col justify-between hover:shadow-[0_24px_48px_-12px_rgba(16,185,129,0.26)] hover:-translate-y-2 hover:rotate-[0.3deg] hover:border-emerald-400/90 dark:hover:border-emerald-500/90 transition-all duration-300 ease-out cursor-pointer text-left overflow-hidden before:absolute before:left-0 before:top-6 before:bottom-6 before:w-1.5 before:rounded-r-full before:bg-gradient-to-b before:from-amber-400 before:via-emerald-500 before:to-teal-600 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
     >
+      {/* Subtle Ethnic Vector Watermark Accent (matching background ornament) */}
+      <div className="absolute -top-7 -right-7 w-28 h-28 text-emerald-600/7 dark:text-emerald-400/7 pointer-events-none group-hover:text-emerald-600/16 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500">
+        <svg viewBox="0 0 100 100" fill="currentColor" className="w-full h-full">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3"/>
+          <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" strokeWidth="1.2"/>
+          <path d="M 50,15 C 40,25 40,35 50,45 C 60,35 60,25 50,15 Z" fill="currentColor" opacity="0.6"/>
+          <path d="M 50,85 C 40,75 40,65 50,55 C 60,65 60,75 50,85 Z" fill="currentColor" opacity="0.6"/>
+          <path d="M 15,50 C 25,40 35,40 45,50 C 35,60 25,60 15,50 Z" fill="currentColor" opacity="0.6"/>
+          <path d="M 85,50 C 75,40 65,40 55,50 C 65,60 75,60 85,50 Z" fill="currentColor" opacity="0.6"/>
+        </svg>
+      </div>
+
       <div>
         {/* 3D Textbook Cover Frame with Physical Book Spine & Page Edges */}
         <div className="relative w-full h-52 sm:h-56 bg-gradient-to-b from-slate-100/90 via-slate-50 to-slate-100/60 dark:from-slate-800/60 dark:via-darkBorder/40 dark:to-slate-800/30 rounded-2xl overflow-hidden mb-3.5 flex items-center justify-center p-3 border border-slate-200/70 dark:border-slate-700/60 shadow-[2px_3px_0px_rgba(0,0,0,0.04),4px_5px_0px_rgba(0,0,0,0.02)] dark:shadow-[2px_3px_0px_rgba(255,255,255,0.03)] group-hover:shadow-[4px_6px_0px_rgba(16,185,129,0.12)] transition-shadow">
@@ -90,9 +103,9 @@ export const BookCard = ({
           <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-r from-black/15 via-white/10 to-transparent pointer-events-none border-r border-black/5" />
 
           {/* Official Kyrgyz School Standard Seal Badge */}
-          <div className="absolute top-2 left-3 bg-emerald-600/90 dark:bg-emerald-500/90 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 backdrop-blur-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse" />
-            <span>КР Мектеп</span>
+          <div className="absolute top-2.5 left-2.5 bg-slate-900/85 dark:bg-black/85 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1.5 backdrop-blur-md border border-amber-400/30">
+            <TyndykEmblem size={11} className="text-amber-400" />
+            <span className="text-amber-300 font-bold">{t('card.krStandard', { defaultValue: 'КР Мектеп' })}</span>
           </div>
 
           <img
@@ -165,14 +178,14 @@ export const BookCard = ({
       </div>
 
       {/* MBANK Fintech Pricing & Actions Pod */}
-      <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 bg-slate-50/80 dark:bg-slate-800/40 p-2.5 rounded-2xl border border-slate-200/50 dark:border-slate-700/40 group-hover:border-emerald-300/60 dark:group-hover:border-emerald-700/60 transition-colors">
+      <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 bg-gradient-to-r from-slate-50/90 to-emerald-50/30 dark:from-slate-800/60 dark:to-emerald-950/20 p-2.5 rounded-2xl border border-slate-200/60 dark:border-slate-700/50 group-hover:border-emerald-300/80 dark:group-hover:border-emerald-600/60 transition-all duration-300">
         <div>
           {isRentable ? (
             <div>
-              <div className="text-[10px] text-gray-400 dark:text-gray-400 font-semibold uppercase tracking-wider">
+              <div className="text-[10px] text-gray-400 dark:text-gray-400 font-bold uppercase tracking-wider">
                 {t('units.rentPrice')}
               </div>
-              <div className="text-sm font-black text-emerald-600 dark:text-emerald-400 leading-tight">
+              <div className="text-sm font-black text-emerald-600 dark:text-emerald-400 leading-tight flex items-baseline">
                 {formatKGS(book.rentPricePerMonth)}
                 <span className="text-[10px] font-normal text-gray-400 ml-1">
                   {t('units.perMonth')}
@@ -181,7 +194,7 @@ export const BookCard = ({
             </div>
           ) : (
             <div>
-              <div className="text-[10px] text-gray-400 dark:text-gray-400 font-semibold uppercase tracking-wider">
+              <div className="text-[10px] text-gray-400 dark:text-gray-400 font-bold uppercase tracking-wider">
                 {t('units.buyPrice')}
               </div>
               <div className="text-sm font-black text-gray-900 dark:text-gray-100 leading-tight">
@@ -197,7 +210,7 @@ export const BookCard = ({
             e.stopPropagation();
             onAddToCart && onAddToCart(book, isRentable ? 'RENT' : 'BUY', 9);
           }}
-          className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:brightness-125 hover:shadow-[0_0_18px_rgba(16,185,129,0.6)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-md shadow-emerald-500/25 shrink-0"
+          className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 text-white hover:brightness-120 hover:shadow-[0_0_20px_rgba(16,185,129,0.7)] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shadow-md shadow-emerald-500/30 shrink-0"
           title={t('actions.addToCart')}
         >
           <ShoppingBag className="w-4 h-4" />

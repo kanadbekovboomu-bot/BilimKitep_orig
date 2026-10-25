@@ -94,7 +94,7 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-2 text-[11px] text-gray-500">
                 <Clock className="w-3.5 h-3.5 text-brand-500 shrink-0" />
-                <span>09:00 - 20:00 (Дем алышсыз)</span>
+                <span>{t('footer.workingHours', { defaultValue: '09:00 - 20:00 (Дем алышсыз)' })}</span>
               </li>
             </ul>
           </div>
@@ -104,12 +104,12 @@ export const Footer = () => {
             <div className="flex items-center gap-2">
               <CreditCard className="w-4 h-4 text-brand-600 dark:text-brand-400" />
               <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wider">
-                Коопсуз төлөм жана жеткирүү
+                {t('footer.safePaymentTitle', { defaultValue: 'Коопсуз төлөм жана жеткирүү' })}
               </h4>
             </div>
 
             <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
-              Кыргызстандын бардык банктары жана капчыктары аркылуу коопсуз төлөм кабыл алынат.
+              {t('footer.safePaymentDesc', { defaultValue: 'Кыргызстандын бардык банктары жана капчыктары аркылуу коопсуз төлөм кабыл алынат.' })}
             </p>
 
             {/* Payment method chips */}
@@ -133,7 +133,7 @@ export const Footer = () => {
 
             <div className="flex items-center gap-1.5 pt-1 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
               <Truck className="w-3.5 h-3.5" />
-              <span>7 облус боюнча 24 саатта жеткирүү</span>
+              <span>{t('footer.delivery24h', { defaultValue: '7 облус боюнча 24 саатта жеткирүү' })}</span>
             </div>
           </div>
         </div>
@@ -142,9 +142,9 @@ export const Footer = () => {
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <p>{t('footer.rights')}</p>
           <p className="flex items-center gap-1.5 font-medium">
-            <span>Кыргызстанда сүйүү менен жасалган</span>
+            <span>{t('footer.madeWithLove', { defaultValue: 'Кыргызстанда сүйүү менен жасалган' })}</span>
             <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" />
-            <span>• Билим — түгөнгүс кенч 🇰🇬</span>
+            <span>• {t('footer.quote', { defaultValue: 'Билим — түгөнгүс кенч 🇰🇬' })}</span>
           </p>
         </div>
       </div>

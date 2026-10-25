@@ -87,7 +87,13 @@
     "rentLiterature": "Rentals (3, 5, 9 Months)",
     "ortPrep": "ORT / JRT Test Prep",
     "address": "Bishkek, 205 Chuy Avenue (Bilim Hub)",
-    "diploma": "Diploma Project 2026"
+    "diploma": "Diploma Project 2026",
+    "workingHours": "09:00 - 20:00 (Daily)",
+    "safePaymentTitle": "Secure Payment & Delivery",
+    "safePaymentDesc": "Secure payment accepted via all banks and mobile wallets of Kyrgyzstan.",
+    "delivery24h": "24-hour delivery across all 7 regions",
+    "madeWithLove": "Made with love in Kyrgyzstan",
+    "quote": "Knowledge is an endless treasure 🇰🇬"
   },
   "paymentModal": {
     "title": "Demo Payment Gateway",
@@ -113,5 +119,34 @@
     "location": "City / Region:",
     "contact": "Contact:",
     "hiddenUntilOrder": "Contact details unlocked after order confirmation"
+  },
+  "brandSubtitle": "Kyrgyzstan Textbook Store",
+  "cultureBadge": "Official Textbooks of Kyrgyzstan • 7 Regions",
+  "card": {
+    "krStandard": "KR Standard",
+    "quickView": "Quick View"
+  },
+  "subjects": {
+    "title": "Textbooks by School Subjects",
+    "standard": "National Curriculum Standard",
+    "standardShort": "KR Standard",
+    "all": "All Subjects",
+    "math": "Mathematics",
+    "kyrgyz": "Kyrgyz Language",
+    "lit": "Literature",
+    "physics": "Physics",
+    "chem": "Chemistry",
+    "bio": "Biology",
+    "history": "History",
+    "english": "English Language",
+    "it": "Informatics / IT",
+    "ort": "ORT Exam Prep",
+    "badges": {
+      "stateLang": "State Lang",
+      "studyGuide": "Study Guide",
+      "krAndWorld": "KR & World",
+      "ortGrant": "ORT / Grant",
+      "itDigital": "IT / Digital"
+    }
   }
 }

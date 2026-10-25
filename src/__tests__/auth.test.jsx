@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { authSlice, setCredentials, logout } from '../features/auth/authSlice';
 import { LoginPage } from '../pages/LoginPage';
-import '../i18n';
+import i18n from '../i18n';
 
 // Mock Google OAuth package for jsdom
 vi.mock('@react-oauth/google', () => ({
@@ -28,7 +28,8 @@ vi.mock('@react-oauth/google', () => ({
 describe('Auth Redux Slice & Google Auth', () => {
   let store;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await i18n.changeLanguage('ru');
     store = configureStore({
       reducer: {
         auth: authSlice.reducer,
@@ -84,7 +85,7 @@ describe('Auth Redux Slice & Google Auth', () => {
     );
 
     expect(screen.getByTestId('google-login-button')).toBeInTheDocument();
-    expect(screen.getByText(/Колдонуучу/i)).toBeInTheDocument();
-    expect(screen.getByText(/Админ КР/i)).toBeInTheDocument();
+    expect(screen.getByText(/Колдонуучу|Пользователь|User/i)).toBeInTheDocument();
+    expect(screen.getByText(/Админ КР|Admin/i)).toBeInTheDocument();
   });
 });

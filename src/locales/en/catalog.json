@@ -20,7 +20,10 @@
     "sortNewest": "Newest First",
     "sortPriceAsc": "Price: Low to High",
     "sortPriceDesc": "Price: High to Low",
-    "sortRating": "Highest Rated"
+    "sortRating": "Highest Rated",
+    "upTo": "up to {{price}}",
+    "wisdomTitle": "Knowledge is an endless treasure",
+    "wisdomDesc": "High quality education and accessible textbooks for students across Kyrgyzstan."
   },
   "results": {
     "found": "Books found",

@@ -44,5 +44,18 @@
   "buySection": {
     "title": "Purchase Price (Full Ownership):",
     "buyBtn": "Buy Now"
+  },
+  "guarantee": {
+    "title": "BilimKitep Guarantee • 100% Trust",
+    "depositRefundTitle": "100% Refundable Deposit",
+    "depositRefundDesc": "Deposit is refunded to your card upon textbook return.",
+    "fastDeliveryTitle": "Fast Delivery to 7 Regions",
+    "fastDeliveryDesc": "Bishkek, Osh and all regions by courier or post within 24 hours.",
+    "verifiedConditionTitle": "Verified Condition",
+    "verifiedConditionDesc": "Every textbook is checked for integrity and clean condition.",
+    "ministryApprovalTitle": "Ministry of Education and Science of the Kyrgyz Republic",
+    "approvedBadge": "Approved",
+    "complianceDesc": "Official textbook fully compliant with the national curriculum of Kyrgyzstan",
+    "proverb": "“Knowledge is an endless treasure, skill is an unquenchable lamp” 🇰🇬"
   }
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Sparkles, Star } from 'lucide-react';
 import { BrandLogoIcon } from './BrandLogo';
 
@@ -12,6 +13,7 @@ export const CreativePageLoader = ({
   onComplete,
   duration = 1100,
 }) => {
+  const { t } = useTranslation('common');
   const [progress, setProgress] = useState(15);
   const [quoteIndex, setQuoteIndex] = useState(0);
 
@@ -81,7 +83,7 @@ export const CreativePageLoader = ({
           <div className="flex items-center justify-between text-xs font-black text-gray-700 dark:text-gray-300 px-1">
             <span className="flex items-center gap-1.5 text-brand-600 dark:text-brand-400">
               <span className="w-2 h-2 rounded-full bg-brand-500 animate-ping inline-block" />
-              <span>Жүктөлүүдө...</span>
+              <span>{t('actions.loading', { defaultValue: 'Жүктөлүүдө...' })}</span>
             </span>
             <span className="font-mono text-emerald-600 dark:text-emerald-400 text-sm font-black">
               {progress}%

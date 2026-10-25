@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Lively, Natural 3D-styled Educational Mascot & Brand Mark for BilimKitep
@@ -199,6 +200,7 @@ export const BrandLogo = ({
   className = '',
   linkTo = '/',
 }) => {
+  const { t } = useTranslation('common');
   const sizeMap = {
     sm: { icon: 36, text: 'text-lg', badge: 'text-[9px] px-1 py-0.2', sub: 'text-[9px]' },
     md: { icon: 46, text: 'text-xl sm:text-2xl', badge: 'text-[10px] px-1.5 py-0.5', sub: 'text-[10px]' },
@@ -232,7 +234,7 @@ export const BrandLogo = ({
           <span className={`font-semibold text-gray-500 dark:text-gray-400 tracking-wider mt-1 hidden sm:flex items-center gap-1 ${currentSize.sub}`}>
             <span>Кыргызстан</span>
             <span className="text-amber-500">•</span>
-            <span>Окуу китептер дүкөнү</span>
+            <span>{t('brandSubtitle', { defaultValue: 'Окуу китептер дүкөнү' })}</span>
           </span>
         )}
       </div>

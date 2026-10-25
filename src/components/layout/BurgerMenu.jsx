@@ -34,36 +34,42 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount, user, onLogout }) => {
             <ThemeToggle />
           </div>
 
-          <nav className="flex flex-col gap-1.5 py-4">
+          <nav className="flex flex-col gap-2 py-4">
             <Link
               to="/catalog"
               onClick={onClose}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-darkBorder hover:text-brand-600"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-bold text-gray-800 dark:text-gray-100 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-700 dark:hover:text-emerald-300 border border-slate-200/80 dark:border-slate-700/80 transition-all"
             >
-              <BookOpen className="w-4 h-4" />
-              {t('nav.catalog')}
+              <span className="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <BookOpen className="w-4 h-4" />
+              </span>
+              <span>{t('nav.catalog')}</span>
             </Link>
 
             <Link
               to="/add-book"
               onClick={onClose}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-darkBorder hover:text-brand-600"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-md shadow-emerald-500/20 transition-all"
             >
-              <PlusCircle className="w-4 h-4" />
-              {t('nav.addBook')}
+              <span className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
+                <PlusCircle className="w-4 h-4 text-white" />
+              </span>
+              <span>{t('nav.addBook')}</span>
             </Link>
 
             <Link
               to="/api-docs"
               onClick={onClose}
-              className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-sky-700 dark:text-sky-300 hover:bg-sky-50 dark:hover:bg-sky-950/40"
+              className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold text-sky-700 dark:text-sky-300 bg-sky-50/80 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/50 hover:bg-sky-100 transition-all"
             >
               <div className="flex items-center gap-3">
-                <Code2 className="w-4 h-4 text-sky-500" />
-                <span>REST API Документация</span>
+                <span className="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-900/60 text-sky-600 flex items-center justify-center shrink-0">
+                  <Code2 className="w-4 h-4" />
+                </span>
+                <span>REST API Explorer</span>
               </div>
               <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">
-                22+
+                25+
               </span>
             </Link>
 

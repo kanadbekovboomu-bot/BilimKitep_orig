@@ -45,30 +45,39 @@ export const Header = ({ onOpenDefenseModal }) => {
           <BrandLogo size="md" />
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          <nav className="hidden lg:flex items-center gap-2 xl:gap-3 flex-shrink-0">
+            {/* Catalog Button Pill */}
             <Link
               to="/catalog"
-              className="px-3 py-2 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-gray-50 dark:hover:bg-darkCard transition-colors"
+              className="group relative px-4 py-2 rounded-2xl text-xs xl:text-sm font-bold text-gray-800 dark:text-gray-100 bg-slate-100/90 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-700 dark:hover:text-emerald-300 border border-slate-200/90 dark:border-slate-700/80 hover:border-emerald-400/80 shadow-xs hover:shadow-[0_4px_16px_rgba(16,185,129,0.18)] transition-all duration-200 flex items-center gap-2.5 whitespace-nowrap flex-shrink-0 backdrop-blur-md"
             >
-              {t('nav.catalog')}
+              <span className="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-[-6deg] transition-transform">
+                <BookOpen className="w-3.5 h-3.5" />
+              </span>
+              <span>{t('nav.catalog')}</span>
             </Link>
 
+            {/* Add Book CTA Pill (M-Bank FinTech Aesthetic) */}
             <Link
               to="/add-book"
-              className="px-3 py-2 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-gray-50 dark:hover:bg-darkCard transition-colors flex items-center gap-1.5"
+              className="group relative px-4 py-2 rounded-2xl text-xs xl:text-sm font-bold text-white bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:via-emerald-500 hover:to-teal-500 shadow-md shadow-emerald-600/25 hover:shadow-[0_6px_22px_rgba(16,185,129,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 flex items-center gap-2.5 whitespace-nowrap flex-shrink-0 overflow-hidden"
             >
-              <PlusCircle className="w-4 h-4 text-brand-500" />
-              {t('nav.addBook')}
+              <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.22)_50%,transparent_75%)] bg-[length:250%_250%] opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity pointer-events-none" />
+              <span className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center shrink-0 group-hover:rotate-90 transition-transform duration-300">
+                <PlusCircle className="w-4 h-4 text-white" />
+              </span>
+              <span>{t('nav.addBook')}</span>
             </Link>
 
+            {/* REST API Explorer Badge */}
             <Link
               to="/api-docs"
-              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/50 hover:bg-sky-100 dark:hover:bg-sky-900/60 transition-all flex items-center gap-1.5 cursor-pointer ml-0.5"
-              title="REST API Explorer (22+ Endpoints)"
+              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/90 dark:border-sky-800/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap flex-shrink-0"
+              title="REST API Explorer (25+ Endpoints)"
             >
               <Code2 className="w-3.5 h-3.5 text-sky-500" />
               <span>REST API</span>
-              <span className="text-[10px] bg-emerald-500 text-white px-1.5 py-0.2 rounded-full font-bold">22+</span>
+              <span className="text-[10px] bg-emerald-500 text-white px-1.5 py-0.2 rounded-full font-bold">25+</span>
             </Link>
 
             {/* Quick Diploma Defense Presentation Guide Button */}
@@ -76,10 +85,10 @@ export const Header = ({ onOpenDefenseModal }) => {
               <button
                 type="button"
                 onClick={onOpenDefenseModal}
-                className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800/50 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition-all flex items-center gap-1.5 cursor-pointer ml-1"
+                className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200/90 dark:border-amber-800/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap flex-shrink-0"
                 title="5-minute Defense Speech in English (Diploma Section 9)"
               >
-                <GraduationCap className="w-3.5 h-3.5 text-brand-500" />
+                <GraduationCap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span className="hidden xl:inline">Speech Guide</span> (10/10)
               </button>
             )}
@@ -147,11 +156,11 @@ export const Header = ({ onOpenDefenseModal }) => {
               </Link>
             )}
 
-            {/* Mobile menu hamburger button */}
+            {/* Mobile / Tablet menu hamburger button */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden p-2.5 rounded-xl border border-gray-200 dark:border-darkBorder text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkCard"
+              className="lg:hidden p-2.5 rounded-xl border border-gray-200 dark:border-darkBorder text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-darkCard cursor-pointer"
               aria-label="Open navigation menu"
             >
               <Menu className="w-5 h-5" />

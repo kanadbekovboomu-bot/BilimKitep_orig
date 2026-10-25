@@ -57,5 +57,15 @@
     "b2Desc": "Approved textbooks by Bekboev, Ibraimov, Mambetakunov, and leading Kyrgyz educators.",
     "b3Title": "Secure Transactions",
     "b3Desc": "Structured escrow deposit system and condition verification before handover."
+  },
+  "impactStats": {
+    "studentsCount": "85 000+",
+    "studentsLabel": "Students Using Platform",
+    "booksCount": "12 400+",
+    "booksLabel": "Verified Textbooks",
+    "savedAmount": "4.8M KGS",
+    "savedLabel": "Saved by Families",
+    "regionsCount": "7 Regions",
+    "regionsLabel": "All Kyrgyzstan"
   }
 }

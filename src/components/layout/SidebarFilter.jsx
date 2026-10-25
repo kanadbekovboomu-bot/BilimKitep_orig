@@ -240,7 +240,7 @@ export const SidebarFilter = ({
               <span>{t('filters.priceRange')}</span>
             </label>
             <span className="text-xs font-black text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-lg border border-brand-200 dark:border-brand-800/40">
-              {formatKGS(filters.maxPrice || 2000)} чейин
+              {t('filters.upTo', { price: formatKGS(filters.maxPrice || 2000), defaultValue: `${formatKGS(filters.maxPrice || 2000)} чейин` })}
             </span>
           </div>
 
@@ -266,11 +266,11 @@ export const SidebarFilter = ({
           <div className="flex items-center gap-2">
             <TyndykEmblem size={20} className="text-amber-500 shrink-0" />
             <span className="text-xs font-black text-amber-900 dark:text-amber-200">
-              «Билим — түгөнгүс кенч»
+              {t('filters.wisdomTitle', { defaultValue: '«Билим — түгөнгүс кенч»' })}
             </span>
           </div>
           <p className="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed">
-            Кыргызстандын окуучулары үчүн сапаттуу билим берүү жана жеткиликтүү китептер дүкөнү.
+            {t('filters.wisdomDesc', { defaultValue: 'Кыргызстандын окуучулары үчүн сапаттуу билим берүү жана жеткиликтүү китептер дүкөнү.' })}
           </p>
         </div>
 

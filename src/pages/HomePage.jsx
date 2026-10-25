@@ -85,7 +85,7 @@ export const HomePage = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-6 animate-entrance">
             <div className="flex flex-wrap items-center justify-center gap-2">
-              <KyrgyzCultureBadge text="Кыргызстандын окуу китептер дүкөнү • 7 облус" />
+              <KyrgyzCultureBadge text={t('cultureBadge', { ns: 'common', defaultValue: 'Кыргызстандын окуу китептер дүкөнү • 7 облус' })} />
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/80 dark:bg-emerald-950/60 text-brand-800 dark:text-brand-300 text-xs font-bold shadow-xs">
                 <Sparkles className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
                 <span>{t('hero.badge')}</span>
@@ -161,8 +161,8 @@ export const HomePage = () => {
               <GraduationCap className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">85 000+</div>
-              <div className="text-xs text-gray-500 font-semibold">Окуучулар колдонууда</div>
+              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">{t('impactStats.studentsCount', { defaultValue: '85 000+' })}</div>
+              <div className="text-xs text-gray-500 font-semibold">{t('impactStats.studentsLabel', { defaultValue: 'Окуучулар колдонууда' })}</div>
             </div>
           </div>
 
@@ -171,8 +171,8 @@ export const HomePage = () => {
               <BookOpen className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">12 400+</div>
-              <div className="text-xs text-gray-500 font-semibold">Текшерилген окуу китептер</div>
+              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">{t('impactStats.booksCount', { defaultValue: '12 400+' })}</div>
+              <div className="text-xs text-gray-500 font-semibold">{t('impactStats.booksLabel', { defaultValue: 'Текшерилген окуу китептер' })}</div>
             </div>
           </div>
 
@@ -181,8 +181,8 @@ export const HomePage = () => {
               <Coins className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">4.8 млн сом</div>
-              <div className="text-xs text-gray-500 font-semibold">Бюджет үнөмдөлдү</div>
+              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">{t('impactStats.savedAmount', { defaultValue: '4.8 млн сом' })}</div>
+              <div className="text-xs text-gray-500 font-semibold">{t('impactStats.savedLabel', { defaultValue: 'Бюджет үнөмдөлдү' })}</div>
             </div>
           </div>
 
@@ -191,8 +191,8 @@ export const HomePage = () => {
               <Truck className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">7 Облус</div>
-              <div className="text-xs text-gray-500 font-semibold">24 саатта жеткирүү</div>
+              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">{t('impactStats.regionsCount', { defaultValue: '7 Облус' })}</div>
+              <div className="text-xs text-gray-500 font-semibold">{t('impactStats.regionsLabel', { defaultValue: 'Бүт Кыргызстан' })}</div>
             </div>
           </div>
         </div>

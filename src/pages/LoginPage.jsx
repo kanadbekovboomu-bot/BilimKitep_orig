@@ -147,15 +147,15 @@ export const LoginPage = () => {
             <div className="space-y-1.5">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 text-xs font-bold border border-emerald-300/40">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span>Ийгиликтүү кирүү!</span>
+                <span>{t('loginSuccess', { defaultValue: 'Ийгиликтүү кирүү!' })}</span>
               </div>
               <h3 className="text-xl font-black text-gray-900 dark:text-gray-100">
-                Кош келиңиз, {enteringUser?.name}!
+                {t('welcomeUser', { name: enteringUser?.name, defaultValue: `Кош келиңиз, ${enteringUser?.name}!` })}
               </h3>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 {enteringUser?.role === 'ADMIN'
-                  ? 'КР Администратор панелине өтүүдө...'
-                  : 'БилимКитеп платформасына өтүүдө...'}
+                  ? t('redirectAdmin', { defaultValue: 'КР Администратор панелине өтүүдө...' })
+                  : t('redirectHome', { defaultValue: 'БилимКитеп платформасына өтүүдө...' })}
               </p>
             </div>
 
@@ -204,7 +204,7 @@ export const LoginPage = () => {
               className="py-2 px-1.5 rounded-xl bg-white dark:bg-darkCard hover:bg-emerald-100/50 text-[11px] font-semibold text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-darkBorder transition-all flex items-center justify-center gap-1 shadow-xs cursor-pointer"
             >
               <UserCheck className="w-3.5 h-3.5 text-brand-500" />
-              <span>Колдонуучу</span>
+              <span>{t('demoUserShort', { defaultValue: 'Колдонуучу' })}</span>
             </button>
             <button
               type="button"
@@ -212,7 +212,7 @@ export const LoginPage = () => {
               className="py-2 px-1.5 rounded-xl bg-white dark:bg-darkCard hover:bg-purple-100/50 text-[11px] font-semibold text-purple-700 dark:text-purple-300 border border-gray-200 dark:border-darkBorder transition-all flex items-center justify-center gap-1 shadow-xs cursor-pointer"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-purple-600" />
-              <span>Админ КР</span>
+              <span>{t('demoAdminShort', { defaultValue: 'Админ КР' })}</span>
             </button>
             <button
               type="button"

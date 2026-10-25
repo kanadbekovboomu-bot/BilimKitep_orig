@@ -92,12 +92,12 @@ export const OrderSummary = ({
           <div className="flex items-center gap-2 p-2.5 rounded-xl bg-amber-500/10 dark:bg-amber-950/20 border border-amber-300/30 dark:border-amber-700/20 text-amber-900 dark:text-amber-200 text-[11px]">
             <TyndykEmblem size={18} className="text-amber-500 shrink-0" />
             <span className="font-semibold">
-              Кыргызстан • Коопсуз төлөм жана кепилденген кайтарым күрөө
+              {t('trustBadge', { defaultValue: 'Кыргызстан • Коопсуз төлөм жана кепилденген кайтарым күрөө' })}
             </span>
           </div>
           <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center flex items-center justify-center gap-1">
             <Leaf className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-            <span>Китепти кайра колдонуу — жаратылышты жана каражатты сактайт</span>
+            <span>{t('ecoBadge', { defaultValue: 'Китепти кайра колдонуу — жаратылышты жана каражатты сактайт' })}</span>
           </p>
         </div>
       </div>
