@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { X, BookOpen, ShoppingBag, PlusCircle, User, ShieldCheck, LogIn, LogOut, Code2 } from 'lucide-react';
+import { X, BookOpen, ShoppingBag, PlusCircle, User, ShieldCheck, LogIn, LogOut } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { LangSwitcher } from '../common/LangSwitcher';
 import { BrandLogo } from '../common/BrandLogo';
@@ -55,22 +55,6 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount, user, onLogout }) => {
                 <PlusCircle className="w-4 h-4 text-white" />
               </span>
               <span>{t('nav.addBook')}</span>
-            </Link>
-
-            <Link
-              to="/api-docs"
-              onClick={onClose}
-              className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold text-sky-700 dark:text-sky-300 bg-sky-50/80 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-800/50 hover:bg-sky-100 transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <span className="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-900/60 text-sky-600 flex items-center justify-center shrink-0">
-                  <Code2 className="w-4 h-4" />
-                </span>
-                <span>REST API Explorer</span>
-              </div>
-              <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">
-                25+
-              </span>
             </Link>
 
             <Link

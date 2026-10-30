@@ -76,7 +76,7 @@ export const HomePage = () => {
   ];
 
   return (
-    <div className="space-y-16 pb-16">
+    <div className="w-full max-w-full overflow-x-hidden space-y-16 pb-16">
       {/* Hero Section with Kyrgyz Cultural & Store Highlights */}
       <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-16 bg-gradient-to-b from-emerald-50/60 via-amber-50/30 to-transparent dark:from-emerald-950/20 dark:via-darkBg dark:to-transparent border-b border-gray-100 dark:border-darkBorder">
         {/* Ambient Entrance Glow Orbs */}

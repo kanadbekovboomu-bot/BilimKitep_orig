@@ -83,7 +83,7 @@ export const LoginPage = () => {
     setError(t('googleAuthFailed'));
   };
 
-  // Quick Demo Logins for Diploma Defense
+  // Quick Demo Logins for Testing
   const handleQuickDemo = (role) => {
     if (role === 'ADMIN') {
       const adminUser = {

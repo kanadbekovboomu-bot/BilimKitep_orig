@@ -63,14 +63,6 @@ export const Footer = () => {
                   {t('footer.ortPrep')}
                 </Link>
               </li>
-              <li className="pt-1">
-                <Link to="/api-docs" className="inline-flex items-center gap-1.5 font-bold text-sky-600 dark:text-sky-400 hover:text-sky-500 transition-colors">
-                  <span>REST API Explorer (22+)</span>
-                  <span className="px-1.5 py-0.2 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px]">
-                    v2.0
-                  </span>
-                </Link>
-              </li>
             </ul>
           </div>
 

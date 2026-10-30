@@ -9,8 +9,6 @@ import {
   User,
   ShieldCheck,
   Menu,
-  GraduationCap,
-  Code2
 } from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { LangSwitcher } from '../common/LangSwitcher';
@@ -19,7 +17,7 @@ import { TyndykEmblem } from '../common/KyrgyzOrnament';
 import { BrandLogo } from '../common/BrandLogo';
 import { logout } from '../../features/auth/authSlice';
 
-export const Header = ({ onOpenDefenseModal }) => {
+export const Header = () => {
   const { t } = useTranslation('common');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -39,13 +37,13 @@ export const Header = ({ onOpenDefenseModal }) => {
       {/* Kyrgyz National Color Ribbon */}
       <div className="w-full h-1 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
           {/* New Premium Kyrgyz Brand Logo */}
           <BrandLogo size="md" />
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-2 xl:gap-3 flex-shrink-0">
+          <nav className="hidden lg:flex items-center gap-3 flex-shrink-0">
             {/* Catalog Button Pill */}
             <Link
               to="/catalog"
@@ -68,30 +66,6 @@ export const Header = ({ onOpenDefenseModal }) => {
               </span>
               <span>{t('nav.addBook')}</span>
             </Link>
-
-            {/* REST API Explorer Badge */}
-            <Link
-              to="/api-docs"
-              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/90 dark:border-sky-800/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap flex-shrink-0"
-              title="REST API Explorer (25+ Endpoints)"
-            >
-              <Code2 className="w-3.5 h-3.5 text-sky-500" />
-              <span>REST API</span>
-              <span className="text-[10px] bg-emerald-500 text-white px-1.5 py-0.2 rounded-full font-bold">25+</span>
-            </Link>
-
-            {/* Quick Diploma Defense Presentation Guide Button */}
-            {onOpenDefenseModal && (
-              <button
-                type="button"
-                onClick={onOpenDefenseModal}
-                className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200/90 dark:border-amber-800/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap flex-shrink-0"
-                title="5-minute Defense Speech in English (Diploma Section 9)"
-              >
-                <GraduationCap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                <span className="hidden xl:inline">Speech Guide</span> (10/10)
-              </button>
-            )}
           </nav>
 
           {/* Right Action Icons & Controls */}
