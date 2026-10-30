@@ -8,6 +8,12 @@ import { RatingStars } from '../common/RatingStars';
 import { Button } from '../common/Button';
 import { formatKGS } from '../../utils/formatters';
 import { ShoppingBag, ArrowRight } from 'lucide-react';
+import {
+  getLocalizedBookTitle,
+  getLocalizedBookDesc,
+  getLocalizedBookAuthor,
+  getLocalizedMedium,
+} from '../../utils/bookLocalization';
 
 export const QuickViewModal = ({
   book,
@@ -15,11 +21,19 @@ export const QuickViewModal = ({
   onClose,
   onAddToCart,
 }) => {
-  const { t } = useTranslation(['book', 'common']);
+  const { t, i18n } = useTranslation(['book', 'common']);
   const [selectedMonths, setSelectedMonths] = useState(9);
   const [dealType, setDealType] = useState('RENT');
+  const [imgError, setImgError] = useState(false);
 
   if (!book) return null;
+
+  const currentLang = i18n.language || 'ru';
+  const title = getLocalizedBookTitle(book, currentLang);
+  const desc = getLocalizedBookDesc(book, currentLang);
+  const author = getLocalizedBookAuthor(book, currentLang);
+  const medium = getLocalizedMedium(book.language, currentLang);
+  const currency = currentLang.toLowerCase().startsWith('en') ? 'KGS' : 'сом';
 
   const isRentable = book.dealType === 'RENT' || book.dealType === 'BOTH';
   const isBuyable = book.dealType === 'BUY' || book.dealType === 'BOTH';
@@ -31,8 +45,16 @@ export const QuickViewModal = ({
     onClose();
   };
 
+  const conditionMap = {
+    NEW: t('condition.new', { ns: 'common' }),
+    EXCELLENT: t('condition.excellent', { ns: 'common' }),
+    GOOD: t('condition.good', { ns: 'common' }),
+    FAIR: t('condition.fair', { ns: 'common' }),
+  };
+  const localizedCondition = conditionMap[book.condition] || book.condition;
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={book.title} maxWidth="max-w-2xl">
+    <Modal isOpen={isOpen} onClose={onClose} title={title} maxWidth="max-w-2xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left: Image & Specs */}
         <div>
@@ -41,22 +63,30 @@ export const QuickViewModal = ({
             onClick={onClose}
             className="block w-full h-64 bg-gray-50 dark:bg-darkBorder/40 rounded-xl overflow-hidden mb-3 p-2 group"
           >
-            <img
-              src={book.images?.[0] || '/covers/geometry-8.svg'}
-              alt={book.title}
-              className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
-            />
+            {imgError ? (
+              <div className="w-full h-full rounded-xl bg-gradient-to-br from-violet-700 to-indigo-900 p-4 text-white flex flex-col justify-center items-center text-center">
+                <div className="text-sm font-black mb-1">{title}</div>
+                <div className="text-xs text-violet-200">{t('units.grade', { count: book.grade, ns: 'common' })}</div>
+              </div>
+            ) : (
+              <img
+                src={book.images?.[0] || '/covers/geometry-8.svg'}
+                alt={title}
+                onError={() => setImgError(true)}
+                className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+              />
+            )}
           </Link>
           <div className="flex flex-wrap gap-1.5 mb-2">
             <DealBadge dealType={book.dealType} />
             <Badge variant="default" size="sm">
               {t('units.grade', { count: book.grade, ns: 'common' })}
             </Badge>
-            <Badge variant="primary" size="sm">{book.language}</Badge>
-            <Badge variant="default" size="sm">{book.condition}</Badge>
+            <Badge variant="primary" size="sm">{medium}</Badge>
+            <Badge variant="default" size="sm">{localizedCondition}</Badge>
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-3">
-            {book.description}
+            {desc}
           </p>
         </div>
 
@@ -65,7 +95,7 @@ export const QuickViewModal = ({
           <div>
             <div className="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-darkBorder mb-3">
               <span className="text-xs text-gray-400">{t('details.author')}:</span>
-              <span className="text-xs font-bold text-gray-800 dark:text-gray-200">{book.author}</span>
+              <span className="text-xs font-bold text-gray-800 dark:text-gray-200">{author}</span>
             </div>
 
             {/* Deal Type Switcher if BOTH */}
@@ -126,15 +156,15 @@ export const QuickViewModal = ({
                 <div className="pt-2 text-xs space-y-1 text-gray-600 dark:text-gray-300">
                   <div className="flex justify-between">
                     <span>{t('rentCalculator.rentPrice')} ({t('units.monthCount', { count: selectedMonths, ns: 'common' })}):</span>
-                    <span className="font-semibold">{formatKGS(book.rentPricePerMonth * selectedMonths)}</span>
+                    <span className="font-semibold">{formatKGS(book.rentPricePerMonth * selectedMonths, currency)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>{t('rentCalculator.deposit')}:</span>
-                    <span className="font-semibold">{formatKGS(book.deposit)}</span>
+                    <span className="font-semibold">{formatKGS(book.deposit, currency)}</span>
                   </div>
                   <div className="flex justify-between text-sm font-extrabold text-brand-700 dark:text-brand-300 pt-1 border-t border-brand-200 dark:border-brand-800/40">
                     <span>{t('units.total', { ns: 'common' })}</span>
-                    <span>{formatKGS(rentTotal)}</span>
+                    <span>{formatKGS(rentTotal, currency)}</span>
                   </div>
                 </div>
               </div>
@@ -142,7 +172,7 @@ export const QuickViewModal = ({
               <div className="p-4 bg-gray-50 dark:bg-darkBorder/40 rounded-xl space-y-2">
                 <span className="text-xs text-gray-400">{t('buySection.title')}</span>
                 <div className="text-2xl font-black text-gray-900 dark:text-gray-100">
-                  {formatKGS(book.price)}
+                  {formatKGS(book.price, currency)}
                 </div>
               </div>
             )}
@@ -156,7 +186,7 @@ export const QuickViewModal = ({
               icon={ShoppingBag}
               onClick={handleAdd}
             >
-              {t('actions.addToCart', { ns: 'common' })} ({formatKGS(dealType === 'RENT' && isRentable ? rentTotal : book.price)})
+              {t('actions.addToCart', { ns: 'common' })} ({formatKGS(dealType === 'RENT' && isRentable ? rentTotal : book.price, currency)})
             </Button>
 
             <Link

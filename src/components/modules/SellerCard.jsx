@@ -3,10 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Phone, ShieldCheck, MapPin, UserCheck } from 'lucide-react';
 import { RatingStars } from '../common/RatingStars';
 import { formatPhoneKG } from '../../utils/formatters';
+import { getLocalizedCity } from '../../utils/bookLocalization';
 
 export const SellerCard = ({ owner }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   if (!owner) return null;
+
+  const localizedCity = owner.city ? getLocalizedCity(owner.city, i18n.language) : '';
 
   return (
     <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-5 space-y-4">
@@ -32,7 +35,7 @@ export const SellerCard = ({ owner }) => {
         {owner.city && (
           <div className="flex items-center gap-2">
             <MapPin className="w-3.5 h-3.5 text-gray-400" />
-            <span>{t('seller.location')} <strong className="text-gray-900 dark:text-gray-100">{owner.city}</strong></span>
+            <span>{t('seller.location')} <strong className="text-gray-900 dark:text-gray-100">{localizedCity}</strong></span>
           </div>
         )}
         {owner.phone && (

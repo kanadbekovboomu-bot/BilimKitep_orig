@@ -1,10 +1,14 @@
 // Price, Date, and Phone Formatters for Kyrgyzstan
 
-export const formatKGS = (amount) => {
+export const formatKGS = (amount, currency = 'сом') => {
   const num = Number(amount) || 0;
-  return new Intl.NumberFormat('ru-RU', {
-    maximumFractionDigits: 0,
-  }).format(num) + ' сом';
+  return (
+    new Intl.NumberFormat('ru-RU', {
+      maximumFractionDigits: 0,
+    }).format(num) +
+    ' ' +
+    currency
+  );
 };
 
 export const formatPhoneKG = (phone) => {

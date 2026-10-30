@@ -10,6 +10,7 @@ export const RentCalculator = ({
   onBuySubmit,
 }) => {
   const { t } = useTranslation(['book', 'common']);
+  const currency = t('currency', { ns: 'common', defaultValue: 'сом' });
   const [months, setMonths] = useState(9);
   const [tab, setTab] = useState(book.dealType === 'BUY' ? 'BUY' : 'RENT');
 
@@ -86,7 +87,7 @@ export const RentCalculator = ({
                   >
                     <div className="text-xs font-bold">{t('units.monthCount', { count: d.value, ns: 'common' })}</div>
                     <div className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
-                      {formatKGS(book.rentPricePerMonth * d.value)}
+                      {formatKGS(book.rentPricePerMonth * d.value, currency)}
                     </div>
                   </button>
                 );
@@ -98,18 +99,18 @@ export const RentCalculator = ({
           <div className="bg-gray-50 dark:bg-darkBorder/40 rounded-xl p-4 space-y-2.5 text-xs">
             <div className="flex justify-between text-gray-600 dark:text-gray-400">
               <span>{t('rentCalculator.rentPrice')} ({t('units.monthCount', { count: months, ns: 'common' })}):</span>
-              <span className="font-bold text-gray-900 dark:text-gray-100">{formatKGS(rentFee)}</span>
+              <span className="font-bold text-gray-900 dark:text-gray-100">{formatKGS(rentFee, currency)}</span>
             </div>
             <div className="flex justify-between text-gray-600 dark:text-gray-400">
               <span>{t('rentCalculator.deposit')}:</span>
-              <span className="font-bold text-gray-900 dark:text-gray-100">{formatKGS(deposit)}</span>
+              <span className="font-bold text-gray-900 dark:text-gray-100">{formatKGS(deposit, currency)}</span>
             </div>
             <div className="pt-2 border-t border-gray-200 dark:border-darkBorder flex justify-between items-baseline">
               <span className="text-sm font-bold text-gray-900 dark:text-gray-100">
                 {t('rentCalculator.total')}
               </span>
               <span className="text-xl font-extrabold text-brand-600 dark:text-brand-400">
-                {formatKGS(totalDue)}
+                {formatKGS(totalDue, currency)}
               </span>
             </div>
           </div>
@@ -129,7 +130,7 @@ export const RentCalculator = ({
             icon={ShoppingBag}
             onClick={() => onRentSubmit && onRentSubmit(months)}
           >
-            {t('rentCalculator.rentButton')} {t('units.monthCount', { count: months, ns: 'common' })} ({formatKGS(totalDue)})
+            {t('rentCalculator.rentButton')} {t('units.monthCount', { count: months, ns: 'common' })} ({formatKGS(totalDue, currency)})
           </Button>
         </div>
       ) : (
@@ -137,7 +138,7 @@ export const RentCalculator = ({
           <div className="p-4 bg-gray-50 dark:bg-darkBorder/40 rounded-xl space-y-2">
             <span className="text-xs text-gray-400">{t('buySection.title')}</span>
             <div className="text-3xl font-black text-gray-900 dark:text-gray-100">
-              {formatKGS(book.price)}
+              {formatKGS(book.price, currency)}
             </div>
           </div>
 
@@ -148,7 +149,7 @@ export const RentCalculator = ({
             icon={ShoppingBag}
             onClick={() => onBuySubmit && onBuySubmit()}
           >
-            {t('buySection.buyBtn')} ({formatKGS(book.price)})
+            {t('buySection.buyBtn')} ({formatKGS(book.price, currency)})
           </Button>
         </div>
       )}

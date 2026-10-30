@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -20,47 +20,65 @@ import { Badge } from '../common/Badge';
 import { RatingStars } from '../common/RatingStars';
 import { formatKGS } from '../../utils/formatters';
 import { TyndykEmblem } from '../common/KyrgyzOrnament';
+import {
+  getLocalizedBookTitle,
+  getLocalizedBookDesc,
+  getLocalizedBookAuthor,
+  getLocalizedSubject,
+  getLocalizedCity,
+  getLocalizedMedium,
+} from '../../utils/bookLocalization';
 
 export const BookCard = ({
   book,
   onQuickView,
   onAddToCart,
 }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
+  const [hasImgError, setHasImgError] = useState(false);
+
+  const currentLang = i18n.language || 'ru';
+  const title = getLocalizedBookTitle(book, currentLang);
+  const desc = getLocalizedBookDesc(book, currentLang);
+  const author = getLocalizedBookAuthor(book, currentLang);
+  const subject = getLocalizedSubject(book.subject, currentLang);
+  const city = getLocalizedCity(book.owner?.city, currentLang);
+  const medium = getLocalizedMedium(book.language, currentLang);
+  const currency = currentLang.toLowerCase().startsWith('en') ? 'KGS' : 'сом';
 
   const isRentable = book.dealType === 'RENT' || book.dealType === 'BOTH';
   const coverImage = book.images && book.images.length > 0
     ? book.images[0]
     : '/covers/geometry-8.svg';
 
-  const getSubjectStyle = (subject = '') => {
-    const s = subject.toLowerCase();
-    if (s.includes('математик') || s.includes('алгебр') || s.includes('геометр')) {
+  const getSubjectStyle = (subj = '') => {
+    const s = subj.toLowerCase();
+    if (s.includes('математик') || s.includes('алгебр') || s.includes('геометр') || s.includes('math')) {
       return { bg: 'bg-blue-50 dark:bg-blue-950/60', text: 'text-blue-700 dark:text-blue-300', border: 'border-blue-200/80 dark:border-blue-800/40', Icon: Calculator };
     }
-    if (s.includes('кыргыз') || s.includes('адабият') || s.includes('тили')) {
+    if (s.includes('кыргыз') || s.includes('адабият') || s.includes('тили') || s.includes('lit')) {
       return { bg: 'bg-emerald-50 dark:bg-emerald-950/60', text: 'text-emerald-700 dark:text-emerald-300', border: 'border-emerald-200/80 dark:border-emerald-800/40', Icon: BookOpen };
     }
-    if (s.includes('физик') || s.includes('астроном')) {
+    if (s.includes('физик') || s.includes('астроном') || s.includes('phys')) {
       return { bg: 'bg-indigo-50 dark:bg-indigo-950/60', text: 'text-indigo-700 dark:text-indigo-300', border: 'border-indigo-200/80 dark:border-indigo-800/40', Icon: Zap };
     }
-    if (s.includes('хим') || s.includes('биолог')) {
+    if (s.includes('хим') || s.includes('биолог') || s.includes('chem') || s.includes('bio')) {
       return { bg: 'bg-teal-50 dark:bg-teal-950/60', text: 'text-teal-700 dark:text-teal-300', border: 'border-teal-200/80 dark:border-teal-800/40', Icon: FlaskConical };
     }
-    if (s.includes('тарых') || s.includes('географ')) {
+    if (s.includes('тарых') || s.includes('географ') || s.includes('hist') || s.includes('geog')) {
       return { bg: 'bg-amber-50 dark:bg-amber-950/60', text: 'text-amber-800 dark:text-amber-300', border: 'border-amber-200/80 dark:border-amber-800/40', Icon: Landmark };
     }
     if (s.includes('англ') || s.includes('english')) {
       return { bg: 'bg-rose-50 dark:bg-rose-950/60', text: 'text-rose-700 dark:text-rose-300', border: 'border-rose-200/80 dark:border-rose-800/40', Icon: Globe };
     }
-    if (s.includes('информ') || s.includes('ит')) {
+    if (s.includes('информ') || s.includes('ит') || s.includes('ict') || s.includes('it')) {
       return { bg: 'bg-violet-50 dark:bg-violet-950/60', text: 'text-violet-700 dark:text-violet-300', border: 'border-violet-200/80 dark:border-violet-800/40', Icon: Laptop };
     }
     return { bg: 'bg-slate-50 dark:bg-slate-900/60', text: 'text-slate-700 dark:text-slate-300', border: 'border-slate-200/80 dark:border-slate-800/40', Icon: BookOpen };
   };
 
-  const subjectStyle = getSubjectStyle(book.subject);
+  const subjectStyle = getSubjectStyle(book.subject || subject);
   const SubjectIcon = subjectStyle.Icon || BookOpen;
 
   const handleCardClick = (e) => {
@@ -103,17 +121,38 @@ export const BookCard = ({
           <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-r from-black/15 via-white/10 to-transparent pointer-events-none border-r border-black/5" />
 
           {/* Official Kyrgyz School Standard Seal Badge */}
-          <div className="absolute top-2.5 left-2.5 bg-slate-900/85 dark:bg-black/85 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1.5 backdrop-blur-md border border-amber-400/30">
+          <div className="absolute top-2.5 left-2.5 z-10 bg-slate-900/85 dark:bg-black/85 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1.5 backdrop-blur-md border border-amber-400/30">
             <TyndykEmblem size={11} className="text-amber-400" />
-            <span className="text-amber-300 font-bold">{t('card.krStandard', { defaultValue: 'КР Мектеп' })}</span>
+            <span className="text-amber-300 font-bold">{t('card.krStandard', { defaultValue: 'КР Стандарты' })}</span>
           </div>
 
-          <img
-            src={coverImage}
-            alt={book.title}
-            loading="lazy"
-            className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
-          />
+          {hasImgError ? (
+            <div className="w-full h-full rounded-xl bg-gradient-to-br from-violet-700 via-indigo-800 to-slate-900 p-4 text-white flex flex-col justify-between items-center text-center shadow-inner relative overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#c4b5fd25,transparent_70%)] pointer-events-none" />
+              <div className="w-full text-[9px] font-bold uppercase tracking-widest text-violet-200/90 pt-4 truncate">
+                {subject}
+              </div>
+              <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg my-auto group-hover:scale-110 transition-transform">
+                <SubjectIcon className="w-8 h-8 text-amber-300" />
+              </div>
+              <div className="w-full space-y-1">
+                <div className="text-xs font-black line-clamp-2 leading-tight text-white drop-shadow-sm">
+                  {title}
+                </div>
+                <div className="text-[10px] text-violet-200 font-semibold">
+                  {t('units.grade', { count: book.grade })}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <img
+              src={coverImage}
+              alt={title}
+              loading="lazy"
+              onError={() => setHasImgError(true)}
+              className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+            />
+          )}
 
           {/* Quick View Button overlay on hover */}
           <button
@@ -122,7 +161,7 @@ export const BookCard = ({
               e.stopPropagation();
               onQuickView && onQuickView(book);
             }}
-            className="absolute bottom-2.5 right-2.5 bg-white/95 dark:bg-slate-900/95 hover:bg-white dark:hover:bg-slate-800 text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 hover:brightness-110 hover:shadow-md transition-all cursor-pointer flex items-center gap-1 text-xs font-semibold border border-slate-200/70 dark:border-slate-700/70"
+            className="absolute bottom-2.5 right-2.5 z-10 bg-white/95 dark:bg-slate-900/95 hover:bg-white dark:hover:bg-slate-800 text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 hover:brightness-110 hover:shadow-md transition-all cursor-pointer flex items-center gap-1 text-xs font-semibold border border-slate-200/70 dark:border-slate-700/70"
             title={t('actions.quickView')}
           >
             <Eye className="w-3.5 h-3.5 text-brand-600" />
@@ -138,16 +177,16 @@ export const BookCard = ({
             <span>{t('units.grade', { count: book.grade })}</span>
           </span>
           <Badge variant="primary" size="sm">
-            {book.language}
+            {medium}
           </Badge>
         </div>
 
         {/* Content with OnlineMektep-styled Subject Badge */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between text-xs gap-2">
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border max-w-[70%] truncate ${subjectStyle.bg} ${subjectStyle.text} ${subjectStyle.border}`}>
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border shrink-0 ${subjectStyle.bg} ${subjectStyle.text} ${subjectStyle.border}`}>
               <SubjectIcon className="w-3 h-3 shrink-0" />
-              <span className="truncate">{book.subject}</span>
+              <span className="whitespace-nowrap">{subject}</span>
             </span>
             <RatingStars rating={book.rating || 5} showNumber />
           </div>
@@ -157,21 +196,21 @@ export const BookCard = ({
             onClick={(e) => e.stopPropagation()}
             className="block font-bold text-sm text-gray-900 dark:text-gray-100 hover:text-brand-600 dark:hover:text-brand-400 line-clamp-1 transition-colors"
           >
-            {book.title}
+            {title}
           </Link>
 
           <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 font-medium">
-            {book.author}
+            {author}
           </p>
 
           <p className="text-[11px] text-gray-500 dark:text-gray-400 line-clamp-2 pt-1 leading-relaxed">
-            {book.description}
+            {desc}
           </p>
 
-          {book.owner?.city && (
+          {city && (
             <div className="flex items-center gap-1 text-[11px] text-gray-400 pt-1">
               <MapPin className="w-3 h-3" />
-              <span>{book.owner.city}</span>
+              <span>{city}</span>
             </div>
           )}
         </div>
@@ -186,7 +225,7 @@ export const BookCard = ({
                 {t('units.rentPrice')}
               </div>
               <div className="text-sm font-black text-emerald-600 dark:text-emerald-400 leading-tight flex items-baseline">
-                {formatKGS(book.rentPricePerMonth)}
+                {formatKGS(book.rentPricePerMonth, currency)}
                 <span className="text-[10px] font-normal text-gray-400 ml-1">
                   {t('units.perMonth')}
                 </span>
@@ -198,7 +237,7 @@ export const BookCard = ({
                 {t('units.buyPrice')}
               </div>
               <div className="text-sm font-black text-gray-900 dark:text-gray-100 leading-tight">
-                {formatKGS(book.price)}
+                {formatKGS(book.price, currency)}
               </div>
             </div>
           )}

@@ -25,10 +25,17 @@ import { ToastNotification } from '../components/common/ToastNotification';
 import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import { fetchBookById, addReviewToBook } from '../features/books/booksSlice';
 import { addToCart } from '../features/cart/cartSlice';
+import {
+  getLocalizedBookTitle,
+  getLocalizedBookDesc,
+  getLocalizedBookAuthor,
+  getLocalizedSubject,
+  getLocalizedMedium,
+} from '../utils/bookLocalization';
 
 export const BookDetailPage = () => {
   const { id } = useParams();
-  const { t } = useTranslation('book');
+  const { t, i18n } = useTranslation(['book', 'common']);
   const dispatch = useDispatch();
 
   const { selectedBook: book, loading, error } = useSelector((state) => state.books);
@@ -42,17 +49,32 @@ export const BookDetailPage = () => {
     }
   }, [id, dispatch]);
 
+  const currentLang = i18n.language || 'ru';
+  const localizedTitle = book ? getLocalizedBookTitle(book, currentLang) : '';
+  const localizedDesc = book ? getLocalizedBookDesc(book, currentLang) : '';
+  const localizedAuthor = book ? getLocalizedBookAuthor(book, currentLang) : '';
+  const localizedSubject = book ? getLocalizedSubject(book.subject, currentLang) : '';
+  const localizedMedium = book ? getLocalizedMedium(book.language, currentLang) : '';
+
+  const conditionMap = {
+    NEW: t('condition.new', { ns: 'common' }),
+    EXCELLENT: t('condition.excellent', { ns: 'common' }),
+    GOOD: t('condition.good', { ns: 'common' }),
+    FAIR: t('condition.fair', { ns: 'common' }),
+  };
+  const localizedCondition = book ? (conditionMap[book.condition] || book.condition) : '';
+
   const handleRentSubmit = (months) => {
     if (!book) return;
     dispatch(addToCart({ book, type: 'RENT', months }));
-    setToastMessage(t('toast.addedRent', { ns: 'common', title: book.title, months }));
+    setToastMessage(t('toast.addedRent', { ns: 'common', title: localizedTitle || book.title, months }));
     setShowToast(true);
   };
 
   const handleBuySubmit = () => {
     if (!book) return;
     dispatch(addToCart({ book, type: 'BUY', months: null }));
-    setToastMessage(t('toast.addedBuy', { ns: 'common', title: book.title }));
+    setToastMessage(t('toast.addedBuy', { ns: 'common', title: localizedTitle || book.title }));
     setShowToast(true);
   };
 
@@ -96,7 +118,7 @@ export const BookDetailPage = () => {
       <Breadcrumbs
         items={[
           { label: t('nav.catalog', { ns: 'common' }), to: '/catalog' },
-          { label: book.title },
+          { label: localizedTitle || book.title },
         ]}
       />
 
@@ -111,16 +133,16 @@ export const BookDetailPage = () => {
               <div className="flex flex-wrap items-center gap-2">
                 <DealBadge dealType={book.dealType} />
                 <Badge variant="default">{t('units.grade', { count: book.grade, ns: 'common' })}</Badge>
-                <Badge variant="primary">{book.language}</Badge>
-                <Badge variant="default">{book.condition}</Badge>
+                <Badge variant="primary">{localizedMedium || book.language}</Badge>
+                <Badge variant="default">{localizedCondition || book.condition}</Badge>
               </div>
 
               <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
-                {book.title}
+                {localizedTitle || book.title}
               </h1>
 
               <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
-                {t('details.author')}: <span className="text-brand-600 dark:text-brand-400">{book.author}</span>
+                {t('details.author')}: <span className="text-brand-600 dark:text-brand-400">{localizedAuthor || book.author}</span>
               </p>
             </div>
 
@@ -128,7 +150,7 @@ export const BookDetailPage = () => {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-gray-50 dark:bg-darkBorder/40 text-xs">
               <div>
                 <span className="text-gray-400 block text-[11px]">{t('details.subject')}:</span>
-                <span className="font-bold text-gray-800 dark:text-gray-200">{book.subject}</span>
+                <span className="font-bold text-gray-800 dark:text-gray-200">{localizedSubject || book.subject}</span>
               </div>
               <div>
                 <span className="text-gray-400 block text-[11px]">{t('details.grade')}:</span>
@@ -140,7 +162,7 @@ export const BookDetailPage = () => {
               </div>
               <div>
                 <span className="text-gray-400 block text-[11px]">{t('details.condition')}:</span>
-                <span className="font-bold text-emerald-600 dark:text-emerald-400">{book.condition}</span>
+                <span className="font-bold text-emerald-600 dark:text-emerald-400">{localizedCondition || book.condition}</span>
               </div>
             </div>
 
@@ -168,7 +190,7 @@ export const BookDetailPage = () => {
                 {t('details.description')}
               </h3>
               <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">
-                {book.description}
+                {localizedDesc || book.description}
               </p>
             </div>
           </div>

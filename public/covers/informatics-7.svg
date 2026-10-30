@@ -51,7 +51,7 @@
     <line x1="8" y1="-30" x2="-8" y2="30" stroke="#c4b5fd" stroke-width="2.5" stroke-linecap="round" />
     <!-- Subject Symbol Text -->
     <text x="0" y="70" fill="#ffffff" font-family="Arial, sans-serif" font-weight="900" font-size="16" text-anchor="middle" letter-spacing="1">
-      < / >
+      &lt; / &gt;
     </text>
   </g>
 
