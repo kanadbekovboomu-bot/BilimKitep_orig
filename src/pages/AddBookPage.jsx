@@ -10,6 +10,7 @@ import { Button } from '../components/common/Button';
 import { ImageDropzone } from '../components/modules/ImageDropzone';
 import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import { createBookListing } from '../features/books/booksSlice';
+import { notifyTelegramNewBook } from '../services/telegram';
 
 export const AddBookPage = () => {
   const { t } = useTranslation('profile');
@@ -72,6 +73,12 @@ export const AddBookPage = () => {
       };
 
       await dispatch(createBookListing(bookPayload)).unwrap();
+
+      // Dispatch alert to Telegram Bot
+      notifyTelegramNewBook(bookPayload).catch((e) =>
+        console.warn('Telegram notify listing error:', e)
+      );
+
       navigate('/catalog');
     } catch (err) {
       setError(err || 'Error adding book listing');

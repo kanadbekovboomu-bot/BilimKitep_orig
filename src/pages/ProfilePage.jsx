@@ -16,7 +16,9 @@ import {
   Laptop,
   CheckCircle2,
   Clock,
-  Sparkles
+  Sparkles,
+  Send,
+  BellRing
 } from 'lucide-react';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { ProfileStats } from '../components/modules/ProfileStats';
@@ -30,6 +32,7 @@ import { api } from '../services/api';
 import { logout } from '../features/auth/authSlice';
 import { deleteBook } from '../features/books/booksSlice';
 import { hashPassword, verifyPassword, evaluatePasswordStrength } from '../utils/security';
+import { testTelegramConnection } from '../services/telegram';
 
 export const ProfilePage = () => {
   const { t } = useTranslation(['profile', 'common', 'auth']);
@@ -48,6 +51,42 @@ export const ProfilePage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordStatusMsg, setPasswordStatusMsg] = useState({ type: '', text: '' });
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [telegramStatus, setTelegramStatus] = useState({ loading: false, msg: '', type: '' });
+
+  const handleTestTelegram = async () => {
+    setTelegramStatus({ loading: true, msg: 'Отправка оповещения в Telegram...', type: 'info' });
+    try {
+      const res = await testTelegramConnection();
+      if (res && res.ok) {
+        setTelegramStatus({
+          loading: false,
+          msg: '✅ Тестовое оповещение успешно доставлено в ваш Telegram (@BilimKitep_bot)!',
+          type: 'success',
+        });
+      } else {
+        const errorDesc = res?.description || '';
+        if (errorDesc.includes('chat not found')) {
+          setTelegramStatus({
+            loading: false,
+            msg: 'ℹ️ Для получения сообщений откройте бота t.me/BilimKitep_bot в Telegram и нажмите кнопку «Start / Начать» (1 клик).',
+            type: 'warning',
+          });
+        } else {
+          setTelegramStatus({
+            loading: false,
+            msg: `⚠️ Ответ Telegram API: ${errorDesc || 'Проверьте соединение'}`,
+            type: 'error',
+          });
+        }
+      }
+    } catch (e) {
+      setTelegramStatus({
+        loading: false,
+        msg: `Ошибка сети: ${e.message}`,
+        type: 'error',
+      });
+    }
+  };
 
   useEffect(() => {
     const loadProfileData = async () => {
@@ -467,6 +506,59 @@ export const ProfilePage = () => {
                       </p>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Telegram Bot Notification Hub Card */}
+              <div className="bg-gradient-to-br from-sky-500/10 via-brand-500/5 to-transparent rounded-3xl border border-sky-300/40 dark:border-sky-800/40 p-5 space-y-3.5 shadow-xs">
+                <div className="flex items-center justify-between pb-2 border-b border-sky-200/40 dark:border-sky-900/40">
+                  <div className="flex items-center gap-2 text-sky-700 dark:text-sky-300 font-bold text-xs uppercase tracking-wide">
+                    <BellRing className="w-4 h-4" />
+                    <span>Telegram Оповещения (@BilimKitep_bot)</span>
+                  </div>
+                  <span className="text-[10px] bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold px-2 py-0.5 rounded-full border border-sky-300/30">
+                    ID: 8174784625
+                  </span>
+                </div>
+
+                <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                  Бот моментально присылает уведомления о новых заказах, сдаче книг в аренду и подтверждении бронирования прямо в ваш Telegram.
+                </p>
+
+                {telegramStatus.msg && (
+                  <div
+                    className={`p-3 rounded-xl text-xs font-semibold leading-relaxed ${
+                      telegramStatus.type === 'success'
+                        ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200'
+                        : telegramStatus.type === 'warning'
+                        ? 'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200'
+                        : 'bg-red-50 text-red-800 dark:bg-red-950/40 dark:text-red-300 border border-red-200'
+                    }`}
+                  >
+                    {telegramStatus.msg}
+                  </div>
+                )}
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-1">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    icon={Send}
+                    disabled={telegramStatus.loading}
+                    onClick={handleTestTelegram}
+                    className="flex-1 justify-center bg-sky-600 hover:bg-sky-700 border-none shadow-md shadow-sky-600/20"
+                  >
+                    {telegramStatus.loading ? 'Отправка...' : 'Отправить тест в Telegram'}
+                  </Button>
+
+                  <a
+                    href="https://t.me/BilimKitep_bot"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 text-center px-3.5 py-2 rounded-xl text-xs font-bold border border-sky-300 dark:border-sky-700/60 text-sky-700 dark:text-sky-300 hover:bg-sky-50 dark:hover:bg-sky-950/40 transition-colors"
+                  >
+                    t.me/BilimKitep_bot ↗
+                  </a>
                 </div>
               </div>
             </div>
