@@ -1,0 +1,28 @@
+# Render.com Blueprint Specification for BilimKitep
+# Full-Stack Deployment: React SPA Website + 24/7 Telegram Notification Bot
+# 100% Free Plan Compatible
+
+services:
+  - type: web
+    name: bilimkitep
+    env: node
+    plan: free
+    region: frankfurt # Low latency for Kyrgyzstan / Central Asia
+    buildCommand: npm install && npm run build
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: VITE_TELEGRAM_BOT_TOKEN
+        value: 9192396334:AAFi2pr4TuxDBysf0aM-rfYZyOK3SKk38GQ
+      - key: VITE_TELEGRAM_CHAT_ID
+        value: "8174784625"
+      - key: VITE_API_BASE_URL
+        value: https://api.bilimkitep.kg/api
+      - key: VITE_GOOGLE_CLIENT_ID
+        value: 616700297922-rlurljeqi2qai5uo3eaqoki0u49m7eq0.apps.googleusercontent.com
+      - key: VITE_MOCKAPI_BASE_URL
+        value: https://6add823cfa5e73d4ab2dff52.mockapi.io/api/v1
+      - key: VITE_MOCKAPI_ORDERS_URL
+        value: https://69dbb1d2560857310a07ed0a.mockapi.io/api/v1
