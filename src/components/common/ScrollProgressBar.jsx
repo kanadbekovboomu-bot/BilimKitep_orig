@@ -1,32 +1,48 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 /**
- * ScrollProgressBar (Kyrgyz Ribbon Reading Progress)
- * Transforms the national Kyrgyz gradient decor (Red -> Amber -> Emerald)
- * into a smooth, interactive 60fps reading progress slider.
+ * ScrollProgressBar (Kyrgyz Ribbon Reading Progress Slider)
+ * Always fixed at the very top of the browser viewport (z-[100]),
+ * ensuring it NEVER scrolls off-screen or disappears.
  *
  * Features:
- * - Real-time scroll progress tracking via requestAnimationFrame (no jank).
- * - Smooth width interpolation with vibrant Kyrgyz national gradient.
- * - Interactive seeking: click anywhere on the bar to jump/scroll to that point on the page.
- * - Glowing thumb and tooltip badge on hover.
- * - Full ARIA progressbar compliance.
+ * - Always visible at fixed top-0 with 8px-10px bold height and high-contrast track.
+ * - Prominent 18px glowing Kyrgyz thumb ("ползунок") that visibly glides as you scroll.
+ * - Dynamic scroll percentage badge showing current position (e.g. "45%").
+ * - Interactive seeking: click anywhere along the top bar to jump directly to that point.
+ * - 60 FPS performance via requestAnimationFrame and passive listeners.
+ * - Universal compatibility (works regardless of parent overflow or router).
  */
 export const ScrollProgressBar = ({ className = '' }) => {
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
   const [hoverPosition, setHoverPosition] = useState(null); // { percent, clientX }
   const barRef = useRef(null);
   const rafIdRef = useRef(null);
+  const scrollTimeoutRef = useRef(null);
 
-  // Smooth scroll listener using requestAnimationFrame
+  // Smooth scroll listener
   const updateProgress = useCallback(() => {
-    const scrollY = window.scrollY || document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight;
-    const clientHeight = window.innerHeight || document.documentElement.clientHeight;
+    const scrollY =
+      window.pageYOffset ||
+      window.scrollY ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+
+    const scrollHeight = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight,
+      document.documentElement.offsetHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight || 0
+    );
+
+    const clientHeight = window.innerHeight || document.documentElement.clientHeight || 1;
     const maxScroll = scrollHeight - clientHeight;
 
-    if (maxScroll > 0) {
+    if (maxScroll > 15) {
       const currentPercent = Math.min(100, Math.max(0, (scrollY / maxScroll) * 100));
       setProgress(currentPercent);
     } else {
@@ -36,6 +52,12 @@ export const ScrollProgressBar = ({ className = '' }) => {
 
   useEffect(() => {
     const onScroll = () => {
+      setIsScrolling(true);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      scrollTimeoutRef.current = setTimeout(() => {
+        setIsScrolling(false);
+      }, 1200);
+
       if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
       rafIdRef.current = requestAnimationFrame(updateProgress);
     };
@@ -44,26 +66,51 @@ export const ScrollProgressBar = ({ className = '' }) => {
       updateProgress();
     };
 
+    // Attach listeners to window, document and body to handle all scroll containers
     window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('popstate', updateProgress, { passive: true });
+
+    // Initial check + delayed checks for dynamically loaded content
     updateProgress();
+    const timer1 = setTimeout(updateProgress, 100);
+    const timer2 = setTimeout(updateProgress, 500);
+
+    // Mutation observer to detect dynamic page height changes
+    let observer;
+    if (typeof MutationObserver !== 'undefined' && document.body) {
+      observer = new MutationObserver(updateProgress);
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
 
     return () => {
       window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('popstate', updateProgress);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
       if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      if (observer) observer.disconnect();
     };
   }, [updateProgress]);
 
-  // Click on the progress bar to smoothly seek to that position on the page
+  // Click / tap to seek to that percentage of the page
   const handleSeek = (e) => {
     if (!barRef.current) return;
     const rect = barRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const ratio = Math.min(1, Math.max(0, clickX / rect.width));
 
-    const scrollHeight = document.documentElement.scrollHeight;
-    const clientHeight = window.innerHeight || document.documentElement.clientHeight;
+    const scrollHeight = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight,
+      document.documentElement.offsetHeight,
+      document.body.offsetHeight
+    );
+    const clientHeight = window.innerHeight || document.documentElement.clientHeight || 1;
     const maxScroll = scrollHeight - clientHeight;
 
     if (maxScroll > 0) {
@@ -82,11 +129,14 @@ export const ScrollProgressBar = ({ className = '' }) => {
     setHoverPosition({ percent, clientX: e.clientX });
   };
 
+  const roundedPercent = Math.round(progress);
+  const showBadge = isHovered || isScrolling;
+
   return (
     <div
       ref={barRef}
       role="progressbar"
-      aria-valuenow={Math.round(progress)}
+      aria-valuenow={roundedPercent}
       aria-valuemin={0}
       aria-valuemax={100}
       aria-label="Прогресс чтения страницы"
@@ -98,31 +148,39 @@ export const ScrollProgressBar = ({ className = '' }) => {
         setIsHovered(false);
         setHoverPosition(null);
       }}
-      className={`group relative w-full h-1 hover:h-2 bg-slate-200/60 dark:bg-slate-800/80 transition-all duration-200 cursor-pointer select-none overflow-visible z-50 ${className}`}
-      title={`Прогресс страницы: ${Math.round(progress)}% (кликните для перехода)`}
+      className={`fixed top-0 left-0 right-0 w-full h-2 sm:h-2.5 bg-slate-200/90 dark:bg-slate-800/90 backdrop-blur-md cursor-pointer select-none z-[100] transition-all duration-150 border-b border-black/10 dark:border-white/10 shadow-sm ${className}`}
+      title={`Прогресс страницы: ${roundedPercent}% (кликните для перехода)`}
     >
-      {/* Background ambient glow line */}
+      {/* Active filled Kyrgyz Ribbon (Red -> Amber -> Emerald) */}
       <div
-        className="h-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-500 transition-[width] duration-100 ease-out relative"
+        className="h-full bg-gradient-to-r from-red-600 via-amber-400 to-emerald-500 shadow-[0_0_12px_rgba(245,158,11,0.6)] transition-[width] duration-75 ease-out relative"
         style={{ width: `${progress}%` }}
       >
-        {/* Leading edge laser head / glowing indicator */}
-        {progress > 0 && (
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_8px_#10b981,0_0_12px_#f59e0b] ring-2 ring-emerald-500/80" />
-        )}
+        {/* Prominent Glowing Slider Thumb ("Ползунок / Бегунок") */}
+        <div
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white dark:bg-slate-900 border-2 border-emerald-500 dark:border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.95),0_2px_6px_rgba(0,0,0,0.4)] flex items-center justify-center transform hover:scale-125 transition-transform"
+          aria-hidden="true"
+        >
+          {/* Inner Golden Dot */}
+          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500 shadow-[0_0_4px_#f59e0b]" />
+        </div>
       </div>
 
-      {/* Hover preview tooltip badge */}
-      {isHovered && hoverPosition && (
+      {/* Floating Percentage Indicator Pill */}
+      {showBadge && (
         <div
-          className="pointer-events-none absolute top-3 -translate-x-1/2 px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-slate-900/95 text-white dark:bg-white/95 dark:text-slate-900 shadow-lg border border-slate-700/50 dark:border-slate-200/50 backdrop-blur-md transition-transform duration-75 z-50 whitespace-nowrap flex items-center gap-1 animate-in fade-in zoom-in-90"
+          className="pointer-events-none absolute top-3.5 -translate-x-1/2 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-black bg-slate-950/95 text-white dark:bg-white/95 dark:text-slate-950 shadow-xl border border-slate-700/60 dark:border-slate-300/60 backdrop-blur-md transition-all duration-100 z-[101] whitespace-nowrap flex items-center gap-1.5 animate-in fade-in zoom-in-95"
           style={{
-            left: `${Math.min(96, Math.max(4, hoverPosition.percent))}%`,
+            left: `${
+              hoverPosition
+                ? Math.min(95, Math.max(5, hoverPosition.percent))
+                : Math.min(95, Math.max(5, progress))
+            }%`,
           }}
         >
-          <span>{hoverPosition.percent}%</span>
-          <span className="opacity-60">•</span>
-          <span className="opacity-80">Перейти</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span>{hoverPosition ? hoverPosition.percent : roundedPercent}%</span>
+          {isHovered && <span className="opacity-60 text-[9px] font-medium hidden sm:inline">• Перейти</span>}
         </div>
       )}
     </div>

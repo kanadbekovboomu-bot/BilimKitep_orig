@@ -34,7 +34,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 dark:bg-darkBg/95 border-b border-gray-100 dark:border-darkBorder transition-colors shadow-xs">
+    <header className="sticky top-0 z-40 w-full pt-2 sm:pt-2.5 backdrop-blur-md bg-white/95 dark:bg-darkBg/95 border-b border-gray-100 dark:border-darkBorder transition-colors shadow-xs">
       {/* Interactive Kyrgyz National Reading Progress Slider */}
       <ScrollProgressBar />
 
