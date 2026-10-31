@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import {
   X,
@@ -12,6 +13,7 @@ import {
   Bookmark
 } from 'lucide-react';
 import { getBookPreviewPages } from '../../data/bookPreviews';
+import { getLocalizedBookTitle, getLocalizedBookAuthor, getLocalizedSubject } from '../../utils/bookLocalization';
 import { formatKGS } from '../../utils/formatters';
 
 export const BookPreviewModal = ({
@@ -20,12 +22,31 @@ export const BookPreviewModal = ({
   onClose,
   onAddToCart,
 }) => {
-  const { t } = useTranslation(['common', 'book']);
+  const { t, i18n } = useTranslation(['common', 'book']);
   const currency = t('currency', { defaultValue: 'сом' });
   const [currentPage, setCurrentPage] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
 
-  const pages = book ? getBookPreviewPages(book) : [];
+  const bookLang = (book?.language || 'KG').toLowerCase().includes('ru')
+    ? 'ru'
+    : (book?.language || 'KG').toLowerCase().includes('en')
+    ? 'en'
+    : 'kg';
+
+  const localizedTitle = book ? (getLocalizedBookTitle(book, bookLang) || book.title) : '';
+  const localizedAuthor = book ? (getLocalizedBookAuthor(book, bookLang) || book.author) : '';
+  const localizedSubject = book ? (getLocalizedSubject(book.subject, bookLang) || book.subject) : '';
+
+  const enrichedBook = book
+    ? {
+        ...book,
+        title: localizedTitle,
+        author: localizedAuthor,
+        subject: localizedSubject,
+      }
+    : null;
+
+  const pages = enrichedBook ? getBookPreviewPages(enrichedBook) : [];
   const totalPages = pages.length || 5;
 
   // Reset to first page when opening new book
@@ -79,12 +100,12 @@ export const BookPreviewModal = ({
   const page = pages[currentPage] || pages[0];
   const progressPercent = Math.round(((currentPage + 1) / totalPages) * 100);
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto">
+  const modalMarkup = (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-hidden">
       {/* Blurred Backdrop */}
       <div
         data-testid="preview-backdrop"
-        className="fixed inset-0 bg-black/75 backdrop-blur-md transition-opacity"
+        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -114,10 +135,10 @@ export const BookPreviewModal = ({
             </div>
             <div className="min-w-0">
               <h3 className="text-sm font-black text-gray-900 dark:text-gray-100 truncate">
-                {book.title}
+                {localizedTitle || book.title}
               </h3>
               <p className="text-[11px] text-gray-500 dark:text-gray-400 truncate">
-                {book.author} • {book.grade}-класс
+                {localizedAuthor || book.author} • {book.grade}-класс
               </p>
             </div>
           </div>
@@ -427,6 +448,11 @@ export const BookPreviewModal = ({
       </div>
     </div>
   );
+
+  if (typeof document !== 'undefined') {
+    return createPortal(modalMarkup, document.body);
+  }
+  return modalMarkup;
 };
 
 export default BookPreviewModal;

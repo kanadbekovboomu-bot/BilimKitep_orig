@@ -29,6 +29,17 @@ describe('bookLocalization utility tests', () => {
     expect(getLocalizedBookTitle(book, 'kg')).toBe('Информатика жана ИКТ 7-класс');
     expect(getLocalizedBookTitle(book, 'ru')).toBe('Информатика и ИКТ 7 класс');
     expect(getLocalizedBookTitle(book, 'en')).toBe('Informatics & ICT Grade 7');
+
+    // Verify b_120 (Grade 9 Informatics) has 9th grade in all languages
+    const book9 = { id: 'b_120', grade: 9, subject: 'Информатика' };
+    expect(getLocalizedBookTitle(book9, 'ru')).toBe('Информатика и цифровая грамотность 9 класс');
+    expect(getLocalizedBookTitle(book9, 'kg')).toBe('Информатика жана санариптик сабаттуулук 9-класс');
+    expect(getLocalizedBookAuthor(book9, 'ru')).toBe('А. С. Сулайманов, Г. К. Кошоева');
+
+    // Verify b_126 (Grade 11 ORT History) has 11th grade in all languages
+    const book11 = { id: 'b_126', grade: 11, subject: 'ОРТ / ЖРТ' };
+    expect(getLocalizedBookTitle(book11, 'ru')).toBe('ОРТ / ЖРТ История 11 класс (Сборник тестов)');
+    expect(getLocalizedBookTitle(book11, 'kg')).toBe('ЖРТ Тарых 11-класс (Тесттер жыйнагы)');
   });
 
   it('translates textbook subjects across languages', () => {
