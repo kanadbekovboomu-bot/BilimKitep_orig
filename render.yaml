@@ -26,3 +26,7 @@ services:
         value: https://6add823cfa5e73d4ab2dff52.mockapi.io/api/v1
       - key: VITE_MOCKAPI_ORDERS_URL
         value: https://69dbb1d2560857310a07ed0a.mockapi.io/api/v1
+      - key: DATABASE_URL
+        value: postgresql://neondb_owner:npg_jwoQV4CJE0NT@ep-ancient-credit-b5qop6cz-pooler.c-7.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require
+      - key: VITE_DATABASE_URL
+        value: postgresql://neondb_owner:npg_jwoQV4CJE0NT@ep-ancient-credit-b5qop6cz-pooler.c-7.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require

@@ -57,7 +57,83 @@ async function initDb() {
     );
   `;
 
+  await sql`
+    CREATE TABLE IF NOT EXISTS users (
+      id VARCHAR(64) PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) UNIQUE NOT NULL,
+      password_hash VARCHAR(255),
+      password_salt VARCHAR(64),
+      phone VARCHAR(64),
+      city VARCHAR(128) DEFAULT 'Бишкек',
+      role VARCHAR(32) DEFAULT 'USER',
+      rating NUMERIC DEFAULT 5.0,
+      avatar TEXT,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+
   console.log('[Neon Init] Tables created successfully.');
+
+  // 2. Check if users exist and seed initial users
+  const existingUsers = await sql`SELECT count(*) FROM users`;
+  const userCount = Number(existingUsers[0].count);
+  console.log(`[Neon Init] Current users count: ${userCount}`);
+
+  if (userCount === 0) {
+    console.log('[Neon Init] Seeding initial users into Neon Postgres...');
+    const seedUsers = [
+      {
+        id: 'a0010000-7c2a-41e9-9011-000000000001',
+        name: 'Администратор BilimKitep',
+        email: 'admin@bilimkitep.kg',
+        phone: '+996 700 000 001',
+        role: 'ADMIN',
+        city: 'Бишкек',
+        rating: 5.0,
+        avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=BilimAdmin'
+      },
+      {
+        id: 'a0020000-7c2a-41e9-9011-000000000002',
+        name: 'Айбек Нурланов',
+        email: 'aibek.n@gmail.com',
+        phone: '+996 700 123 456',
+        role: 'USER',
+        city: 'Бишкек',
+        rating: 4.9,
+        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80'
+      },
+      {
+        id: 'a0030000-7c2a-41e9-9011-000000000003',
+        name: 'Чынара Касымова',
+        email: 'chynara.k@gmail.com',
+        phone: '+996 555 987 654',
+        role: 'USER',
+        city: 'Ош',
+        rating: 4.8,
+        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80'
+      },
+      {
+        id: 'a0070000-7c2a-41e9-9011-000000000007',
+        name: 'kanadbekovboomu',
+        email: 'kanadbekovboomu@gmail.com',
+        phone: '+996 700 123 456',
+        role: 'USER',
+        city: 'Бишкек',
+        rating: 5.0,
+        avatar: ''
+      }
+    ];
+
+    for (const u of seedUsers) {
+      await sql`
+        INSERT INTO users (id, name, email, phone, role, city, rating, avatar)
+        VALUES (${u.id}, ${u.name}, ${u.email}, ${u.phone}, ${u.role}, ${u.city}, ${u.rating}, ${u.avatar})
+        ON CONFLICT (email) DO NOTHING;
+      `;
+    }
+    console.log(`[Neon Init] Seeded ${seedUsers.length} users into Neon Postgres.`);
+  }
 
   // 2. Check if books exist
   const existing = await sql`SELECT count(*) FROM books`;

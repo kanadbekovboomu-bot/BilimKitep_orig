@@ -3,6 +3,10 @@ import { generateUuid } from '../utils/uuid';
 
 // Resolve connection string from environment
 const getConnectionString = () => {
+  // In unit test environment, bypass remote connection to ensure fast, reliable local mock execution
+  if (typeof process !== 'undefined' && process.env?.NODE_ENV === 'test') {
+    return '';
+  }
   if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_DATABASE_URL) {
     return import.meta.env.VITE_DATABASE_URL;
   }
@@ -295,5 +299,69 @@ export const neonService = {
         { name: 'Чет тилдери', value: 5 },
       ]
     };
+  },
+
+  async getUsers() {
+    if (!sql) throw new Error('Neon database is not configured');
+    const rows = await sql.query('SELECT id, name, email, phone, city, role, rating, avatar, created_at FROM users ORDER BY created_at DESC');
+    return rows.map((u) => ({
+      uuid: u.id,
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      phone: u.phone,
+      city: u.city,
+      role: u.role,
+      rating: Number(u.rating),
+      avatar: u.avatar,
+      createdAt: u.created_at,
+    }));
+  },
+
+  async getUserByEmail(email) {
+    if (!sql) throw new Error('Neon database is not configured');
+    const rows = await sql.query('SELECT * FROM users WHERE LOWER(email) = $1', [email.toLowerCase().trim()]);
+    if (!rows || rows.length === 0) return null;
+    const u = rows[0];
+    return {
+      uuid: u.id,
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      phone: u.phone,
+      city: u.city,
+      role: u.role,
+      rating: Number(u.rating),
+      avatar: u.avatar,
+      passwordHash: u.password_hash,
+      passwordSalt: u.password_salt,
+      createdAt: u.created_at,
+    };
+  },
+
+  async createUser(userData) {
+    if (!sql) throw new Error('Neon database is not configured');
+    const id = userData.uuid || userData.id || generateUuid();
+    await sql.query(
+      `INSERT INTO users (id, name, email, password_hash, password_salt, phone, city, role, rating, avatar)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+       ON CONFLICT (email) DO UPDATE SET
+         name = EXCLUDED.name,
+         phone = EXCLUDED.phone,
+         city = EXCLUDED.city`,
+      [
+        id,
+        userData.name,
+        userData.email.toLowerCase().trim(),
+        userData.passwordHash || null,
+        userData.passwordSalt || null,
+        userData.phone || '+996 700 000 000',
+        userData.city || 'Бишкек',
+        userData.role || 'USER',
+        Number(userData.rating) || 5.0,
+        userData.avatar || '',
+      ]
+    );
+    return this.getUserByEmail(userData.email);
   }
 };

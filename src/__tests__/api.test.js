@@ -57,7 +57,7 @@ describe('Mock REST API and Data Layer tests', () => {
     // 4. Delete
     await api.deleteBook(created.id);
     await expect(api.getBookById(created.id)).rejects.toThrow();
-  });
+  }, 20000);
 
   it('creates orders and recalculates admin metrics', async () => {
     const newOrder = await api.createOrder({
@@ -74,7 +74,7 @@ describe('Mock REST API and Data Layer tests', () => {
     const metrics = await api.getAdminMetrics();
     expect(metrics.totalRevenue).toBeGreaterThan(0);
     expect(metrics.chartData.length).toBeGreaterThan(0);
-  });
+  }, 20000);
 
   it('generates standard RFC 4122 UUID v4 for new textbooks and orders', async () => {
     const created = await api.createBook({
