@@ -15,7 +15,6 @@ import { LangSwitcher } from '../common/LangSwitcher';
 import { BurgerMenu } from './BurgerMenu';
 import { TyndykEmblem } from '../common/KyrgyzOrnament';
 import { BrandLogo } from '../common/BrandLogo';
-import { ScrollProgressBar } from '../common/ScrollProgressBar';
 import { logout } from '../../features/auth/authSlice';
 
 export const Header = () => {
@@ -34,10 +33,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full pt-2 sm:pt-2.5 backdrop-blur-md bg-white/95 dark:bg-darkBg/95 border-b border-gray-100 dark:border-darkBorder transition-colors shadow-xs">
-      {/* Interactive Kyrgyz National Reading Progress Slider */}
-      <ScrollProgressBar />
-
+    <header className="sticky top-0 z-40 w-full pt-2.5 backdrop-blur-md bg-white/95 dark:bg-darkBg/95 border-b border-gray-100 dark:border-darkBorder transition-colors shadow-xs">
       <div className="w-full max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
           {/* Responsive Kyrgyz Brand Logo: compact on mobile, majestic on desktop */}

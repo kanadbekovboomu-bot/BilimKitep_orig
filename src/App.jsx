@@ -5,6 +5,7 @@ import { ErrorBoundary } from './components/layout/ErrorBoundary';
 import { AppRoutes } from './routes/AppRoutes';
 import { CreativePageLoader } from './components/common/CreativePageLoader';
 import { KyrgyzMandalaBackground } from './components/common/KyrgyzMandalaBackground';
+import { ScrollProgressBar } from './components/common/ScrollProgressBar';
 
 export const App = () => {
   const [showInitialSplash, setShowInitialSplash] = useState(() => {
@@ -24,6 +25,9 @@ export const App = () => {
 
   return (
     <ErrorBoundary>
+      {/* Fixed Viewport Kyrgyz Reading Progress Bar Slider - Always at absolute top of window */}
+      <ScrollProgressBar />
+
       {showInitialSplash && (
         <CreativePageLoader
           fullScreen
@@ -32,12 +36,12 @@ export const App = () => {
         />
       )}
 
-      <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden flex flex-col bg-gray-50/70 text-gray-900 dark:bg-darkBg dark:text-gray-100 transition-colors duration-200">
+      <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-clip flex flex-col bg-gray-50/70 text-gray-900 dark:bg-darkBg dark:text-gray-100 transition-colors duration-200">
         {/* Luxury Ethnic Mandala & Shyrdak Background Pattern */}
         <KyrgyzMandalaBackground />
 
         <Header />
-        <main className="flex-1 w-full max-w-full overflow-x-hidden">
+        <main className="flex-1 w-full max-w-full overflow-x-clip">
           <AppRoutes />
         </main>
         <Footer />
