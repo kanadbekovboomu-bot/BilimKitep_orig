@@ -104,7 +104,11 @@ export const neonService = {
     } else if (params.sort === 'priceDesc') {
       query += ' ORDER BY price DESC';
     } else if (params.sort === 'rating') {
-      query += ' ORDER BY rating DESC';
+      query += ' ORDER BY rating DESC, reviews_count DESC';
+    } else if (params.sort === 'reviews') {
+      query += ' ORDER BY reviews_count DESC, rating DESC';
+    } else if (params.sort === 'sales' || params.sort === 'popular') {
+      query += ' ORDER BY reviews_count DESC, price DESC';
     } else {
       query += ' ORDER BY year DESC, created_at DESC';
     }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -36,6 +36,7 @@ const QUICK_SUBJECTS = [
 export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogout }) => {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
+  const [subjectCategory, setSubjectCategory] = useState('all'); // 'all' | 'sales' | 'reviews' | 'rent'
 
   useEffect(() => {
     if (isOpen) {
@@ -63,7 +64,15 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
   };
 
   const handleSubjectSelect = (searchTerm) => {
-    navigate(`/catalog?search=${encodeURIComponent(searchTerm)}`);
+    let url = `/catalog?search=${encodeURIComponent(searchTerm)}`;
+    if (subjectCategory === 'sales') {
+      url += '&dealType=BUY';
+    } else if (subjectCategory === 'reviews') {
+      url += '&sort=reviews';
+    } else if (subjectCategory === 'rent') {
+      url += '&dealType=RENT';
+    }
+    navigate(url);
     onClose();
   };
 
@@ -177,20 +186,82 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
             </div>
           </div>
 
-          {/* SECTION 2: POPULAR SUBJECTS */}
+          {/* SECTION 2: POPULAR SUBJECTS WITH CATEGORIES */}
           <div className="space-y-2.5">
-            <span className="text-xs font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              {t('menu.quickSubjects', { defaultValue: 'Популярные предметы' })}
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                {t('menu.quickSubjects', { defaultValue: 'Популярные предметы' })}
+              </span>
+              <span className="text-[10px] font-bold text-gray-400">
+                Категории:
+              </span>
+            </div>
 
+            {/* Sub-category selector tabs: Все / По продаже / По отзывам / По аренде */}
+            <div className="grid grid-cols-4 gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">
+              <button
+                type="button"
+                onClick={() => setSubjectCategory('all')}
+                className={`py-1.5 rounded-lg transition-all text-center cursor-pointer ${
+                  subjectCategory === 'all'
+                    ? 'bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 shadow-xs'
+                    : 'text-gray-500 hover:text-gray-900 dark:hover:text-gray-100'
+                }`}
+              >
+                Все
+              </button>
+              <button
+                type="button"
+                onClick={() => setSubjectCategory('sales')}
+                className={`py-1.5 rounded-lg transition-all text-center cursor-pointer ${
+                  subjectCategory === 'sales'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'text-gray-500 hover:text-blue-600'
+                }`}
+              >
+                🛒 Продажа
+              </button>
+              <button
+                type="button"
+                onClick={() => setSubjectCategory('reviews')}
+                className={`py-1.5 rounded-lg transition-all text-center cursor-pointer ${
+                  subjectCategory === 'reviews'
+                    ? 'bg-amber-500 text-white shadow-xs'
+                    : 'text-gray-500 hover:text-amber-600'
+                }`}
+              >
+                ⭐ Отзывы
+              </button>
+              <button
+                type="button"
+                onClick={() => setSubjectCategory('rent')}
+                className={`py-1.5 rounded-lg transition-all text-center cursor-pointer ${
+                  subjectCategory === 'rent'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-gray-500 hover:text-emerald-600'
+                }`}
+              >
+                🔄 Аренда
+              </button>
+            </div>
+
+            {/* Subject Chips */}
             <div className="flex flex-wrap gap-1.5">
               {QUICK_SUBJECTS.map((s) => (
                 <button
                   key={s.id}
                   type="button"
                   onClick={() => handleSubjectSelect(s.search)}
-                  className="px-2.5 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-700 dark:hover:text-emerald-300 border border-slate-200/70 dark:border-slate-700/70 transition-colors cursor-pointer"
+                  className={`px-2.5 py-1.5 rounded-xl text-xs font-medium border transition-colors cursor-pointer ${
+                    subjectCategory === 'sales'
+                      ? 'bg-blue-50/70 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border-blue-200/80 hover:bg-blue-100'
+                      : subjectCategory === 'reviews'
+                      ? 'bg-amber-50/70 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border-amber-200/80 hover:bg-amber-100'
+                      : subjectCategory === 'rent'
+                      ? 'bg-emerald-50/70 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-200/80 hover:bg-emerald-100'
+                      : 'bg-slate-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 border-slate-200/70 dark:border-slate-700/70 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-700 dark:hover:text-emerald-300'
+                  }`}
                 >
                   {s.label}
                 </button>

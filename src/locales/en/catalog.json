@@ -21,6 +21,8 @@
     "sortPriceAsc": "Price: Low to High",
     "sortPriceDesc": "Price: High to Low",
     "sortRating": "Highest Rated",
+    "sortReviews": "By Reviews",
+    "sortSales": "By Sales",
     "upTo": "up to {{price}}",
     "wisdomTitle": "Knowledge is an endless treasure",
     "wisdomDesc": "High quality education and accessible textbooks for students across Kyrgyzstan."

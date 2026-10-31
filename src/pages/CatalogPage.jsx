@@ -40,9 +40,11 @@ export const CatalogPage = () => {
     const q = searchParams.get('search');
     const grade = searchParams.get('grade');
     const dealType = searchParams.get('dealType');
+    const sort = searchParams.get('sort');
     if (q) dispatch(setSearchQuery(q));
     if (grade) dispatch(setFilterParam({ key: 'grade', value: grade }));
     if (dealType) dispatch(setFilterParam({ key: 'dealType', value: dealType }));
+    if (sort) dispatch(setFilterParam({ key: 'sort', value: sort }));
   }, [searchParams, dispatch]);
 
   // Fetch books whenever filter state changes
@@ -111,11 +113,65 @@ export const CatalogPage = () => {
       />
 
       {/* OnlineMektep-styled Subject Filter Bar */}
-      <div className="bg-white dark:bg-darkCard rounded-3xl p-4 border border-gray-100 dark:border-darkBorder shadow-xs">
+      <div className="bg-white dark:bg-darkCard rounded-3xl p-4 border border-gray-100 dark:border-darkBorder shadow-xs space-y-3">
         <EdTechSubjectBar
           selectedSubject={filterState.search}
           onSelectSubject={(subj) => handleSearchChange(subj)}
         />
+
+        {/* Quick Category Sub-Filter Pills: All / По продаже / По отзывам / По аренде */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-0.5 no-scrollbar text-xs font-bold pt-2 border-t border-gray-100 dark:border-darkBorder">
+          <span className="text-gray-400 dark:text-gray-500 shrink-0 font-medium text-[11px]">
+            Категории:
+          </span>
+          <button
+            type="button"
+            onClick={() => {
+              handleFilterChange('dealType', 'all');
+              handleFilterChange('sort', 'newest');
+            }}
+            className={`shrink-0 px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
+              filterState.dealType === 'all' && filterState.sort === 'newest'
+                ? 'bg-emerald-500 text-white border-emerald-500 shadow-xs'
+                : 'bg-slate-50 dark:bg-slate-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-darkBorder hover:border-emerald-400'
+            }`}
+          >
+            📚 Все предложения
+          </button>
+          <button
+            type="button"
+            onClick={() => handleFilterChange('dealType', 'BUY')}
+            className={`shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
+              filterState.dealType === 'BUY'
+                ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                : 'bg-slate-50 dark:bg-slate-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-darkBorder hover:border-blue-400 hover:text-blue-600'
+            }`}
+          >
+            <span>🛒 По продаже</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleFilterChange('sort', 'reviews')}
+            className={`shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
+              filterState.sort === 'reviews'
+                ? 'bg-amber-500 text-white border-amber-500 shadow-xs'
+                : 'bg-slate-50 dark:bg-slate-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-darkBorder hover:border-amber-400 hover:text-amber-600'
+            }`}
+          >
+            <span>⭐ По отзывам</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleFilterChange('dealType', 'RENT')}
+            className={`shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
+              filterState.dealType === 'RENT'
+                ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                : 'bg-slate-50 dark:bg-slate-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-darkBorder hover:border-emerald-400 hover:text-emerald-600'
+            }`}
+          >
+            <span>🔄 По аренде</span>
+          </button>
+        </div>
       </div>
 
       {/* Main Layout: Sidebar Filter + Book Grid */}
@@ -149,9 +205,10 @@ export const CatalogPage = () => {
                 className="rounded-xl border border-gray-200 dark:border-darkBorder bg-white dark:bg-darkCard py-1.5 px-3 text-xs font-semibold text-gray-900 dark:text-gray-100 focus:ring-1 focus:ring-brand-500"
               >
                 <option value="newest">{t('filters.sortNewest')}</option>
+                <option value="reviews">{t('filters.sortReviews', { defaultValue: 'По отзывам' })}</option>
+                <option value="rating">{t('filters.sortRating')}</option>
                 <option value="priceAsc">{t('filters.sortPriceAsc')}</option>
                 <option value="priceDesc">{t('filters.sortPriceDesc')}</option>
-                <option value="rating">{t('filters.sortRating')}</option>
               </select>
             </div>
           </div>

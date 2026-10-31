@@ -1018,7 +1018,11 @@ export const api = {
     } else if (params.sort === 'priceDesc') {
       books.sort((a, b) => b.price - a.price);
     } else if (params.sort === 'rating') {
-      books.sort((a, b) => b.rating - a.rating);
+      books.sort((a, b) => (b.rating || 0) - (a.rating || 0) || (b.reviewsCount || 0) - (a.reviewsCount || 0));
+    } else if (params.sort === 'reviews') {
+      books.sort((a, b) => (b.reviewsCount || 0) - (a.reviewsCount || 0) || (b.rating || 0) - (a.rating || 0));
+    } else if (params.sort === 'sales' || params.sort === 'popular') {
+      books.sort((a, b) => (b.reviewsCount || 0) - (a.reviewsCount || 0));
     } else {
       // Newest
       books.sort((a, b) => (b.year || 2020) - (a.year || 2020));
