@@ -993,7 +993,15 @@ export const api = {
     }
 
     if (params.grade && params.grade !== 'all') {
-      books = books.filter(b => String(b.grade) === String(params.grade));
+      if (params.grade === 'primary') {
+        books = books.filter(b => Number(b.grade) >= 1 && Number(b.grade) <= 4);
+      } else if (params.grade === 'middle') {
+        books = books.filter(b => Number(b.grade) >= 5 && Number(b.grade) <= 9);
+      } else if (params.grade === 'senior') {
+        books = books.filter(b => Number(b.grade) >= 10 && Number(b.grade) <= 11);
+      } else {
+        books = books.filter(b => String(b.grade) === String(params.grade));
+      }
     }
 
     if (params.language && params.language !== 'all') {

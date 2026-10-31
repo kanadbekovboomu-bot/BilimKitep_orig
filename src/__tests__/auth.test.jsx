@@ -78,7 +78,7 @@ describe('Auth Redux Slice & Google Auth', () => {
   it('renders LoginPage with Google Sign-In container and demo buttons', () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <LoginPage />
         </BrowserRouter>
       </Provider>

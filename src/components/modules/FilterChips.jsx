@@ -11,7 +11,11 @@ export const FilterChips = ({ filters, onRemove, onClearAll }) => {
     chips.push({ key: 'search', label: `${t('actions.search', { ns: 'common' })}: "${filters.search}"` });
   }
   if (filters.grade && filters.grade !== 'all') {
-    chips.push({ key: 'grade', label: `${t('filters.grade')}: ${filters.grade}` });
+    let gradeLabel = `${filters.grade}-класс`;
+    if (filters.grade === 'primary') gradeLabel = '1-4 классы';
+    else if (filters.grade === 'middle') gradeLabel = '5-9 классы';
+    else if (filters.grade === 'senior') gradeLabel = '10-11 классы';
+    chips.push({ key: 'grade', label: `${t('filters.grade')}: ${gradeLabel}` });
   }
   if (filters.language && filters.language !== 'all') {
     chips.push({ key: 'language', label: `${t('filters.language')}: ${filters.language}` });

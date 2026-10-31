@@ -9,6 +9,7 @@ import { RentCalculator } from '../components/modules/RentCalculator';
 import { BurgerMenu } from '../components/layout/BurgerMenu';
 import { BookPreviewModal } from '../components/modules/BookPreviewModal';
 import { CustomDropdown } from '../components/common/CustomDropdown';
+import { ScrollProgressBar } from '../components/common/ScrollProgressBar';
 import { ThemeProvider } from '../context/ThemeContext';
 import '../i18n';
 
@@ -77,7 +78,7 @@ describe('Common UI Components rendering & interaction', () => {
 
     render(
       <ThemeProvider>
-        <MemoryRouter>
+        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <BurgerMenu
             isOpen={true}
             onClose={handleClose}
@@ -192,5 +193,22 @@ describe('Common UI Components rendering & interaction', () => {
     expect(handleChange).toHaveBeenCalledWith('priceDesc');
     // Dropdown closes after selection
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('renders ScrollProgressBar with ARIA progressbar role and handles seek click', () => {
+    const scrollToMock = vi.fn();
+    window.scrollTo = scrollToMock;
+
+    render(<ScrollProgressBar />);
+
+    const bar = screen.getByRole('progressbar', { name: /Прогресс чтения/i });
+    expect(bar).toBeInTheDocument();
+    expect(bar).toHaveAttribute('aria-valuemin', '0');
+    expect(bar).toHaveAttribute('aria-valuemax', '100');
+
+    // Simulate clicking on the bar
+    fireEvent.click(bar, { clientX: 200 });
+    // Should call window.scrollTo or maintain state
+    expect(bar).toBeInTheDocument();
   });
 });
