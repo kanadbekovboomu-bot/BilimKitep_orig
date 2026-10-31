@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -37,6 +38,11 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const [subjectCategory, setSubjectCategory] = useState('all'); // 'all' | 'sales' | 'reviews' | 'rent'
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -81,25 +87,25 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
     onClose();
   };
 
-  return (
-    <div className="fixed inset-0 z-50 lg:hidden">
-      {/* Dimmed & blurred backdrop */}
+  const modalContent = (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-5 overflow-hidden">
+      {/* Dimmed & blurred backdrop covering entire viewport */}
       <div
         data-testid="burger-menu-backdrop"
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-slate-950/70 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Slide-in Full-Height Drawer (Ergonomic & Never Cut Off) */}
+      {/* Floating Centered Modal Window Dialog (Never Trapped, Never Cut Off) */}
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Навигационное меню"
-        className="fixed inset-y-0 right-0 w-[88vw] sm:w-[380px] max-w-sm sm:max-w-md h-full bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200/80 dark:border-slate-800/80 z-50 flex flex-col overflow-hidden animate-in slide-in-from-right duration-250"
+        className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200/90 dark:border-slate-800/90 z-10 flex flex-col max-h-[90vh] overflow-hidden animate-in zoom-in-95 fade-in duration-200 my-auto"
       >
-        {/* Fixed Header */}
-        <div className="flex items-center justify-between px-4 sm:px-5 py-3.5 border-b border-gray-100 dark:border-darkBorder shrink-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md">
+        {/* Fixed Modal Header */}
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 border-b border-gray-100 dark:border-darkBorder shrink-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
           <div onClick={onClose} className="cursor-pointer">
             <BrandLogo size="sm" showTagline={false} linkTo="/" />
           </div>
@@ -114,16 +120,16 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
         </div>
 
         {/* Quick controls: Language + Theme */}
-        <div className="flex items-center justify-between px-4 sm:px-5 py-2.5 border-b border-gray-100 dark:border-darkBorder gap-2 shrink-0 bg-slate-50/70 dark:bg-slate-800/40">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 border-b border-gray-100 dark:border-darkBorder gap-2 shrink-0 bg-slate-50/80 dark:bg-slate-800/50">
           <LangSwitcher />
           <ThemeToggle />
         </div>
 
-        {/* Scrollable Navigation & Filter Body */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-5 overscroll-contain">
+        {/* Scrollable Modal Content (Overscroll Contain) */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 overscroll-contain">
           {/* User Preview Card if logged in */}
           {user && (
-            <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 flex items-center gap-3">
+            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 flex items-center gap-3">
               {user.avatar ? (
                 <img
                   src={user.avatar}
@@ -163,7 +169,7 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
             </div>
 
             {/* Grid of Grade Buttons for Instant Selection */}
-            <div className="grid grid-cols-6 gap-1.5">
+            <div className="grid grid-cols-6 sm:grid-cols-12 gap-1.5">
               {QUICK_GRADES.map((g) => (
                 <button
                   key={g}
@@ -383,7 +389,7 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
           </nav>
         </div>
 
-        {/* Fixed Footer */}
+        {/* Modal Footer */}
         {user ? (
           <div className="p-4 border-t border-gray-100 dark:border-darkBorder shrink-0 bg-white dark:bg-slate-900">
             <button
@@ -408,6 +414,13 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
       </div>
     </div>
   );
+
+  // Escaping <header>'s backdrop-filter containing block via portal
+  if (typeof document !== 'undefined') {
+    return createPortal(modalContent, document.body);
+  }
+
+  return modalContent;
 };
 
 export default BurgerMenu;
