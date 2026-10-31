@@ -1,13 +1,41 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { X, BookOpen, ShoppingBag, PlusCircle, User, ShieldCheck, LogIn, LogOut } from 'lucide-react';
+import {
+  X,
+  BookOpen,
+  ShoppingBag,
+  PlusCircle,
+  User,
+  ShieldCheck,
+  LogIn,
+  LogOut,
+  GraduationCap,
+  Sparkles,
+  Layers
+} from 'lucide-react';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { LangSwitcher } from '../common/LangSwitcher';
 import { BrandLogo } from '../common/BrandLogo';
 
+const QUICK_GRADES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+const QUICK_SUBJECTS = [
+  { id: 'math', label: 'Математика & Алгебра', search: 'Математика' },
+  { id: 'kyrgyz', label: 'Кыргыз тили & Адабият', search: 'Кыргыз' },
+  { id: 'russian', label: 'Русский язык', search: 'Русский' },
+  { id: 'english', label: 'English', search: 'English' },
+  { id: 'physics', label: 'Физика', search: 'Физика' },
+  { id: 'chemistry', label: 'Химия', search: 'Химия' },
+  { id: 'history', label: 'Кыргызстан тарыхы', search: 'Тарых' },
+  { id: 'geography', label: 'География', search: 'География' },
+  { id: 'it', label: 'Информатика & ИКТ', search: 'Информатика' },
+  { id: 'ort', label: '🎯 ЖРТ / ОРТ даярдоо', search: 'ЖРТ' },
+];
+
 export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogout }) => {
   const { t } = useTranslation('common');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpen) {
@@ -17,9 +45,7 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
     }
 
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
+      if (e.key === 'Escape') onClose();
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -31,8 +57,23 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
 
   if (!isOpen) return null;
 
+  const handleGradeSelect = (grade) => {
+    navigate(`/catalog?grade=${grade}`);
+    onClose();
+  };
+
+  const handleSubjectSelect = (searchTerm) => {
+    navigate(`/catalog?search=${encodeURIComponent(searchTerm)}`);
+    onClose();
+  };
+
+  const handleDealTypeSelect = (dealType) => {
+    navigate(dealType === 'all' ? '/catalog' : `/catalog?dealType=${dealType}`);
+    onClose();
+  };
+
   return (
-    <div className="fixed inset-0 z-50 lg:hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-50 lg:hidden">
       {/* Dimmed & blurred backdrop */}
       <div
         data-testid="burger-menu-backdrop"
@@ -41,15 +82,15 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
         aria-hidden="true"
       />
 
-      {/* Floating Modal Window Dialog */}
+      {/* Slide-in Full-Height Drawer (Ergonomic & Never Cut Off) */}
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Навигационное меню"
-        className="relative w-full max-w-sm sm:max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-slate-200/80 dark:border-slate-800/80 p-5 sm:p-6 z-10 my-auto overflow-hidden flex flex-col max-h-[90vh] transition-all transform scale-100"
+        className="fixed inset-y-0 right-0 w-[88vw] sm:w-[380px] max-w-sm sm:max-w-md h-full bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200/80 dark:border-slate-800/80 z-50 flex flex-col overflow-hidden animate-in slide-in-from-right duration-250"
       >
-        {/* Modal Header */}
-        <div className="flex items-center justify-between pb-3.5 border-b border-gray-100 dark:border-darkBorder shrink-0">
+        {/* Fixed Header */}
+        <div className="flex items-center justify-between px-4 sm:px-5 py-3.5 border-b border-gray-100 dark:border-darkBorder shrink-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md">
           <div onClick={onClose} className="cursor-pointer">
             <BrandLogo size="sm" showTagline={false} linkTo="/" />
           </div>
@@ -63,17 +104,17 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
           </button>
         </div>
 
-        {/* Quick settings: Language + Theme */}
-        <div className="flex items-center justify-between py-3 border-b border-gray-100 dark:border-darkBorder gap-2 shrink-0">
+        {/* Quick controls: Language + Theme */}
+        <div className="flex items-center justify-between px-4 sm:px-5 py-2.5 border-b border-gray-100 dark:border-darkBorder gap-2 shrink-0 bg-slate-50/70 dark:bg-slate-800/40">
           <LangSwitcher />
           <ThemeToggle />
         </div>
 
-        {/* Scrollable Navigation Body */}
-        <div className="overflow-y-auto py-3 space-y-2.5 flex-1 pr-0.5">
-          {/* User profile card if logged in */}
+        {/* Scrollable Navigation & Filter Body */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-5 overscroll-contain">
+          {/* User Preview Card if logged in */}
           {user && (
-            <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 flex items-center gap-3 mb-1">
+            <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 flex items-center gap-3">
               {user.avatar ? (
                 <img
                   src={user.avatar}
@@ -96,90 +137,184 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
             </div>
           )}
 
-          {/* Navigation links */}
-          <Link
-            to="/catalog"
-            onClick={onClose}
-            className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-bold text-gray-800 dark:text-gray-100 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-700 dark:hover:text-emerald-300 border border-slate-200/80 dark:border-slate-700/80 transition-all"
-          >
-            <span className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-              <BookOpen className="w-4 h-4" />
-            </span>
-            <span className="flex-1">{t('nav.catalog')}</span>
-          </Link>
-
-          <Link
-            to="/add-book"
-            onClick={onClose}
-            className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-md shadow-emerald-500/20 transition-all"
-          >
-            <span className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-              <PlusCircle className="w-4 h-4 text-white" />
-            </span>
-            <span className="flex-1">{t('nav.addBook')}</span>
-          </Link>
-
-          <Link
-            to="/cart"
-            onClick={onClose}
-            className="flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-                <ShoppingBag className="w-4 h-4" />
+          {/* SECTION 1: QUICK GRADE SELECTOR (1-11 КЛАСС) */}
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+                <GraduationCap className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                {t('menu.quickGrades', { defaultValue: 'Классы (1–11 класс)' })}
               </span>
-              <span>{t('nav.cart')}</span>
-            </div>
-            {cartCount > 0 && (
-              <span className="bg-emerald-500 text-white text-xs px-2.5 py-0.5 rounded-full font-bold shadow-sm">
-                {cartCount}
-              </span>
-            )}
-          </Link>
-
-          {user ? (
-            <>
-              <Link
-                to="/profile"
-                onClick={onClose}
-                className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              <button
+                type="button"
+                onClick={() => handleGradeSelect('all')}
+                className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
               >
-                <span className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-                  <User className="w-4 h-4" />
-                </span>
-                <span className="flex-1">{t('nav.profile')}</span>
-              </Link>
+                {t('menu.allGrades', { defaultValue: 'Все' })}
+              </button>
+            </div>
 
-              {user.role === 'ADMIN' && (
-                <Link
-                  to="/admin"
-                  onClick={onClose}
-                  className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-semibold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 hover:bg-purple-100 transition-colors"
+            {/* Grid of Grade Buttons for Instant Selection */}
+            <div className="grid grid-cols-6 gap-1.5">
+              {QUICK_GRADES.map((g) => (
+                <button
+                  key={g}
+                  type="button"
+                  onClick={() => handleGradeSelect(g)}
+                  className="h-9 rounded-xl font-black text-xs bg-slate-100 dark:bg-slate-800 text-gray-800 dark:text-gray-200 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-600 transition-all cursor-pointer flex items-center justify-center border border-slate-200/60 dark:border-slate-700/60 active:scale-95"
+                  title={`${g}-класс`}
                 >
-                  <span className="w-8 h-8 rounded-xl bg-purple-200 dark:bg-purple-900 text-purple-700 dark:text-purple-300 flex items-center justify-center shrink-0">
-                    <ShieldCheck className="w-4 h-4" />
-                  </span>
-                  <span className="flex-1">{t('nav.admin')}</span>
-                </Link>
-              )}
-            </>
-          ) : (
+                  {g}
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={() => handleSubjectSelect('ЖРТ')}
+                className="col-span-1 h-9 rounded-xl font-bold text-[10px] bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 hover:bg-amber-500 hover:text-white transition-all cursor-pointer flex items-center justify-center border border-amber-200/60 active:scale-95"
+                title="ЖРТ / ОРТ"
+              >
+                ЖРТ
+              </button>
+            </div>
+          </div>
+
+          {/* SECTION 2: POPULAR SUBJECTS */}
+          <div className="space-y-2.5">
+            <span className="text-xs font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              {t('menu.quickSubjects', { defaultValue: 'Популярные предметы' })}
+            </span>
+
+            <div className="flex flex-wrap gap-1.5">
+              {QUICK_SUBJECTS.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => handleSubjectSelect(s.search)}
+                  className="px-2.5 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-700 dark:hover:text-emerald-300 border border-slate-200/70 dark:border-slate-700/70 transition-colors cursor-pointer"
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* SECTION 3: DEAL TYPE FILTER */}
+          <div className="space-y-2">
+            <span className="text-xs font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-blue-500" />
+              {t('menu.dealType', { defaultValue: 'Формат книги' })}
+            </span>
+            <div className="grid grid-cols-3 gap-1.5 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => handleDealTypeSelect('all')}
+                className="py-2 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer text-center"
+              >
+                Все
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDealTypeSelect('RENT')}
+                className="py-2 px-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 transition-colors cursor-pointer text-center"
+              >
+                Аренда
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDealTypeSelect('BUY')}
+                className="py-2 px-2 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 transition-colors cursor-pointer text-center"
+              >
+                Покупка
+              </button>
+            </div>
+          </div>
+
+          {/* SECTION 4: MAIN NAVIGATION LINKS */}
+          <nav className="pt-2 border-t border-gray-100 dark:border-darkBorder space-y-2">
             <Link
-              to="/login"
+              to="/catalog"
               onClick={onClose}
-              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition-all shadow-md shadow-emerald-600/20"
+              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-bold text-gray-800 dark:text-gray-100 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-700 dark:hover:text-emerald-300 border border-slate-200/80 dark:border-slate-700/80 transition-all"
+            >
+              <span className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <BookOpen className="w-4 h-4" />
+              </span>
+              <span className="flex-1">{t('nav.catalog')}</span>
+            </Link>
+
+            <Link
+              to="/add-book"
+              onClick={onClose}
+              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-md shadow-emerald-500/20 transition-all"
             >
               <span className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <LogIn className="w-4 h-4 text-white" />
+                <PlusCircle className="w-4 h-4 text-white" />
               </span>
-              <span className="flex-1">{t('nav.login')}</span>
+              <span className="flex-1">{t('nav.addBook')}</span>
             </Link>
-          )}
+
+            <Link
+              to="/cart"
+              onClick={onClose}
+              className="flex items-center justify-between px-3.5 py-3 rounded-2xl text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <span className="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                  <ShoppingBag className="w-4 h-4" />
+                </span>
+                <span>{t('nav.cart')}</span>
+              </div>
+              {cartCount > 0 && (
+                <span className="bg-emerald-500 text-white text-xs px-2.5 py-0.5 rounded-full font-bold shadow-sm">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+
+            {user ? (
+              <>
+                <Link
+                  to="/profile"
+                  onClick={onClose}
+                  className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <span className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                    <User className="w-4 h-4" />
+                  </span>
+                  <span className="flex-1">{t('nav.profile')}</span>
+                </Link>
+
+                {user.role === 'ADMIN' && (
+                  <Link
+                    to="/admin"
+                    onClick={onClose}
+                    className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-semibold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 hover:bg-purple-100 transition-colors"
+                  >
+                    <span className="w-8 h-8 rounded-xl bg-purple-200 dark:bg-purple-900 text-purple-700 dark:text-purple-300 flex items-center justify-center shrink-0">
+                      <ShieldCheck className="w-4 h-4" />
+                    </span>
+                    <span className="flex-1">{t('nav.admin')}</span>
+                  </Link>
+                )}
+              </>
+            ) : (
+              <Link
+                to="/login"
+                onClick={onClose}
+                className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition-all shadow-md shadow-emerald-600/20"
+              >
+                <span className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                  <LogIn className="w-4 h-4 text-white" />
+                </span>
+                <span className="flex-1">{t('nav.login')}</span>
+              </Link>
+            )}
+          </nav>
         </div>
 
-        {/* Modal Footer */}
+        {/* Fixed Footer */}
         {user ? (
-          <div className="pt-3 border-t border-gray-100 dark:border-darkBorder shrink-0">
+          <div className="p-4 border-t border-gray-100 dark:border-darkBorder shrink-0 bg-white dark:bg-slate-900">
             <button
               type="button"
               onClick={() => {
@@ -193,9 +328,9 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
             </button>
           </div>
         ) : (
-          <div className="pt-3 border-t border-gray-100 dark:border-darkBorder text-center shrink-0">
+          <div className="py-3 border-t border-gray-100 dark:border-darkBorder text-center shrink-0 bg-white dark:bg-slate-900">
             <span className="text-[11px] text-gray-400 font-medium">
-              BilimKitep KG • Шеринг учебников
+              BilimKitep KG • Шеринг окуу китептери
             </span>
           </div>
         )}

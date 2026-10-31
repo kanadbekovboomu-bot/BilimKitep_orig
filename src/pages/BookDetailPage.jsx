@@ -18,6 +18,7 @@ import { RentCalculator } from '../components/modules/RentCalculator';
 import { SellerCard } from '../components/modules/SellerCard';
 import { ReviewCard } from '../components/modules/ReviewCard';
 import { ReviewFormModal } from '../components/modules/ReviewFormModal';
+import { BookPreviewModal } from '../components/modules/BookPreviewModal';
 import { DealBadge } from '../components/modules/DealBadge';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
@@ -40,6 +41,7 @@ export const BookDetailPage = () => {
 
   const { selectedBook: book, loading, error } = useSelector((state) => state.books);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
 
@@ -184,6 +186,16 @@ export const BookDetailPage = () => {
               </div>
             </div>
 
+            {/* 5-Page Sample Book Reader Button */}
+            <button
+              type="button"
+              onClick={() => setIsPreviewModalOpen(true)}
+              className="w-full flex items-center justify-center gap-2.5 px-4 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 transition-all cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <BookOpen className="w-5 h-5 text-white" />
+              <span>{t('preview.btn', { defaultValue: '📖 Ознакомиться с книгой (5 страниц онлайн)' })}</span>
+            </button>
+
             {/* Description */}
             <div className="space-y-2">
               <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">
@@ -291,6 +303,14 @@ export const BookDetailPage = () => {
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
         onSubmit={handleAddReview}
+      />
+
+      {/* 5-Page Sample Book Preview Reader Modal */}
+      <BookPreviewModal
+        book={book}
+        isOpen={isPreviewModalOpen}
+        onClose={() => setIsPreviewModalOpen(false)}
+        onAddToCart={(b, type, months) => handleRentSubmit({ months, type })}
       />
 
       {/* Toast */}

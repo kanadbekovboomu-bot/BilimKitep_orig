@@ -1,6 +1,6 @@
 // Hybrid REST API Service with Neon Postgres & LocalStorage fallback
-import { neonService, isNeonAvailable } from './neonClient';
-import { generateUuid } from '../utils/uuid';
+import { neonService, isNeonAvailable } from './neonClient.js';
+import { generateUuid } from '../utils/uuid.js';
 
 const STORAGE_KEY_BOOKS = 'bilimkitep_books_db';
 const STORAGE_KEY_ORDERS = 'bilimkitep_orders_db';
@@ -71,7 +71,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_103",
-    title: "Алгебра жана анализдин башталышы 10-11-класс",
+    title: "Алгебра жана анализдин башталышы 10-класс",
     author: "А. А. Бөрүбаев, И. Б. Бекбоев",
     subject: "Алгебра",
     grade: 10,
@@ -129,7 +129,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_105",
-    title: "ЖРТ Математика: Алтын Сертификатка жол",
+    title: "ЖРТ Математика 11-класс (Алтын Сертификат)",
     author: "С. Акматов, Б. Садыков",
     subject: "ОРТ / ЖРТ",
     grade: 11,
@@ -158,7 +158,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_106",
-    title: "Физика 9-класс (на русском языке)",
+    title: "Физика 9-класс (на русском)",
     author: "Э. Мамбетакунов, В. Гутник",
     subject: "Физика",
     grade: 9,
@@ -187,7 +187,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_107",
-    title: "Химия 8-класс (на русском языке)",
+    title: "Химия 8-класс (на русском)",
     author: "С. Сатыбалдиев, О. Рудзитис",
     subject: "Химия",
     grade: 8,
@@ -216,7 +216,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_108",
-    title: "English 6 (Student's Book)",
+    title: "English 6-класс (Student's Book)",
     author: "В. Эванс, А. Алымова",
     subject: "Англис тили",
     grade: 6,
@@ -274,7 +274,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_110",
-    title: "Биология: Адам жана ден соолук 8-класс",
+    title: "Биология 8-класс (Адам жана ден соолук)",
     author: "Ж. Абдырахманов, Д. Тентимишев",
     subject: "Биология",
     grade: 8,
@@ -332,7 +332,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_112",
-    title: "ЖРТ Кыргыз тили жана окуу боюнча колдонмо",
+    title: "ЖРТ Кыргыз тили 11-класс (Тесттер жыйнагы)",
     author: "Г. Орозова, Т. Бакасова",
     subject: "ОРТ / ЖРТ",
     grade: 11,
@@ -496,7 +496,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_118",
-    title: "Кыргызстандын географиясы 8-9-класс",
+    title: "Кыргызстандын географиясы 8-класс",
     author: "К. М. Джумашев, М. Б. Бараталиев",
     subject: "География",
     grade: 8,
@@ -631,7 +631,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_123",
-    title: "English Plus Grade 8 (Student's Book)",
+    title: "English Plus 8-класс (Student's Book)",
     author: "Ben Wetz, Diana Pye",
     subject: "Англис тили",
     grade: 8,
@@ -658,7 +658,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_124",
-    title: "Физика 7-класс (кыргыз тилинде)",
+    title: "Физика 7-класс",
     author: "Э. Мамбетакунов, В. Д. Бабаев",
     subject: "Физика",
     grade: 7,
@@ -712,7 +712,7 @@ const RAW_INITIAL_BOOKS = [
   },
   {
     id: "b_126",
-    title: "ЖРТ Тарых боюнча тесттер жыйнагы",
+    title: "ЖРТ Тарых 11-класс (Тесттер жыйнагы)",
     author: "ЦООМО • Билимди баалоо борбору",
     subject: "ОРТ / ЖРТ",
     grade: 11,
@@ -735,6 +735,168 @@ const RAW_INITIAL_BOOKS = [
     },
     rating: 5.0,
     reviewsCount: 20,
+    reviews: []
+  },
+  {
+    id: "b_127",
+    title: "Эне тили 2-класс",
+    author: "Т. Асаналиев, М. Рысбаев",
+    subject: "Кыргыз тили",
+    grade: 2,
+    language: "KG",
+    dealType: "BOTH",
+    price: 260,
+    rentPricePerMonth: 30,
+    deposit: 100,
+    condition: "EXCELLENT",
+    year: 2023,
+    images: ["/covers/kyrgyz-7.svg"],
+    description: "2-класстар үчүн эне тили окуу китеби. Муундар, сөздөр, сүйлөм түзүү, көнүгүүлөр жана көркөм тексти түшүнүү.",
+    status: "AVAILABLE",
+    owner: {
+      id: "u_501",
+      name: "Айнура Бекова",
+      phone: "+996 700 112 233",
+      city: "Бишкек",
+      rating: 4.9
+    },
+    rating: 5.0,
+    reviewsCount: 10,
+    reviews: []
+  },
+  {
+    id: "b_128",
+    title: "Математика 2-класс",
+    author: "И. Б. Бекбоев, Н. И. Ибраева",
+    subject: "Математика",
+    grade: 2,
+    language: "KG",
+    dealType: "RENT",
+    price: 270,
+    rentPricePerMonth: 35,
+    deposit: 110,
+    condition: "GOOD",
+    year: 2022,
+    images: ["/covers/algebra-7.svg"],
+    description: "Башталгыч 2-класс үчүн математика. 100гө чейинки сандар, кошуу жана кемитүү амалдары, геометриялык фигуралар.",
+    status: "AVAILABLE",
+    owner: {
+      id: "u_502",
+      name: "Айбек Нурланов",
+      phone: "+996 700 123 456",
+      city: "Бишкек",
+      rating: 4.9
+    },
+    rating: 4.8,
+    reviewsCount: 7,
+    reviews: []
+  },
+  {
+    id: "b_129",
+    title: "Математика 6-класс",
+    author: "С. М. Мусабеков, А. А. Бөрүбаев",
+    subject: "Математика",
+    grade: 6,
+    language: "KG",
+    dealType: "BOTH",
+    price: 310,
+    rentPricePerMonth: 40,
+    deposit: 140,
+    condition: "EXCELLENT",
+    year: 2023,
+    images: ["/covers/algebra-7.svg"],
+    description: "6-класстын математика курсу. Жөнөкөй жана ондук бөлчөктөр, пропорциялар, терс сандар жана координаталар тегиздиги.",
+    status: "AVAILABLE",
+    owner: {
+      id: "u_505",
+      name: "Алина Жумалиева",
+      phone: "+996 500 223 344",
+      city: "Талас",
+      rating: 4.9
+    },
+    rating: 4.9,
+    reviewsCount: 9,
+    reviews: []
+  },
+  {
+    id: "b_130",
+    title: "Геометрия 10-класс",
+    author: "И. Б. Бекбоев, А. А. Бөрүбаев",
+    subject: "Геометрия",
+    grade: 10,
+    language: "KG",
+    dealType: "RENT",
+    price: 360,
+    rentPricePerMonth: 45,
+    deposit: 160,
+    condition: "GOOD",
+    year: 2021,
+    images: ["/covers/geometry-8.svg"],
+    description: "Стереометрия негиздери: мейкиндиктеги түз сызыктар жана тегиздиктер, призмалар, пирамидалар жана айлануу нерселери.",
+    status: "AVAILABLE",
+    owner: {
+      id: "u_504",
+      name: "Марат Осмонов",
+      phone: "+996 772 334 455",
+      city: "Бишкек",
+      rating: 5.0
+    },
+    rating: 5.0,
+    reviewsCount: 14,
+    reviews: []
+  },
+  {
+    id: "b_131",
+    title: "Алгебра жана анализдин башталышы 11-класс",
+    author: "А. А. Бөрүбаев, И. Б. Бекбоев",
+    subject: "Алгебра",
+    grade: 11,
+    language: "KG",
+    dealType: "BOTH",
+    price: 460,
+    rentPricePerMonth: 55,
+    deposit: 200,
+    condition: "NEW",
+    year: 2024,
+    images: ["/covers/algebra-10.svg"],
+    description: "11-класстын бүтүрүүчүлөрү үчүн алгебра: баштапкы функция жана интеграл, дифференциалдык теңдемелер жана комбинаторика.",
+    status: "AVAILABLE",
+    owner: {
+      id: "u_506",
+      name: "Билим Борбору «Келечек»",
+      phone: "+996 312 900 100",
+      city: "Бишкек",
+      rating: 5.0
+    },
+    rating: 5.0,
+    reviewsCount: 18,
+    reviews: []
+  },
+  {
+    id: "b_132",
+    title: "Кыргыз адабияты 11-класс",
+    author: "К. Асаналиев, С. Байгазиев",
+    subject: "Адабият",
+    grade: 11,
+    language: "KG",
+    dealType: "RENT",
+    price: 340,
+    rentPricePerMonth: 40,
+    deposit: 150,
+    condition: "EXCELLENT",
+    year: 2023,
+    images: ["/covers/adabiyat-9.svg"],
+    description: "XX кылымдагы жана азыркы кыргыз адабияты. Чыңгыз Айтматовдун дүйнөлүк маанидеги шедевр романдары жана повесттери.",
+    status: "AVAILABLE",
+    owner: {
+      id: "u_509",
+      name: "Бектур Токтогулов",
+      phone: "+996 702 331 122",
+      city: "Нарын",
+      rating: 5.0
+    },
+    rating: 5.0,
+    reviewsCount: 8,
     reviews: []
   }
 ];

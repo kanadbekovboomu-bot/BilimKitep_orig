@@ -148,5 +148,17 @@
       "ortGrant": "ORT / Grant",
       "itDigital": "IT / Digital"
     }
+  },
+  "preview": {
+    "btn": "📖 Read 5-Page Sample Online",
+    "title": "Textbook Sample (5 Pages)",
+    "finishTitle": "Preview Finished (5 of 5 Pages)",
+    "finishDesc": "Liked the book? Rent or buy the original copy!"
+  },
+  "menu": {
+    "quickGrades": "School Grades (1–11)",
+    "quickSubjects": "Popular Subjects",
+    "dealType": "Book Deal Type",
+    "allGrades": "All"
   }
 }

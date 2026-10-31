@@ -7,7 +7,8 @@ import { Badge } from '../common/Badge';
 import { RatingStars } from '../common/RatingStars';
 import { Button } from '../common/Button';
 import { formatKGS } from '../../utils/formatters';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { ShoppingBag, ArrowRight, BookOpen } from 'lucide-react';
+import { BookPreviewModal } from './BookPreviewModal';
 import {
   getLocalizedBookTitle,
   getLocalizedBookDesc,
@@ -25,6 +26,7 @@ export const QuickViewModal = ({
   const [selectedMonths, setSelectedMonths] = useState(9);
   const [dealType, setDealType] = useState('RENT');
   const [imgError, setImgError] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   if (!book) return null;
 
@@ -180,6 +182,16 @@ export const QuickViewModal = ({
 
           <div className="space-y-2 pt-2">
             <Button
+              variant="outline"
+              size="md"
+              className="w-full text-emerald-600 dark:text-emerald-400 border-emerald-300 dark:border-emerald-700"
+              icon={BookOpen}
+              onClick={() => setIsPreviewOpen(true)}
+            >
+              {t('preview.btn', { defaultValue: '📖 Читать 5 страниц обзора' })}
+            </Button>
+
+            <Button
               variant="primary"
               size="md"
               className="w-full"
@@ -200,6 +212,13 @@ export const QuickViewModal = ({
           </div>
         </div>
       </div>
+
+      <BookPreviewModal
+        book={book}
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)}
+        onAddToCart={onAddToCart}
+      />
     </Modal>
   );
 };

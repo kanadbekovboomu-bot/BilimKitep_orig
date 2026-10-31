@@ -7,6 +7,7 @@ import { Badge } from '../components/common/Badge';
 import { Modal } from '../components/common/Modal';
 import { RentCalculator } from '../components/modules/RentCalculator';
 import { BurgerMenu } from '../components/layout/BurgerMenu';
+import { BookPreviewModal } from '../components/modules/BookPreviewModal';
 import { ThemeProvider } from '../context/ThemeContext';
 import '../i18n';
 
@@ -95,7 +96,7 @@ describe('Common UI Components rendering & interaction', () => {
     // Verify user info inside modal
     expect(screen.getByText('Тестовый Пользователь')).toBeInTheDocument();
     expect(screen.getByText('test@bilimkitep.kg')).toBeInTheDocument();
-    expect(screen.getByText('3')).toBeInTheDocument(); // Cart badge
+    expect(screen.getAllByText('3').length).toBeGreaterThanOrEqual(1);
 
     // Verify close button triggers onClose
     const closeBtn = screen.getByLabelText('Close menu');
@@ -106,5 +107,49 @@ describe('Common UI Components rendering & interaction', () => {
     const backdrop = screen.getByTestId('burger-menu-backdrop');
     fireEvent.click(backdrop);
     expect(handleClose).toHaveBeenCalledTimes(2);
+  });
+
+  it('renders BookPreviewModal with 5 interactive pages and navigates through pages', () => {
+    const handleClose = vi.fn();
+    const handleAddToCart = vi.fn();
+    const sampleBook = {
+      id: 'b_101',
+      title: 'Геометрия 8-класс',
+      author: 'И. Б. Бекбоев',
+      subject: 'Геометрия',
+      grade: 8,
+      language: 'KG',
+      price: 320,
+      rentPricePerMonth: 40,
+    };
+
+    render(
+      <BookPreviewModal
+        book={sampleBook}
+        isOpen={true}
+        onClose={handleClose}
+        onAddToCart={handleAddToCart}
+      />
+    );
+
+    // Page 1: Title page (title in header and on paper)
+    expect(screen.getAllByText('Геометрия 8-класс').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/И. Б. Бекбоев/i).length).toBeGreaterThanOrEqual(1);
+
+    // Next page -> Page 2: Table of Contents
+    const nextBtn = screen.getByRole('button', { name: /Алга/i });
+    fireEvent.click(nextBtn);
+    expect(screen.getByText(/МАЗМУНУ|ОГЛАВЛЕНИЕ/i)).toBeInTheDocument();
+
+    // Quick jump to page 5
+    const page5Btn = screen.getByRole('button', { name: 'Перейти на страницу 5' });
+    fireEvent.click(page5Btn);
+    expect(screen.getByText(/Ознакомительный фрагмент завершён/i)).toBeInTheDocument();
+
+    // Click rent from preview
+    const rentBtn = screen.getByRole('button', { name: /Взять в аренду/i });
+    fireEvent.click(rentBtn);
+    expect(handleAddToCart).toHaveBeenCalledWith(sampleBook, 'RENT', 9);
+    expect(handleClose).toHaveBeenCalled();
   });
 });

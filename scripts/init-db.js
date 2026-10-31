@@ -135,33 +135,46 @@ async function initDb() {
     console.log(`[Neon Init] Seeded ${seedUsers.length} users into Neon Postgres.`);
   }
 
-  // 2. Check if books exist
-  const existing = await sql`SELECT count(*) FROM books`;
-  const count = Number(existing[0].count);
-  console.log(`[Neon Init] Current books count: ${count}`);
+  // 2. Clean up test books and seed / update all Kyrgyz textbooks
+  await sql`DELETE FROM books WHERE title LIKE '%UUID Test%' OR title LIKE '%Тестовый Учебник%'`;
+  console.log('[Neon Init] Cleaned up temporary test artifacts.');
 
-  if (count === 0) {
-    console.log('[Neon Init] Seeding initial Kyrgyz textbooks...');
-    const { INITIAL_BOOKS } = await import('../src/services/api.js');
+  console.log('[Neon Init] Syncing all verified Kyrgyz textbooks with matching grades into Neon Postgres...');
+  const { INITIAL_BOOKS } = await import('../src/services/api.js');
 
-    for (const b of INITIAL_BOOKS) {
-      await sql`
-        INSERT INTO books (
-          id, title, author, subject, grade, language, deal_type, price,
-          rent_price_per_month, deposit, condition, year, images, description,
-          status, owner, rating, reviews_count, reviews
-        ) VALUES (
-          ${b.id}, ${b.title}, ${b.author}, ${b.subject}, ${b.grade}, ${b.language},
-          ${b.dealType}, ${b.price}, ${b.rentPricePerMonth}, ${b.deposit}, ${b.condition},
-          ${b.year || 2022}, ${JSON.stringify(b.images || [])}, ${b.description},
-          ${b.status || 'AVAILABLE'}, ${JSON.stringify(b.owner || {})},
-          ${b.rating || 5.0}, ${b.reviewsCount || 0}, ${JSON.stringify(b.reviews || [])}
-        )
-        ON CONFLICT (id) DO NOTHING;
-      `;
-    }
-    console.log(`[Neon Init] Seeded ${INITIAL_BOOKS.length} textbooks into Neon Postgres.`);
+  for (const b of INITIAL_BOOKS) {
+    await sql`
+      INSERT INTO books (
+        id, title, author, subject, grade, language, deal_type, price,
+        rent_price_per_month, deposit, condition, year, images, description,
+        status, owner, rating, reviews_count, reviews
+      ) VALUES (
+        ${b.id}, ${b.title}, ${b.author}, ${b.subject}, ${b.grade}, ${b.language},
+        ${b.dealType}, ${b.price}, ${b.rentPricePerMonth}, ${b.deposit}, ${b.condition},
+        ${b.year || 2023}, ${JSON.stringify(b.images || [])}, ${b.description},
+        ${b.status || 'AVAILABLE'}, ${JSON.stringify(b.owner || {})},
+        ${b.rating || 5.0}, ${b.reviewsCount || 0}, ${JSON.stringify(b.reviews || [])}
+      )
+      ON CONFLICT (id) DO UPDATE SET
+        title = EXCLUDED.title,
+        author = EXCLUDED.author,
+        subject = EXCLUDED.subject,
+        grade = EXCLUDED.grade,
+        language = EXCLUDED.language,
+        deal_type = EXCLUDED.deal_type,
+        price = EXCLUDED.price,
+        rent_price_per_month = EXCLUDED.rent_price_per_month,
+        deposit = EXCLUDED.deposit,
+        condition = EXCLUDED.condition,
+        year = EXCLUDED.year,
+        images = EXCLUDED.images,
+        description = EXCLUDED.description;
+    `;
   }
+  console.log(`[Neon Init] Synced ${INITIAL_BOOKS.length} textbooks into Neon Postgres.`);
+
+  const currentBooks = await sql`SELECT count(*) FROM books`;
+  console.log(`[Neon Init] Total active books in Neon Postgres: ${currentBooks[0].count}`);
 
   const ver = await sql`SELECT version(), current_database(), now()`;
   console.log('[Neon Init] Verification query SUCCESS:', ver[0]);
