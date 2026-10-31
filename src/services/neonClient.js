@@ -1,5 +1,5 @@
 import { neon } from '@neondatabase/serverless';
-import { generateUuid } from '../utils/uuid';
+import { generateUuid } from '../utils/uuid.js';
 
 // Resolve connection string from environment
 const getConnectionString = () => {
