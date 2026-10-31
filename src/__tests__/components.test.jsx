@@ -8,6 +8,7 @@ import { Modal } from '../components/common/Modal';
 import { RentCalculator } from '../components/modules/RentCalculator';
 import { BurgerMenu } from '../components/layout/BurgerMenu';
 import { BookPreviewModal } from '../components/modules/BookPreviewModal';
+import { CustomDropdown } from '../components/common/CustomDropdown';
 import { ThemeProvider } from '../context/ThemeContext';
 import '../i18n';
 
@@ -151,5 +152,45 @@ describe('Common UI Components rendering & interaction', () => {
     fireEvent.click(rentBtn);
     expect(handleAddToCart).toHaveBeenCalledWith(sampleBook, 'RENT', 9);
     expect(handleClose).toHaveBeenCalled();
+  });
+
+  it('renders CustomDropdown, opens styled menu and selects option', () => {
+    const handleChange = vi.fn();
+    const options = [
+      { value: 'newest', label: 'Сначала новые' },
+      { value: 'reviews', label: 'По отзывам' },
+      { value: 'priceDesc', label: 'Сначала дорогие' },
+    ];
+
+    render(
+      <CustomDropdown
+        value="newest"
+        onChange={handleChange}
+        options={options}
+        label="Сортировка"
+      />
+    );
+
+    // Initial label
+    expect(screen.getByText('Сначала новые')).toBeInTheDocument();
+    // Menu is closed initially
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+
+    // Click trigger button to open
+    const trigger = screen.getByRole('button', { name: /Сначала новые/i });
+    fireEvent.click(trigger);
+
+    // Menu is opened
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: /По отзывам/i })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: /Сначала дорогие/i })).toBeInTheDocument();
+
+    // Select 'Сначала дорогие'
+    const expensiveOption = screen.getByRole('option', { name: /Сначала дорогие/i });
+    fireEvent.click(expensiveOption);
+
+    expect(handleChange).toHaveBeenCalledWith('priceDesc');
+    // Dropdown closes after selection
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
 });

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Trash2, Calendar, ShieldCheck } from 'lucide-react';
 import { formatKGS } from '../../utils/formatters';
 import { calculateItemTotal } from '../../features/cart/cartSlice';
+import { CustomDropdown } from '../common/CustomDropdown';
 
 export const CartItem = ({
   item,
@@ -50,18 +51,22 @@ export const CartItem = ({
 
       {/* Rental Duration Selector */}
       {isRent && (
-        <div className="flex items-center gap-2 bg-gray-50 dark:bg-darkBorder/40 p-2 rounded-xl">
+        <div className="flex items-center gap-2 bg-gray-50 dark:bg-darkBorder/40 p-1.5 sm:p-2 rounded-xl">
           <Calendar className="w-3.5 h-3.5 text-gray-400 shrink-0" />
           <span className="text-xs text-gray-500">{t('rentPeriod')}:</span>
-          <select
+          <CustomDropdown
             value={item.months || 9}
-            onChange={(e) => onChangeDuration(item.id, Number(e.target.value))}
-            className="text-xs font-bold rounded-lg border-none bg-white dark:bg-darkCard py-1 px-2 text-brand-600 dark:text-brand-400 focus:ring-1 focus:ring-brand-500 cursor-pointer shadow-xs"
-          >
-            <option value={3}>{t('months.3', { ns: 'common' })}</option>
-            <option value={5}>{t('months.5', { ns: 'common' })}</option>
-            <option value={9}>{t('months.9', { ns: 'common' })}</option>
-          </select>
+            onChange={(val) => onChangeDuration(item.id, Number(val))}
+            options={[
+              { value: 3, label: t('months.3', { ns: 'common' }) },
+              { value: 5, label: t('months.5', { ns: 'common' }) },
+              { value: 9, label: t('months.9', { ns: 'common' }) },
+            ]}
+            buttonClassName="!py-1 !px-2.5 !text-xs !rounded-lg !border-none !bg-white dark:!bg-darkCard !text-brand-600 dark:!text-brand-400 !font-bold shadow-xs"
+            menuClassName="!w-44"
+            align="left"
+            label=""
+          />
         </div>
       )}
 

@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Filter, SlidersHorizontal } from 'lucide-react';
+import {
+  Filter,
+  SlidersHorizontal,
+  Sparkles,
+  Star,
+  MessageSquareQuote,
+  TrendingDown,
+  TrendingUp,
+} from 'lucide-react';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { SidebarFilter } from '../components/layout/SidebarFilter';
 import { SearchBar } from '../components/modules/SearchBar';
@@ -12,6 +20,7 @@ import { Pagination } from '../components/common/Pagination';
 import { QuickViewModal } from '../components/modules/QuickViewModal';
 import { EdTechSubjectBar } from '../components/modules/EdTechSubjectBar';
 import { ToastNotification } from '../components/common/ToastNotification';
+import { CustomDropdown } from '../components/common/CustomDropdown';
 import { TyndykEmblem, KochkorMuyuzPattern } from '../components/common/KyrgyzOrnament';
 import { fetchBooks } from '../features/books/booksSlice';
 import {
@@ -70,6 +79,37 @@ export const CatalogPage = () => {
     else if (key === 'maxPrice') dispatch(setFilterParam({ key: 'maxPrice', value: 2000 }));
     else dispatch(setFilterParam({ key, value: 'all' }));
   };
+
+  const sortOptions = useMemo(
+    () => [
+      {
+        value: 'newest',
+        label: t('filters.sortNewest'),
+        icon: Sparkles,
+      },
+      {
+        value: 'reviews',
+        label: t('filters.sortReviews', { defaultValue: 'По отзывам' }),
+        icon: MessageSquareQuote,
+      },
+      {
+        value: 'rating',
+        label: t('filters.sortRating'),
+        icon: Star,
+      },
+      {
+        value: 'priceAsc',
+        label: t('filters.sortPriceAsc'),
+        icon: TrendingDown,
+      },
+      {
+        value: 'priceDesc',
+        label: t('filters.sortPriceDesc'),
+        icon: TrendingUp,
+      },
+    ],
+    [t]
+  );
 
   const handleAddToCart = (book, type = 'RENT', months = 9) => {
     dispatch(addToCart({ book, type, months }));
@@ -197,19 +237,16 @@ export const CatalogPage = () => {
               <span>{t('results.filterButton')}</span>
             </button>
 
-            <div className="flex items-center gap-2 ml-auto text-xs text-gray-500">
-              <span className="hidden sm:inline">{t('results.sortLabel')}</span>
-              <select
+            <div className="flex items-center gap-2 ml-auto text-xs">
+              <span className="hidden sm:inline font-semibold text-gray-500 dark:text-gray-400">
+                {t('results.sortLabel')}
+              </span>
+              <CustomDropdown
                 value={filterState.sort}
-                onChange={(e) => handleFilterChange('sort', e.target.value)}
-                className="rounded-xl border border-gray-200 dark:border-darkBorder bg-white dark:bg-darkCard py-1.5 px-3 text-xs font-semibold text-gray-900 dark:text-gray-100 focus:ring-1 focus:ring-brand-500"
-              >
-                <option value="newest">{t('filters.sortNewest')}</option>
-                <option value="reviews">{t('filters.sortReviews', { defaultValue: 'По отзывам' })}</option>
-                <option value="rating">{t('filters.sortRating')}</option>
-                <option value="priceAsc">{t('filters.sortPriceAsc')}</option>
-                <option value="priceDesc">{t('filters.sortPriceDesc')}</option>
-              </select>
+                onChange={(val) => handleFilterChange('sort', val)}
+                options={sortOptions}
+                ariaLabel={t('results.sortLabel')}
+              />
             </div>
           </div>
 

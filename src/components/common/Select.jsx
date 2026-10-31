@@ -1,4 +1,7 @@
 import React, { forwardRef } from 'react';
+import { CustomDropdown } from './CustomDropdown';
+
+export { CustomDropdown };
 
 export const Select = forwardRef(({
   label,
