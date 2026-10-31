@@ -37,10 +37,15 @@ export const Header = () => {
       {/* Kyrgyz National Color Ribbon */}
       <div className="w-full h-1 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
-          {/* New Premium Kyrgyz Brand Logo */}
-          <BrandLogo size="md" />
+      <div className="w-full max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
+          {/* Responsive Kyrgyz Brand Logo: compact on mobile, majestic on desktop */}
+          <div className="sm:hidden">
+            <BrandLogo size="sm" showTagline={false} />
+          </div>
+          <div className="hidden sm:block">
+            <BrandLogo size="md" />
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-3 flex-shrink-0">

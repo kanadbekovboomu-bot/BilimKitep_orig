@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { X, BookOpen, ShoppingBag, PlusCircle, User, ShieldCheck, LogIn, LogOut } from 'lucide-react';
@@ -9,12 +9,29 @@ import { BrandLogo } from '../common/BrandLogo';
 export const BurgerMenu = ({ isOpen, onClose, cartCount, user, onLogout }) => {
   const { t } = useTranslation('common');
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 lg:hidden">
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose} />
-      <div className="fixed inset-y-0 right-0 w-[88vw] max-w-sm bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl p-5 sm:p-6 shadow-2xl border-l border-slate-200/80 dark:border-slate-800/80 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-250">
+      {/* Dimmed backdrop */}
+      <div
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-fade-in"
+        onClick={onClose}
+      />
+
+      {/* Drawer: full width on small screens (<640px) to prevent awkward background peeking, max-w-sm on tablets */}
+      <div className="fixed inset-y-0 right-0 w-full sm:w-[380px] sm:max-w-sm bg-white/98 dark:bg-slate-900/98 backdrop-blur-2xl p-5 sm:p-6 shadow-2xl border-l border-slate-200/80 dark:border-slate-800/80 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-250 z-10">
         <div>
           <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-darkBorder">
             <div onClick={onClose} className="cursor-pointer">
@@ -22,7 +39,7 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount, user, onLogout }) => {
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              className="p-2.5 rounded-xl text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
               aria-label="Close menu"
             >
               <X className="w-5 h-5" />

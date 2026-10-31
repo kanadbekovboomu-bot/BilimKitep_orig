@@ -11,6 +11,8 @@ import { Button } from '../components/common/Button';
 import { BrandLogo } from '../components/common/BrandLogo';
 import { registerUser } from '../features/auth/authSlice';
 import { generateUuid } from '../utils/uuid';
+import { hashPassword, evaluatePasswordStrength, sanitizeText } from '../utils/security';
+import { PasswordStrengthMeter } from '../components/common/PasswordStrengthMeter';
 
 export const RegisterPage = () => {
   const { t } = useTranslation('auth');
@@ -23,27 +25,57 @@ export const RegisterPage = () => {
   const [role, setRole] = useState('PARENT');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+    setError('');
+
     if (!name.trim() || !email.trim() || !password) {
       setError(t('errorAllRequired'));
       return;
     }
 
-    const uuid = generateUuid();
-    const newUser = {
-      uuid,
-      id: uuid,
-      name: name.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-      role: 'USER',
-      userType: role,
-    };
+    const strength = evaluatePasswordStrength(password);
+    if (!strength.isValid) {
+      setError(
+        t('errorPasswordWeak', {
+          defaultValue: 'Пароль слишком простой. Требуется минимум 8 символов, заглавная буква, цифра и спецсимвол.',
+        })
+      );
+      return;
+    }
 
-    dispatch(registerUser({ user: newUser, token: 'jwt_registered_token_456' }));
-    navigate('/profile', { replace: true });
+    setIsSubmitting(true);
+    try {
+      // PBKDF2-SHA256 Salted Hash
+      const { hash, salt } = await hashPassword(password);
+      const uuid = generateUuid();
+      const sanitizedName = sanitizeText(name.trim());
+      const sanitizedEmail = sanitizeText(email.trim().toLowerCase());
+
+      const newUser = {
+        uuid,
+        id: uuid,
+        name: sanitizedName,
+        email: sanitizedEmail,
+        phone: phone.trim(),
+        role: 'USER',
+        userType: role,
+        passwordHash: hash,
+        passwordSalt: salt,
+      };
+
+      // Store credentials locally for login verification
+      localStorage.setItem(`sec_cred_${sanitizedEmail}`, JSON.stringify({ hash, salt }));
+
+      dispatch(registerUser({ user: newUser, token: `jwt_sec_${Date.now()}_${uuid}` }));
+      navigate('/profile', { replace: true });
+    } catch {
+      setError('Ошибка при криптографической обработке пароля.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleGoogleSuccess = (credentialResponse) => {
@@ -138,19 +170,28 @@ export const RegisterPage = () => {
             ]}
           />
 
-          <Input
-            label={t('password')}
-            type="password"
-            placeholder="••••••••"
-            icon={Lock}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="space-y-2">
+            <Input
+              label={t('password')}
+              type="password"
+              placeholder="••••••••"
+              icon={Lock}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {password && <PasswordStrengthMeter password={password} />}
+          </div>
 
-          {error && <p className="text-xs text-red-500">{error}</p>}
+          {error && <p className="text-xs text-red-500 font-semibold">{error}</p>}
 
-          <Button variant="primary" size="md" className="w-full" type="submit">
-            {t('registerBtn')}
+          <Button
+            variant="primary"
+            size="md"
+            className="w-full"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Регистрация...' : t('registerBtn')}
           </Button>
         </form>
 

@@ -6,10 +6,35 @@
     "myListings": "Моих объявлений",
     "depositHolding": "Залог на возврате"
   },
+  "statsSub": {
+    "activeRentals": "Текущие договоры на руках",
+    "savedMoney": "По сравнению с покупкой новых книг",
+    "myListings": "Активно в каталоге платформы",
+    "depositHolding": "Возвратный депозит на хранении"
+  },
   "tabs": {
     "orders": "Мои заказы и аренда",
     "listings": "Мои книги на платформе",
+    "security": "Безопасность и пароль",
     "settings": "Настройки профиля"
+  },
+  "security": {
+    "title": "Безопасность учетной записи",
+    "badgeProtected": "Защищено PBKDF2-SHA256",
+    "badgeDetails": "100 000 итераций + 16-байтная криптостойкая соль",
+    "changePasswordTitle": "Смена пароля",
+    "oldPasswordLabel": "Текущий пароль",
+    "newPasswordLabel": "Новый надежный пароль",
+    "confirmPasswordLabel": "Повторите новый пароль",
+    "changeBtn": "Обновить пароль",
+    "passwordChangedSuccess": "Пароль успешно обновлен и захеширован!",
+    "oldPasswordWrong": "Неверный текущий пароль",
+    "passwordsMismatch": "Пароли не совпадают",
+    "bruteForceTitle": "Защита от брутфорса",
+    "bruteForceDesc": "Блокировка авторизации на 15 минут после 5 неверных попыток входа.",
+    "sessionsTitle": "Активные сессии",
+    "currentSession": "Текущее устройство",
+    "verifiedDevice": "Проверенное устройство (Бишкек, Кыргызстан)"
   },
   "addBookTitle": "Разместить учебник на платформу",
   "addBookSubtitle": "Помогите другим родителям и студентам сэкономить, сдав книгу в аренду или продав её",

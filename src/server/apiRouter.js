@@ -3,9 +3,18 @@
 // /api/reviews, /api/cities, /api/stats, /api/auth/* with full CRUD & search
 // All entities are standardized on RFC 4122 v4 UUID primary identifiers
 
+import crypto from 'crypto';
 import { INITIAL_BOOKS } from '../services/api.js';
 import { KYRGYZ_CITIES } from '../utils/citiesData.js';
 import { generateUuid } from '../utils/uuid.js';
+
+const hashPasswordNode = (password, salt = null) => {
+  const s = salt || crypto.randomBytes(16).toString('hex');
+  const hash = crypto.pbkdf2Sync(password, s, 100000, 32, 'sha256').toString('hex');
+  return { hash, salt: s };
+};
+
+const defaultSec = hashPasswordNode('bilim2026');
 
 // In-memory data store for the live REST API
 let booksStore = [...INITIAL_BOOKS];
@@ -718,14 +727,24 @@ export function handleRestApi(req, res) {
     });
   }
 
-  // --- 8. AUTH MOCKS (/api/auth/login & /api/auth/register) ---
+  // --- 8. AUTH MOCKS (/api/auth/login & /api/auth/register with PBKDF2-SHA256) ---
   if (pathname === '/api/auth/login' && method === 'POST') {
     return parseBody(req).then(body => {
       const user = usersStore.find(u => u.email === body.email) || usersStore[1];
+      if (body.password && user.passwordHash && user.passwordSalt) {
+        const verifyHash = crypto.pbkdf2Sync(body.password, user.passwordSalt, 100000, 32, 'sha256').toString('hex');
+        if (verifyHash !== user.passwordHash) {
+          return sendJson(res, 401, {
+            success: false,
+            error: 'Неверный пароль'
+          });
+        }
+      }
+      const { passwordHash: _h, passwordSalt: _s, ...safeUser } = user;
       return sendJson(res, 200, {
         success: true,
-        token: `jwt_mock_${Date.now()}_${user.uuid || user.id}`,
-        user
+        token: `jwt_sec_${Date.now()}_${user.uuid || user.id}`,
+        user: safeUser
       });
     });
   }
@@ -733,6 +752,9 @@ export function handleRestApi(req, res) {
   if (pathname === '/api/auth/register' && method === 'POST') {
     return parseBody(req).then(body => {
       const uuid = body.uuid || generateUuid();
+      const rawPassword = body.password || 'Bilim#2026Default';
+      const { hash, salt } = hashPasswordNode(rawPassword);
+
       const newUser = {
         uuid,
         id: body.id || uuid,
@@ -742,13 +764,16 @@ export function handleRestApi(req, res) {
         role: 'USER',
         city: body.city || 'Бишкек',
         rating: 5.0,
+        passwordHash: hash,
+        passwordSalt: salt,
         createdAt: new Date().toISOString()
       };
       usersStore.push(newUser);
+      const { passwordHash: _h, passwordSalt: _s, ...safeUser } = newUser;
       return sendJson(res, 201, {
         success: true,
-        token: `jwt_mock_${Date.now()}_${newUser.uuid || newUser.id}`,
-        user: newUser
+        token: `jwt_sec_${Date.now()}_${newUser.uuid || newUser.id}`,
+        user: safeUser
       });
     });
   }

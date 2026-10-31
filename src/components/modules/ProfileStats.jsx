@@ -9,34 +9,35 @@ export const ProfileStats = ({
   myListingsCount = 3,
   depositHolding = 650,
 }) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation(['profile', 'common']);
+  const currency = t('currency', { ns: 'common', defaultValue: 'сом' });
 
   const cards = [
     {
       label: t('stats.activeRentals'),
       value: `${activeRentals}`,
-      sub: t('stats.activeRentals'),
+      sub: t('statsSub.activeRentals', { defaultValue: 'Текущие договоры на руках' }),
       icon: BookOpen,
       color: 'text-blue-600 bg-blue-50 dark:bg-blue-950/40',
     },
     {
       label: t('stats.savedMoney'),
-      value: formatKGS(savedMoney),
-      sub: t('stats.savedMoney'),
+      value: formatKGS(savedMoney, currency),
+      sub: t('statsSub.savedMoney', { defaultValue: 'По сравнению с покупкой новых книг' }),
       icon: PiggyBank,
       color: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40',
     },
     {
       label: t('stats.myListings'),
       value: `${myListingsCount}`,
-      sub: t('stats.myListings'),
+      sub: t('statsSub.myListings', { defaultValue: 'Активно в каталоге платформы' }),
       icon: PlusCircle,
       color: 'text-purple-600 bg-purple-50 dark:bg-purple-950/40',
     },
     {
       label: t('stats.depositHolding'),
-      value: formatKGS(depositHolding),
-      sub: t('stats.depositHolding'),
+      value: formatKGS(depositHolding, currency),
+      sub: t('statsSub.depositHolding', { defaultValue: 'Возвратный депозит на хранении' }),
       icon: ShieldCheck,
       color: 'text-amber-600 bg-amber-50 dark:bg-amber-950/40',
     },

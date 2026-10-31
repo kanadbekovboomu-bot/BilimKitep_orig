@@ -10,6 +10,13 @@ import { Button } from '../components/common/Button';
 import { BrandLogo, BrandLogoIcon } from '../components/common/BrandLogo';
 import { setCredentials } from '../features/auth/authSlice';
 import { generateUuid } from '../utils/uuid';
+import {
+  isAccountLocked,
+  recordFailedLogin,
+  resetFailedAttempts,
+  verifyPassword,
+  sanitizeText,
+} from '../utils/security';
 
 export const LoginPage = () => {
   const { t } = useTranslation('auth');
@@ -34,24 +41,59 @@ export const LoginPage = () => {
     }, 850);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    setError('');
+
+    const cleanEmail = email.trim().toLowerCase();
+    if (!cleanEmail || !password) {
       setError(t('errorRequired'));
       return;
     }
+
+    // Check brute force lockout
+    const lockInfo = isAccountLocked(cleanEmail);
+    if (lockInfo && lockInfo.locked) {
+      setError(
+        `🚨 В целях безопасности аккаунт временно заблокирован на ${lockInfo.remainingMinutes} мин. из-за 5 неверных попыток входа.`
+      );
+      return;
+    }
+
+    // Verify cryptographic salted hash if registered
+    const storedSecRaw = localStorage.getItem(`sec_cred_${cleanEmail}`);
+    if (storedSecRaw) {
+      try {
+        const storedSec = JSON.parse(storedSecRaw);
+        const isValid = await verifyPassword(password, storedSec.hash, storedSec.salt);
+        if (!isValid) {
+          const attemptResult = recordFailedLogin(cleanEmail);
+          if (attemptResult.isLocked) {
+            setError('🚨 Превышен лимит попыток! Аккаунт заблокирован на 15 минут.');
+          } else {
+            setError(`Неверный пароль. Осталось попыток: ${attemptResult.remainingAttempts}`);
+          }
+          return;
+        }
+      } catch {
+        // Fallback
+      }
+    }
+
+    // Reset failed attempts upon successful authentication
+    resetFailedAttempts(cleanEmail);
 
     const uuid = generateUuid();
     const mockUser = {
       uuid,
       id: uuid,
-      name: email.split('@')[0],
-      email,
-      role: email.includes('admin') ? 'ADMIN' : 'USER',
+      name: sanitizeText(cleanEmail.split('@')[0]),
+      email: cleanEmail,
+      role: cleanEmail.includes('admin') ? 'ADMIN' : 'USER',
       phone: '+996 700 123 456',
     };
 
-    triggerLoginEffect(mockUser, 'mock_jwt_token_123', mockUser.role === 'ADMIN' ? '/admin' : from);
+    triggerLoginEffect(mockUser, `jwt_sec_${Date.now()}_${uuid}`, mockUser.role === 'ADMIN' ? '/admin' : from);
   };
 
   // Google OAuth Success Handler

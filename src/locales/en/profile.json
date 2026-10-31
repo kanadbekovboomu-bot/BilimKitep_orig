@@ -6,10 +6,35 @@
     "myListings": "My Listings",
     "depositHolding": "Refundable Deposits"
   },
+  "statsSub": {
+    "activeRentals": "Active rental copies on hand",
+    "savedMoney": "Saved compared to buying new copies",
+    "myListings": "Active listings in the catalog",
+    "depositHolding": "Refundable security deposit"
+  },
   "tabs": {
     "orders": "Orders & Active Rentals",
     "listings": "My Listed Books",
+    "security": "Security & Password",
     "settings": "Profile Settings"
+  },
+  "security": {
+    "title": "Account Security",
+    "badgeProtected": "Protected by PBKDF2-SHA256",
+    "badgeDetails": "100,000 iterations + 16-byte cryptographic salt",
+    "changePasswordTitle": "Change Password",
+    "oldPasswordLabel": "Current Password",
+    "newPasswordLabel": "New Secure Password",
+    "confirmPasswordLabel": "Confirm New Password",
+    "changeBtn": "Update Password",
+    "passwordChangedSuccess": "Password successfully updated and hashed!",
+    "oldPasswordWrong": "Incorrect current password",
+    "passwordsMismatch": "Passwords do not match",
+    "bruteForceTitle": "Brute-Force Protection",
+    "bruteForceDesc": "Temporary 15-minute account lockout after 5 consecutive failed login attempts.",
+    "sessionsTitle": "Active Sessions",
+    "currentSession": "Current Device",
+    "verifiedDevice": "Verified Device (Bishkek, Kyrgyzstan)"
   },
   "addBookTitle": "List a Textbook for Rent or Sale",
   "addBookSubtitle": "Help other parents and students save while monetizing your used curriculum books",
