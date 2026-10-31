@@ -149,25 +149,13 @@ export const ScrollProgressBar = ({ className = '' }) => {
         width: '100%',
         zIndex: 99999,
       }}
-      className={`fixed top-0 left-0 right-0 w-full h-2 sm:h-2.5 bg-slate-900/90 dark:bg-black/90 backdrop-blur-md cursor-pointer select-none transition-all duration-150 border-b border-black/30 dark:border-white/15 shadow-md ${className}`}
+      className={`fixed top-0 left-0 right-0 w-full h-1 sm:h-1.5 bg-slate-200/50 dark:bg-slate-800/60 backdrop-blur-md cursor-pointer select-none transition-all duration-150 shadow-xs ${className}`}
     >
-      {/* Background track subtle glow */}
-      <div className="absolute inset-0 bg-slate-800/40 pointer-events-none" />
-
       {/* Active filled Kyrgyz Ribbon (Red -> Amber -> Emerald) */}
       <div
-        className="h-full bg-gradient-to-r from-red-600 via-amber-400 to-emerald-500 shadow-[0_0_14px_rgba(245,158,11,0.7)] transition-[width] duration-75 ease-out relative"
+        className="h-full bg-gradient-to-r from-red-600 via-amber-400 to-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] transition-[width] duration-75 ease-out"
         style={{ width: `${progress}%` }}
-      >
-        {/* Prominent Glowing Slider Thumb ("Ползунок / Бегунок") */}
-        <div
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white dark:bg-slate-900 border-2 border-emerald-500 shadow-[0_0_12px_rgba(16,185,129,1),0_2px_8px_rgba(0,0,0,0.5)] flex items-center justify-center transform hover:scale-125 transition-transform"
-          aria-hidden="true"
-        >
-          {/* Inner Golden Kyrgyz Dot */}
-          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500 shadow-[0_0_6px_#f59e0b]" />
-        </div>
-      </div>
+      />
     </aside>
   );
 
