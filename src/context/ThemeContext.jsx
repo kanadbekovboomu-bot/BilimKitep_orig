@@ -11,11 +11,27 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === 'dark') {
+    const isDark = theme === 'dark';
+
+    if (isDark) {
       root.classList.add('dark');
+      root.style.colorScheme = 'dark';
     } else {
       root.classList.remove('dark');
+      root.style.colorScheme = 'light';
     }
+
+    // Dynamic Mobile Browser Status & Navigation Bar Color
+    if (typeof document !== 'undefined') {
+      let metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (!metaTheme) {
+        metaTheme = document.createElement('meta');
+        metaTheme.setAttribute('name', 'theme-color');
+        document.head.appendChild(metaTheme);
+      }
+      metaTheme.setAttribute('content', isDark ? '#0f172a' : '#ffffff');
+    }
+
     localStorage.setItem('theme', theme);
   }, [theme]);
 

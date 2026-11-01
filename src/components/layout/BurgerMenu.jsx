@@ -92,7 +92,7 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
       {/* Dimmed & blurred backdrop covering entire viewport */}
       <div
         data-testid="burger-menu-backdrop"
-        className="fixed inset-0 bg-slate-950/70 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-slate-900/35 dark:bg-slate-950/75 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -119,10 +119,10 @@ export const BurgerMenu = ({ isOpen, onClose, cartCount = 0, user = null, onLogo
           </button>
         </div>
 
-        {/* Quick controls: Language + Theme */}
-        <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 border-b border-gray-100 dark:border-darkBorder gap-2 shrink-0 bg-slate-50/80 dark:bg-slate-800/50">
+        {/* Quick controls: Language + Theme Segmented Switch */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 sm:px-6 py-2.5 border-b border-gray-100 dark:border-darkBorder gap-2.5 shrink-0 bg-slate-50/90 dark:bg-slate-800/60">
           <LangSwitcher />
-          <ThemeToggle />
+          <ThemeToggle variant="segmented" />
         </div>
 
         {/* Scrollable Modal Content (Overscroll Contain) */}

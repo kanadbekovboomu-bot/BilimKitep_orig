@@ -40,9 +40,9 @@ export const ToastNotification = ({
   };
 
   const borders = {
-    success: 'border-emerald-500/40 bg-slate-900/95 dark:bg-slate-900/95 text-white',
-    error: 'border-red-500/40 bg-slate-900/95 dark:bg-slate-900/95 text-white',
-    info: 'border-blue-500/40 bg-slate-900/95 dark:bg-slate-900/95 text-white',
+    success: 'border-emerald-500/30 bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white',
+    error: 'border-red-500/30 bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white',
+    info: 'border-blue-500/30 bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white',
   };
 
   const toastContent = (
@@ -62,17 +62,17 @@ export const ToastNotification = ({
           borders[type] || borders.success
         }`}
       >
-        <div className="p-1 rounded-xl bg-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
+        <div className="p-1 rounded-xl bg-emerald-500/15 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5">
           {icons[type] || icons.success}
         </div>
 
         <div className="flex-1 min-w-0 space-y-1">
           {title && (
-            <h5 className="text-xs font-black tracking-wide text-white uppercase flex items-center gap-1.5">
+            <h5 className="text-xs font-black tracking-wide text-slate-900 dark:text-white uppercase flex items-center gap-1.5">
               <span>{title}</span>
             </h5>
           )}
-          <p className="text-xs font-medium text-slate-200 leading-snug break-words">
+          <p className="text-xs font-medium text-slate-600 dark:text-slate-200 leading-snug break-words">
             {message}
           </p>
 
@@ -93,7 +93,7 @@ export const ToastNotification = ({
         <button
           type="button"
           onClick={onClose}
-          className="p-1 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition-colors shrink-0 cursor-pointer"
+          className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors shrink-0 cursor-pointer"
           aria-label="Close"
         >
           <X className="w-4 h-4" />
