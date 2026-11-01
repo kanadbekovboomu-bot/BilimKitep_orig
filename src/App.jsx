@@ -6,6 +6,7 @@ import { AppRoutes } from './routes/AppRoutes';
 import { CreativePageLoader } from './components/common/CreativePageLoader';
 import { KyrgyzMandalaBackground } from './components/common/KyrgyzMandalaBackground';
 import { ScrollProgressBar } from './components/common/ScrollProgressBar';
+import { GlobalCartToast } from './components/common/GlobalCartToast';
 
 export const App = () => {
   const [showInitialSplash, setShowInitialSplash] = useState(() => {
@@ -27,6 +28,9 @@ export const App = () => {
     <ErrorBoundary>
       {/* Fixed Viewport Kyrgyz Reading Progress Bar Slider - Always at absolute top of window */}
       <ScrollProgressBar />
+
+      {/* Global Confirmation Toast whenever item is added to cart */}
+      <GlobalCartToast />
 
       {showInitialSplash && (
         <CreativePageLoader

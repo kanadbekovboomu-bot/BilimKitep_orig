@@ -17,21 +17,17 @@ export const PaymentDemoModal = ({
   const [step, setStep] = useState('select'); // 'select' | 'processing' | 'success'
 
   const handlePay = () => {
-    setLoading(true);
-    setStep('processing');
+    // Immediately close modal window so it doesn't linger
+    if (onClose) onClose();
 
-    setTimeout(() => {
-      setLoading(false);
-      setStep('success');
-      setTimeout(() => {
-        onPaymentSuccess({
-          paymentMethod: method.toUpperCase(),
-          transactionId: `TXN-${Math.floor(10000000 + Math.random() * 90000000)}`,
-          paidAmount: totalAmount,
-        });
-        setStep('select');
-      }, 1500);
-    }, 2000);
+    // Trigger order payment success
+    if (onPaymentSuccess) {
+      onPaymentSuccess({
+        paymentMethod: method.toUpperCase(),
+        transactionId: `TXN-${Math.floor(10000000 + Math.random() * 90000000)}`,
+        paidAmount: totalAmount,
+      });
+    }
   };
 
   return (

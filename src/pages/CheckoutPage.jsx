@@ -339,6 +339,16 @@ export const CheckoutPage = () => {
         totalAmount={finalTotal}
         onPaymentSuccess={handlePaymentSuccess}
       />
+
+      {/* Immediate Order Processing Overlay */}
+      {submitting && (
+        <div className="fixed inset-0 z-[100001] bg-slate-900/60 backdrop-blur-xs flex flex-col items-center justify-center gap-3 text-white select-none">
+          <div className="w-10 h-10 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm font-bold tracking-wide">
+            {t('loading', { defaultValue: 'Оформляем заказ...' })}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

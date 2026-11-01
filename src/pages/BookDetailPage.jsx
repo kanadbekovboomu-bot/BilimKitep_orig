@@ -310,7 +310,14 @@ export const BookDetailPage = () => {
         book={book}
         isOpen={isPreviewModalOpen}
         onClose={() => setIsPreviewModalOpen(false)}
-        onAddToCart={(b, type, months) => handleRentSubmit({ months, type })}
+        onAddToCart={(b, type, months) => {
+          if (type === 'BUY') {
+            handleBuySubmit();
+          } else {
+            handleRentSubmit(months || 9);
+          }
+          setIsPreviewModalOpen(false);
+        }}
       />
 
       {/* Toast */}

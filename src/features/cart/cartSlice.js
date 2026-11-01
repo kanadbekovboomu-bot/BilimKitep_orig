@@ -41,6 +41,7 @@ const initialState = {
   items: initialItems,
   totalAmount: initialTotals.totalAmount,
   depositAmount: initialTotals.depositAmount,
+  lastAdded: null,
 };
 
 const syncWithStorage = (state) => {
@@ -76,6 +77,12 @@ export const cartSlice = createSlice({
           months: type === 'RENT' ? months : null,
         });
       }
+      state.lastAdded = {
+        book,
+        type,
+        months,
+        timestamp: Date.now(),
+      };
       syncWithStorage(state);
     },
     removeFromCart: (state, action) => {
@@ -95,12 +102,16 @@ export const cartSlice = createSlice({
       state.items = [];
       state.totalAmount = 0;
       state.depositAmount = 0;
+      state.lastAdded = null;
       if (typeof window !== 'undefined') {
         localStorage.removeItem('cart');
       }
     },
+    clearLastAdded: (state) => {
+      state.lastAdded = null;
+    },
   },
 });
 
-export const { addToCart, removeFromCart, changeRentDuration, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, changeRentDuration, clearCart, clearLastAdded } = cartSlice.actions;
 export default cartSlice.reducer;
