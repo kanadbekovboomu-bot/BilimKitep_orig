@@ -179,6 +179,15 @@ export const BookCard = ({
           <Badge variant="primary" size="sm">
             {medium}
           </Badge>
+          {(book.quantity ?? 1) <= 0 ? (
+            <span className="inline-flex items-center text-[10px] font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded-full border border-rose-200/60">
+              Распродано
+            </span>
+          ) : (book.soldCount ?? 0) > 0 ? (
+            <span className="inline-flex items-center text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded-full border border-blue-200/60">
+              Куплено: {book.soldCount}
+            </span>
+          ) : null}
         </div>
 
         {/* Content with OnlineMektep-styled Subject Badge */}
@@ -245,12 +254,18 @@ export const BookCard = ({
 
         <button
           type="button"
+          disabled={(book.quantity ?? 1) <= 0}
           onClick={(e) => {
             e.stopPropagation();
+            if ((book.quantity ?? 1) <= 0) return;
             onAddToCart && onAddToCart(book, isRentable ? 'RENT' : 'BUY', 9);
           }}
-          className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 text-white hover:brightness-120 hover:shadow-[0_0_20px_rgba(16,185,129,0.7)] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shadow-md shadow-emerald-500/30 shrink-0"
-          title={t('actions.addToCart')}
+          className={`p-2.5 rounded-xl transition-all duration-200 cursor-pointer shadow-md shrink-0 ${
+            (book.quantity ?? 1) <= 0
+              ? 'bg-gray-200 dark:bg-slate-700 text-gray-400 cursor-not-allowed'
+              : 'bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 text-white hover:brightness-120 hover:shadow-[0_0_20px_rgba(16,185,129,0.7)] hover:scale-110 active:scale-95 shadow-emerald-500/30'
+          }`}
+          title={(book.quantity ?? 1) <= 0 ? 'Нет в наличии' : t('actions.addToCart')}
         >
           <ShoppingBag className="w-4 h-4" />
         </button>

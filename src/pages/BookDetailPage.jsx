@@ -10,7 +10,9 @@ import {
   Share2,
   Calendar,
   AlertCircle,
-  Truck
+  Truck,
+  Package,
+  ShoppingBag
 } from 'lucide-react';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { BookGallery } from '../components/modules/BookGallery';
@@ -137,6 +139,22 @@ export const BookDetailPage = () => {
                 <Badge variant="default">{t('units.grade', { count: book.grade, ns: 'common' })}</Badge>
                 <Badge variant="primary">{localizedMedium || book.language}</Badge>
                 <Badge variant="default">{localizedCondition || book.condition}</Badge>
+                <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                  (book.quantity ?? 1) > 0
+                    ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/50'
+                    : 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200/50'
+                }`}>
+                  <Package className="w-3.5 h-3.5" />
+                  <span>
+                    {(book.quantity ?? 1) > 0 ? `В наличии: ${book.quantity} шт.` : 'Нет в наличии (распродано)'}
+                  </span>
+                </span>
+                {(book.soldCount ?? 0) > 0 && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200/50">
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    <span>Продано: {book.soldCount} шт.</span>
+                  </span>
+                )}
               </div>
 
               <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">

@@ -6,13 +6,16 @@ import {
   Users,
   ShieldCheck,
   RefreshCw,
-  Eye
+  Eye,
+  Package,
+  ShoppingBag
 } from 'lucide-react';
 import { AdminSidebar } from '../components/layout/AdminSidebar';
 import { RevenueChart } from '../components/admin/RevenueChart';
 import { CategoriesPieChart } from '../components/admin/CategoriesPieChart';
 import { AdminBooksTable } from '../components/admin/AdminBooksTable';
 import { AdminOrderModal } from '../components/admin/AdminOrderModal';
+import { BookSalesModal } from '../components/modules/BookSalesModal';
 import { TyndykEmblem } from '../components/common/KyrgyzOrnament';
 import { api } from '../services/api';
 import { formatKGS, formatDate } from '../utils/formatters';
@@ -25,6 +28,7 @@ export const AdminDashboardPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedSalesBook, setSelectedSalesBook] = useState(null);
 
   const loadData = async () => {
     setLoading(true);
@@ -65,6 +69,13 @@ export const AdminDashboardPage = () => {
     );
   };
 
+  const handleStockUpdate = (updatedBook) => {
+    setBooks((prev) =>
+      prev.map((b) => (b.id === updatedBook.id ? updatedBook : b))
+    );
+    setSelectedSalesBook(updatedBook);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
       <div className="flex flex-col lg:flex-row items-start gap-8">
@@ -98,57 +109,83 @@ export const AdminDashboardPage = () => {
           </div>
 
           {/* Metric Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-2">
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
+            <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-1.5 shadow-xs">
               <div className="flex items-center justify-between text-xs text-gray-500 font-semibold">
-                <span>{t('metrics.totalRevenue')}</span>
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4" />
+                <span className="truncate">{t('metrics.totalRevenue')}</span>
+                <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shrink-0">
+                  <TrendingUp className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <div className="text-2xl font-black text-brand-600 dark:text-brand-400">
+              <div className="text-lg sm:text-xl font-black text-brand-600 dark:text-brand-400 truncate">
                 {formatKGS(metrics?.totalRevenue || 45200)}
               </div>
-              <p className="text-[11px] text-gray-400">{t('metricsSub.revenueGrowth')}</p>
+              <p className="text-[10px] text-gray-400 truncate">{t('metricsSub.revenueGrowth')}</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-2">
+            <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-1.5 shadow-xs">
               <div className="flex items-center justify-between text-xs text-gray-500 font-semibold">
-                <span>{t('metrics.activeRentals')}</span>
-                <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center">
-                  <BookOpen className="w-4 h-4" />
+                <span className="truncate">Продано книг</span>
+                <div className="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center shrink-0">
+                  <ShoppingBag className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <div className="text-2xl font-black text-gray-900 dark:text-gray-100">
-                {metrics?.activeRentals || 42} {t('metricsSub.contracts')}
+              <div className="text-lg sm:text-xl font-black text-blue-600 dark:text-blue-400">
+                {metrics?.totalBooksSold || books.reduce((acc, b) => acc + (b.soldCount || 0), 0)} <span className="text-xs font-bold text-gray-400">шт.</span>
               </div>
-              <p className="text-[11px] text-gray-400">{t('metricsSub.rentalsPeriods')}</p>
+              <p className="text-[10px] text-gray-400 truncate">Куплено клиентами</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-2">
+            <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-1.5 shadow-xs">
               <div className="flex items-center justify-between text-xs text-gray-500 font-semibold">
-                <span>{t('metrics.totalBooks')}</span>
-                <div className="w-8 h-8 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center">
-                  <Users className="w-4 h-4" />
+                <span className="truncate">Остаток на складе</span>
+                <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shrink-0">
+                  <Package className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <div className="text-2xl font-black text-gray-900 dark:text-gray-100">
-                {books.length} {t('metricsSub.booksCount')}
+              <div className="text-lg sm:text-xl font-black text-emerald-600 dark:text-emerald-400">
+                {metrics?.totalBooksInStock || books.reduce((acc, b) => acc + (b.quantity || 0), 0)} <span className="text-xs font-bold text-gray-400">шт.</span>
               </div>
-              <p className="text-[11px] text-gray-400">{t('metricsSub.booksCoverage')}</p>
+              <p className="text-[10px] text-gray-400 truncate">В наличии в каталоге</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-2">
+            <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-1.5 shadow-xs">
               <div className="flex items-center justify-between text-xs text-gray-500 font-semibold">
-                <span>{t('metrics.depositPool')}</span>
-                <div className="w-8 h-8 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center">
-                  <ShieldCheck className="w-4 h-4" />
+                <span className="truncate">{t('metrics.activeRentals')}</span>
+                <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 flex items-center justify-center shrink-0">
+                  <BookOpen className="w-3.5 h-3.5" />
                 </div>
               </div>
-              <div className="text-2xl font-black text-amber-600 dark:text-amber-400">
+              <div className="text-lg sm:text-xl font-black text-gray-900 dark:text-gray-100 truncate">
+                {metrics?.activeRentals || 42} <span className="text-xs font-bold text-gray-400">{t('metricsSub.contracts')}</span>
+              </div>
+              <p className="text-[10px] text-gray-400 truncate">{t('metricsSub.rentalsPeriods')}</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-1.5 shadow-xs">
+              <div className="flex items-center justify-between text-xs text-gray-500 font-semibold">
+                <span className="truncate">{t('metrics.totalBooks')}</span>
+                <div className="w-7 h-7 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center shrink-0">
+                  <Users className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <div className="text-lg sm:text-xl font-black text-gray-900 dark:text-gray-100">
+                {books.length} <span className="text-xs font-bold text-gray-400">{t('metricsSub.booksCount')}</span>
+              </div>
+              <p className="text-[10px] text-gray-400 truncate">{t('metricsSub.booksCoverage')}</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white dark:bg-darkCard border border-gray-100 dark:border-darkBorder space-y-1.5 shadow-xs">
+              <div className="flex items-center justify-between text-xs text-gray-500 font-semibold">
+                <span className="truncate">{t('metrics.depositPool')}</span>
+                <div className="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <div className="text-lg sm:text-xl font-black text-amber-600 dark:text-amber-400 truncate">
                 {formatKGS(metrics?.depositPool || 8400)}
               </div>
-              <p className="text-[11px] text-gray-400">{t('metricsSub.depositGuarantee')}</p>
+              <p className="text-[10px] text-gray-400 truncate">{t('metricsSub.depositGuarantee')}</p>
             </div>
           </div>
 
@@ -202,6 +239,7 @@ export const AdminDashboardPage = () => {
             books={books}
             onDeleteBook={handleDeleteBook}
             onToggleStatus={handleToggleStatus}
+            onViewSales={(b) => setSelectedSalesBook(b)}
           />
         </div>
       </div>
@@ -211,6 +249,14 @@ export const AdminDashboardPage = () => {
         order={selectedOrder}
         isOpen={!!selectedOrder}
         onClose={() => setSelectedOrder(null)}
+      />
+
+      {/* Admin Book Sales & Inventory Modal */}
+      <BookSalesModal
+        book={selectedSalesBook}
+        isOpen={!!selectedSalesBook}
+        onClose={() => setSelectedSalesBook(null)}
+        onStockUpdate={handleStockUpdate}
       />
     </div>
   );

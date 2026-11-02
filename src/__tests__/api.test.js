@@ -97,4 +97,46 @@ describe('Mock REST API and Data Layer tests', () => {
     expect(newOrder.uuid).toBeTruthy();
     expect(isUuid(newOrder.uuid)).toBe(true);
   });
+
+  it('tracks stock quantity, decreases stock, and records sales history on order', async () => {
+    // 1. Create book with initial quantity = 5
+    const book = await api.createBook({
+      title: 'Учёт продаж тест',
+      author: 'Тест Автор',
+      subject: 'Алгебра',
+      grade: 7,
+      price: 400,
+      quantity: 5,
+    });
+    expect(book.quantity).toBe(5);
+    expect(book.initialStock).toBe(5);
+    expect(book.soldCount).toBe(0);
+
+    // 2. Place an order for 2 copies
+    await api.createOrder({
+      customerName: 'Бекзат Оморов',
+      customerPhone: '+996 701 223 344',
+      city: 'Бишкек',
+      totalAmount: 800,
+      items: [
+        {
+          id: book.id,
+          quantity: 2,
+          price: 400,
+          dealType: 'BUY',
+        }
+      ]
+    });
+
+    // 3. Verify book stock was decremented and soldCount incremented
+    const updatedBook = await api.getBookById(book.id);
+    expect(updatedBook.quantity).toBe(3);
+    expect(updatedBook.soldCount).toBe(2);
+    expect(updatedBook.sales.length).toBeGreaterThan(0);
+    expect(updatedBook.sales[0].customerName).toBe('Бекзат Оморов');
+
+    // 4. Update stock via updateBookStock
+    const replenished = await api.updateBookStock(book.id, 10);
+    expect(replenished.quantity).toBe(10);
+  });
 });

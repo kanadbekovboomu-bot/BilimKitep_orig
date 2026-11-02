@@ -904,11 +904,34 @@ const RAW_INITIAL_BOOKS = [
 export const INITIAL_BOOKS = RAW_INITIAL_BOOKS.map((b, idx) => {
   const num = String(101 + idx).padStart(4, '0');
   const uuid = `b${num}00-7c2a-41e9-9011-00000000${num}`;
+  const initialStock = b.initialStock ?? ((idx % 5) + 6);
+  const soldCount = b.soldCount ?? ((idx % 4) + 1);
+  const quantity = b.quantity ?? Math.max(1, initialStock - soldCount);
+
+  const sampleSales = [
+    {
+      orderId: `ORD-${8200 + idx}`,
+      customerName: ['Каныбек Жумабеков', 'Айнура Садыкова', 'Тимур Бектурсунов', 'Азамат Орозов'][idx % 4],
+      customerPhone: ['+996 700 889 900', '+996 550 334 455', '+996 772 112 233', '+996 505 443 322'][idx % 4],
+      city: ['Бишкек', 'Ош', 'Жалал-Абад', 'Каракол'][idx % 4],
+      quantity: 1,
+      dealType: b.dealType === 'RENT' ? 'RENT' : 'BUY',
+      price: b.dealType === 'RENT' ? (b.rentPricePerMonth * 9) : b.price,
+      totalAmount: b.dealType === 'RENT' ? (b.rentPricePerMonth * 9 + (b.deposit || 0)) : b.price,
+      date: `2026-10-${String((idx % 25) + 1).padStart(2, '0')}`,
+      status: 'DELIVERED',
+    }
+  ];
+
   return {
     ...b,
     uuid,
     id: b.id || uuid,
     legacyId: b.id,
+    quantity,
+    initialStock,
+    soldCount,
+    sales: b.sales || sampleSales,
     owner: b.owner ? {
       ...b.owner,
       uuid: `a00${(idx % 5) + 1}0000-7c2a-41e9-9011-00000000000${(idx % 5) + 1}`,
@@ -933,7 +956,8 @@ const getStoredBooks = () => {
     const parsed = JSON.parse(raw);
     const hasOldImages = Array.isArray(parsed) && parsed.some(b => b.images?.[0]?.includes('unsplash.com'));
     const lacksUuids = Array.isArray(parsed) && parsed.some(b => !b.uuid);
-    if (hasOldImages || lacksUuids) {
+    const lacksStock = Array.isArray(parsed) && parsed.some(b => b.quantity === undefined);
+    if (hasOldImages || lacksUuids || lacksStock) {
       localStorage.setItem(STORAGE_KEY_BOOKS, JSON.stringify(INITIAL_BOOKS));
       return INITIAL_BOOKS;
     }
@@ -1086,20 +1110,27 @@ export const api = {
     await delay();
     const books = getStoredBooks();
     const uuid = bookData.uuid || generateUuid();
+    const qty = Math.max(0, Number(bookData.quantity) || 1);
     const newBook = {
       uuid,
       id: bookData.id || uuid,
       legacyId: bookData.id || null,
-      status: 'AVAILABLE',
+      status: qty > 0 ? 'AVAILABLE' : 'OUT_OF_STOCK',
       rating: 5.0,
       reviewsCount: 0,
       reviews: [],
+      quantity: qty,
+      initialStock: Math.max(qty, Number(bookData.initialStock) || qty),
+      soldCount: 0,
+      sales: [],
       images: bookData.images && bookData.images.length > 0
         ? bookData.images
         : ["/covers/geometry-8.svg"],
       ...bookData,
       uuid,
       id: bookData.id || uuid,
+      quantity: qty,
+      initialStock: Math.max(qty, Number(bookData.initialStock) || qty),
       grade: Number(bookData.grade) || 8,
       price: Number(bookData.price) || 300,
       rentPricePerMonth: Number(bookData.rentPricePerMonth) || 40,
@@ -1108,6 +1139,36 @@ export const api = {
     books.unshift(newBook);
     saveStoredBooks(books);
     return newBook;
+  },
+
+  async updateBookStock(id, newQuantity) {
+    if (isNeonAvailable()) {
+      try {
+        const updated = await neonService.updateBook(id, { quantity: newQuantity });
+        const books = getStoredBooks();
+        const index = books.findIndex(b => b.uuid === id || b.id === id || b.legacyId === id);
+        if (index > -1) {
+          books[index] = { ...books[index], quantity: newQuantity };
+          saveStoredBooks(books);
+        }
+        return books[index] || updated;
+      } catch (err) {
+        console.warn('[API] Neon updateBookStock fallback to local:', err.message);
+      }
+    }
+
+    await delay();
+    const books = getStoredBooks();
+    const index = books.findIndex(b => b.uuid === id || b.id === id || b.legacyId === id);
+    if (index === -1) throw new Error(`Учебник с ID ${id} не найден`);
+    const qty = Math.max(0, Number(newQuantity) || 0);
+    books[index].quantity = qty;
+    if (!books[index].initialStock || books[index].initialStock < qty) {
+      books[index].initialStock = qty + (books[index].soldCount || 0);
+    }
+    books[index].status = qty > 0 ? 'AVAILABLE' : 'OUT_OF_STOCK';
+    saveStoredBooks(books);
+    return books[index];
   },
 
   async updateBook(id, updateData) {
@@ -1211,6 +1272,46 @@ export const api = {
     };
     orders.unshift(newOrder);
     saveStoredOrders(orders);
+
+    // Auto-deduct stock and record sales on affected books
+    try {
+      const books = getStoredBooks();
+      let modifiedBooks = false;
+      const items = Array.isArray(orderData.items) ? orderData.items : [];
+      items.forEach(item => {
+        const bookId = item.id || item.uuid || item.bookId;
+        const book = books.find(b => b.uuid === bookId || b.id === bookId || b.legacyId === bookId);
+        if (book) {
+          modifiedBooks = true;
+          const buyQty = Math.max(1, Number(item.quantity) || 1);
+          book.soldCount = (book.soldCount || 0) + buyQty;
+          book.quantity = Math.max(0, (book.quantity ?? 1) - buyQty);
+          if (book.quantity === 0) {
+            book.status = 'OUT_OF_STOCK';
+          }
+          const saleRecord = {
+            orderId: ordUuid,
+            customerName: orderData.recipientName || orderData.customerName || 'Покупатель',
+            customerPhone: orderData.phone || orderData.customerPhone || '',
+            city: orderData.city || 'Бишкек',
+            quantity: buyQty,
+            dealType: item.dealType || 'BUY',
+            price: Number(item.price) || (item.dealType === 'RENT' ? (item.rentPricePerMonth * 9) : book.price),
+            totalAmount: (Number(item.price) || book.price) * buyQty,
+            date: new Date().toISOString(),
+            status: 'CONFIRMED',
+          };
+          book.sales = book.sales || [];
+          book.sales.unshift(saleRecord);
+        }
+      });
+      if (modifiedBooks) {
+        saveStoredBooks(books);
+      }
+    } catch (stockErr) {
+      console.warn('[API] Failed to update book stock on order:', stockErr);
+    }
+
     return newOrder;
   },
 
@@ -1245,11 +1346,15 @@ export const api = {
 
     const revenue = orders.reduce((acc, o) => acc + (Number(o.totalAmount) || 0), 0) + 18450;
     const depositPool = orders.reduce((acc, o) => acc + (Number(o.depositAmount) || 0), 0) + 6200;
+    const totalBooksSold = books.reduce((acc, b) => acc + (Number(b.soldCount) || 0), 0);
+    const totalBooksInStock = books.reduce((acc, b) => acc + (Number(b.quantity) || 0), 0);
 
     return {
       totalRevenue: revenue,
       activeRentals: orders.length + 42,
       totalBooks: books.length,
+      totalBooksSold,
+      totalBooksInStock,
       depositPool: depositPool,
       chartData: [
         { month: 'Сентябрь', revenue: 14200, rentals: 35 },

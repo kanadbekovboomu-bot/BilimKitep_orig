@@ -20,6 +20,7 @@ export const RentCalculator = ({
 
   const isRentable = book.dealType === 'RENT' || book.dealType === 'BOTH';
   const isBuyable = book.dealType === 'BUY' || book.dealType === 'BOTH';
+  const isOutOfStock = Number(book.quantity ?? 1) <= 0;
 
   const durations = [
     { value: 3, label: t('rentCalculator.durationQuarter') },
@@ -128,9 +129,12 @@ export const RentCalculator = ({
             size="lg"
             className="w-full"
             icon={ShoppingBag}
+            disabled={isOutOfStock}
             onClick={() => onRentSubmit && onRentSubmit(months)}
           >
-            {t('rentCalculator.rentButton')} {t('units.monthCount', { count: months, ns: 'common' })} ({formatKGS(totalDue, currency)})
+            {isOutOfStock
+              ? 'Нет в наличии'
+              : `${t('rentCalculator.rentButton')} ${t('units.monthCount', { count: months, ns: 'common' })} (${formatKGS(totalDue, currency)})`}
           </Button>
         </div>
       ) : (
@@ -140,6 +144,13 @@ export const RentCalculator = ({
             <div className="text-3xl font-black text-gray-900 dark:text-gray-100">
               {formatKGS(book.price, currency)}
             </div>
+            <div className="text-xs font-semibold text-gray-500">
+              {isOutOfStock ? (
+                <span className="text-rose-500 font-bold">❌ Нет в наличии (распродано)</span>
+              ) : (
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">📦 В наличии: {book.quantity ?? 1} шт.</span>
+              )}
+            </div>
           </div>
 
           <Button
@@ -147,9 +158,12 @@ export const RentCalculator = ({
             size="lg"
             className="w-full"
             icon={ShoppingBag}
+            disabled={isOutOfStock}
             onClick={() => onBuySubmit && onBuySubmit()}
           >
-            {t('buySection.buyBtn')} ({formatKGS(book.price, currency)})
+            {isOutOfStock
+              ? 'Нет в наличии'
+              : `${t('buySection.buyBtn')} (${formatKGS(book.price, currency)})`}
           </Button>
         </div>
       )}

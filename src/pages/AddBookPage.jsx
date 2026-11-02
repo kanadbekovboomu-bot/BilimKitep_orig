@@ -31,6 +31,7 @@ export const AddBookPage = () => {
   const [deposit, setDeposit] = useState('150');
   const [condition, setCondition] = useState('EXCELLENT');
   const [year, setYear] = useState('2023');
+  const [quantity, setQuantity] = useState('1');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
 
@@ -60,6 +61,8 @@ export const AddBookPage = () => {
         deposit: Number(deposit),
         condition,
         year: Number(year),
+        quantity: Math.max(1, Number(quantity) || 1),
+        initialStock: Math.max(1, Number(quantity) || 1),
         description: description.trim() || 'Good condition, intact pages.',
         images: images.length > 0 ? images : undefined,
         owner: {
@@ -231,7 +234,7 @@ export const AddBookPage = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Select
               label={t('bookForm.condition')}
               value={condition}
@@ -249,6 +252,16 @@ export const AddBookPage = () => {
               type="number"
               value={year}
               onChange={(e) => setYear(e.target.value)}
+            />
+
+            <Input
+              label="Количество в наличии (шт.)"
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              placeholder="1"
+              required
             />
           </div>
 
