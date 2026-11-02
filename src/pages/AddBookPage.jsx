@@ -1,8 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { BookPlus, Sparkles, CheckCircle2 } from 'lucide-react';
+import {
+  BookPlus,
+  Sparkles,
+  CheckCircle2,
+  Calculator,
+  Compass,
+  BookOpen,
+  GraduationCap,
+  Zap,
+  FlaskConical,
+  Leaf,
+  Landmark,
+  Globe,
+  Laptop,
+  Layers,
+  Calendar,
+  Coins,
+  ThumbsUp,
+  Clock,
+  Package
+} from 'lucide-react';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { Input } from '../components/common/Input';
 import { Select } from '../components/common/Select';
@@ -13,7 +33,7 @@ import { createBookListing } from '../features/books/booksSlice';
 import { notifyTelegramNewBook } from '../services/telegram';
 
 export const AddBookPage = () => {
-  const { t } = useTranslation('profile');
+  const { t, i18n } = useTranslation(['profile', 'common', 'catalog']);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,6 +58,52 @@ export const AddBookPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const isAdmin = user?.role === 'ADMIN';
+
+  // Localized Dropdown Option Lists with Site Decor Icons
+  const subjectOptions = useMemo(() => [
+    { value: 'Математика / Алгебра', label: t('bookForm.subjects.math', { defaultValue: 'Математика / Алгебра' }), icon: Calculator },
+    { value: 'Геометрия', label: t('bookForm.subjects.geometry', { defaultValue: 'Геометрия' }), icon: Compass },
+    { value: 'Кыргыз тили', label: t('bookForm.subjects.kyrgyzLang', { defaultValue: 'Кыргыз тили' }), icon: BookOpen },
+    { value: 'Кыргыз адабияты', label: t('bookForm.subjects.kyrgyzLit', { defaultValue: 'Кыргыз адабияты' }), icon: BookOpen },
+    { value: 'ОРТ / ЖРТ', label: t('bookForm.subjects.ort', { defaultValue: 'ОРТ / ЖРТ пособия' }), icon: GraduationCap },
+    { value: 'Физика', label: t('bookForm.subjects.physics', { defaultValue: 'Физика' }), icon: Zap },
+    { value: 'Химия', label: t('bookForm.subjects.chemistry', { defaultValue: 'Химия' }), icon: FlaskConical },
+    { value: 'Биология', label: t('bookForm.subjects.biology', { defaultValue: 'Биология' }), icon: Leaf },
+    { value: 'Тарых', label: t('bookForm.subjects.history', { defaultValue: 'Кыргызстан тарыхы' }), icon: Landmark },
+    { value: 'Русский язык', label: t('bookForm.subjects.russian', { defaultValue: 'Русский язык' }), icon: BookOpen },
+    { value: 'Англис тили', label: t('bookForm.subjects.english', { defaultValue: 'Английский язык' }), icon: Globe },
+    { value: 'Информатика', label: t('bookForm.subjects.informatics', { defaultValue: 'Информатика / ИКТ' }), icon: Laptop },
+  ], [t, i18n.language]);
+
+  const gradeOptions = useMemo(() => Array.from({ length: 11 }, (_, i) => {
+    const g = String(i + 1);
+    return {
+      value: g,
+      label: g === '11'
+        ? `${t('units.grade', { count: 11, ns: 'common', defaultValue: '11-класс' })} / ОРТ`
+        : t('units.grade', { count: Number(g), ns: 'common', defaultValue: `${g}-класс` }),
+      icon: GraduationCap,
+    };
+  }), [t, i18n.language]);
+
+  const languageOptions = useMemo(() => [
+    { value: 'KG', label: t('bookForm.languages.kg', { defaultValue: 'Кыргызский (Кыргыз тилинде)' }), icon: BookOpen },
+    { value: 'RU', label: t('bookForm.languages.ru', { defaultValue: 'Русский язык' }), icon: BookOpen },
+    { value: 'EN', label: t('bookForm.languages.en', { defaultValue: 'Английский язык' }), icon: Globe },
+  ], [t, i18n.language]);
+
+  const dealTypeOptions = useMemo(() => [
+    { value: 'BOTH', label: t('bookForm.dealTypes.both', { defaultValue: 'Ижара жана Сатуу' }), icon: Layers },
+    { value: 'RENT', label: t('bookForm.dealTypes.rent', { defaultValue: 'Ижарага гана' }), icon: Calendar },
+    { value: 'BUY', label: t('bookForm.dealTypes.buy', { defaultValue: 'Сатуу гана' }), icon: Coins },
+  ], [t, i18n.language]);
+
+  const conditionOptions = useMemo(() => [
+    { value: 'NEW', label: t('bookForm.conditions.new', { defaultValue: 'Жаңы (Таза, чийилген эмес)' }), icon: Sparkles },
+    { value: 'EXCELLENT', label: t('bookForm.conditions.excellent', { defaultValue: 'Эң жакшы (Идеалдуу)' }), icon: CheckCircle2 },
+    { value: 'GOOD', label: t('bookForm.conditions.good', { defaultValue: 'Жакшы (Барактары бүтүн)' }), icon: ThumbsUp },
+    { value: 'FAIR', label: t('bookForm.conditions.fair', { defaultValue: 'Орточо' }), icon: Clock },
+  ], [t, i18n.language]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,7 +177,7 @@ export const AddBookPage = () => {
               </div>
               <span className="inline-flex items-center gap-1 text-[11px] bg-amber-500/10 text-amber-900 dark:text-amber-200 px-2.5 py-0.5 rounded-full font-bold border border-amber-300/40">
                 <TyndykEmblem size={13} className="text-amber-500" />
-                <span>Кыргызстан • Окуу китептери</span>
+                <span>{t('badgeKyrgyzstan', { defaultValue: 'Кыргызстан • Окуу китептери' })}</span>
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-gray-100 tracking-tight">
@@ -125,29 +191,29 @@ export const AddBookPage = () => {
             <div className="mt-4">
               {!isAdmin ? (
                 <div className="p-4 rounded-2xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 flex items-start gap-3 text-xs">
-                  <span className="px-2 py-0.5 rounded-md font-black lowercase text-[11px] bg-amber-200/90 dark:bg-amber-900 text-amber-950 dark:text-amber-200 shrink-0 mt-0.5 border border-amber-300 dark:border-amber-700">
-                    б/у
+                  <span className="px-2 py-0.5 rounded-md font-black lowercase text-[11px] bg-amber-200/90 dark:bg-amber-900 text-amber-950 dark:text-amber-200 shrink-0 mt-0.5 border border-amber-300 dark:border-amber-700 shadow-2xs">
+                    {t('usedBadge', { defaultValue: 'б/у' })}
                   </span>
                   <div className="space-y-0.5">
                     <div className="font-bold text-amber-950 dark:text-amber-200">
-                      Вы выставляете книгу как пользователь — метка «б/у»
+                      {t('bookForm.userNoticeTitle', { defaultValue: 'Вы выставляете книгу как пользователь — метка «б/у»' })}
                     </div>
                     <p className="text-[11px] text-amber-900/80 dark:text-amber-300/80 leading-relaxed">
-                      Поскольку вы уже использовали эту книгу для учёбы, в каталоге рядом с ней будет автоматически указано маленькими буквами <span className="font-black lowercase bg-amber-200/80 dark:bg-amber-900/80 px-1.5 py-0.2 rounded border border-amber-300/60">б/у</span>.
+                      {t('bookForm.userNoticeDesc', { defaultValue: 'Поскольку вы уже использовали эту книгу для учёбы, в каталоге рядом с ней будет автоматически указано маленькими буквами б/у.' })}
                     </p>
                   </div>
                 </div>
               ) : (
                 <div className="p-4 rounded-2xl bg-emerald-50/90 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 flex items-start gap-3 text-xs">
-                  <span className="px-2 py-0.5 rounded-md font-bold text-[11px] bg-emerald-200/90 dark:bg-emerald-900 text-emerald-950 dark:text-emerald-200 shrink-0 mt-0.5 border border-emerald-300 dark:border-emerald-700">
-                    Новая
+                  <span className="px-2 py-0.5 rounded-md font-bold text-[11px] bg-emerald-200/90 dark:bg-emerald-900 text-emerald-950 dark:text-emerald-200 shrink-0 mt-0.5 border border-emerald-300 dark:border-emerald-700 shadow-2xs">
+                    {t('newBadge', { defaultValue: 'Новая' })}
                   </span>
                   <div className="space-y-0.5">
                     <div className="font-bold text-emerald-950 dark:text-emerald-200">
-                      Режим Администратора — продажа новых книг
+                      {t('bookForm.adminNoticeTitle', { defaultValue: 'Режим Администратора — продажа новых книг' })}
                     </div>
                     <p className="text-[11px] text-emerald-900/80 dark:text-emerald-300/80 leading-relaxed">
-                      Книги администрации выставляются как новые и отображаются в каталоге в первую очередь (в начале списка).
+                      {t('bookForm.adminNoticeDesc', { defaultValue: 'Книги администрации выставляются как новые и отображаются в каталоге в первую очередь (в начале списка).' })}
                     </p>
                   </div>
                 </div>
@@ -168,7 +234,7 @@ export const AddBookPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
               label={t('bookForm.title')}
-              placeholder="Мис. Геометрия 8-класс"
+              placeholder={t('bookForm.titlePlaceholder', { defaultValue: 'Напр. Геометрия 8-класс' })}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -176,7 +242,7 @@ export const AddBookPage = () => {
 
             <Input
               label={t('bookForm.author')}
-              placeholder="Мис. И. Б. Бекбоев, А. А. Бөрүбаев"
+              placeholder={t('bookForm.authorPlaceholder', { defaultValue: 'Напр. И. Б. Бекбоев, А. А. Бөрүбаев' })}
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
               required
@@ -188,49 +254,21 @@ export const AddBookPage = () => {
               label={t('bookForm.subject')}
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              options={[
-                { value: 'Математика / Алгебра', label: 'Математика / Алгебра' },
-                { value: 'Геометрия', label: 'Геометрия' },
-                { value: 'Кыргыз тили', label: 'Кыргыз тили' },
-                { value: 'Кыргыз адабияты', label: 'Кыргыз адабияты' },
-                { value: 'ОРТ / ЖРТ', label: 'ОРТ / ЖРТ пособия' },
-                { value: 'Физика', label: 'Физика' },
-                { value: 'Химия', label: 'Химия' },
-                { value: 'Биология', label: 'Биология' },
-                { value: 'Тарых', label: 'Кыргызстан тарыхы' },
-                { value: 'Русский язык', label: 'Русский язык' },
-                { value: 'Англис тили', label: 'Английский язык' },
-              ]}
+              options={subjectOptions}
             />
 
             <Select
               label={t('bookForm.grade')}
               value={grade}
               onChange={(e) => setGrade(e.target.value)}
-              options={[
-                { value: '1', label: t('units.grade', { count: 1, ns: 'common' }) },
-                { value: '2', label: t('units.grade', { count: 2, ns: 'common' }) },
-                { value: '3', label: t('units.grade', { count: 3, ns: 'common' }) },
-                { value: '4', label: t('units.grade', { count: 4, ns: 'common' }) },
-                { value: '5', label: t('units.grade', { count: 5, ns: 'common' }) },
-                { value: '6', label: t('units.grade', { count: 6, ns: 'common' }) },
-                { value: '7', label: t('units.grade', { count: 7, ns: 'common' }) },
-                { value: '8', label: t('units.grade', { count: 8, ns: 'common' }) },
-                { value: '9', label: t('units.grade', { count: 9, ns: 'common' }) },
-                { value: '10', label: t('units.grade', { count: 10, ns: 'common' }) },
-                { value: '11', label: `${t('units.grade', { count: 11, ns: 'common' })} / ОРТ` },
-              ]}
+              options={gradeOptions}
             />
 
             <Select
               label={t('bookForm.language')}
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              options={[
-                { value: 'KG', label: t('filters.langKG', { ns: 'catalog' }) },
-                { value: 'RU', label: t('filters.langRU', { ns: 'catalog' }) },
-                { value: 'EN', label: t('filters.langEN', { ns: 'catalog' }) },
-              ]}
+              options={languageOptions}
             />
           </div>
 
@@ -240,11 +278,7 @@ export const AddBookPage = () => {
               label={t('bookForm.dealType')}
               value={dealType}
               onChange={(e) => setDealType(e.target.value)}
-              options={[
-                { value: 'BOTH', label: 'Ижара жана Сатуу' },
-                { value: 'RENT', label: 'Ижарага гана' },
-                { value: 'BUY', label: 'Сатуу гана' },
-              ]}
+              options={dealTypeOptions}
             />
 
             <Input
@@ -276,23 +310,18 @@ export const AddBookPage = () => {
               label={t('bookForm.condition')}
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
-              options={[
-                { value: 'NEW', label: 'Жаңы (Таза, чийилген эмес)' },
-                { value: 'EXCELLENT', label: 'Эң жакшы (Идеалдуу)' },
-                { value: 'GOOD', label: 'Жакшы (Барактары бүтүн)' },
-                { value: 'FAIR', label: 'Орточо' },
-              ]}
+              options={conditionOptions}
             />
 
             <Input
-              label="Басылган жылы"
+              label={t('bookForm.year', { defaultValue: 'Год издания' })}
               type="number"
               value={year}
               onChange={(e) => setYear(e.target.value)}
             />
 
             <Input
-              label="Количество в наличии (шт.)"
+              label={t('bookForm.quantity', { defaultValue: 'Количество в наличии (шт.)' })}
               type="number"
               min="1"
               value={quantity}
@@ -310,7 +339,7 @@ export const AddBookPage = () => {
               rows={4}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Китептин сакталышы, барактарынын бүтүндүгү жана башка өзгөчөлүктөрү тууралуу жазыңыз..."
+              placeholder={t('bookForm.descriptionPlaceholder', { defaultValue: 'Опишите сохранность книги, целостность страниц, наличие пометок и другие особенности...' })}
               className="w-full text-xs rounded-xl border border-gray-200 dark:border-darkBorder bg-white dark:bg-darkCard p-3 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-brand-500 focus:outline-none"
             />
           </div>

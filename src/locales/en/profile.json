@@ -39,8 +39,10 @@
   "addBookTitle": "List a Textbook for Rent or Sale",
   "addBookSubtitle": "Help other parents and students save while monetizing your used curriculum books",
   "bookForm": {
-    "title": "Book Title (e.g. Geometry Grade 8)",
-    "author": "Author(s) (e.g. I. B. Bekboev)",
+    "title": "Book Title",
+    "titlePlaceholder": "e.g. Geometry Grade 8",
+    "author": "Author(s)",
+    "authorPlaceholder": "e.g. I. B. Bekboev, A. A. Borubaev",
     "subject": "School Subject",
     "grade": "Grade (1-11 or University/ORT)",
     "language": "Textbook Language",
@@ -49,9 +51,46 @@
     "rentPricePerMonth": "Rental Price per Month (KGS)",
     "deposit": "Deposit Amount (KGS)",
     "condition": "Condition",
+    "year": "Publication Year",
+    "quantity": "Quantity in Stock (pcs)",
     "description": "Description (notes, pages condition, edition)",
+    "descriptionPlaceholder": "Describe the preservation of the book, page integrity, markings, and edition details...",
     "images": "Book Photos (Cloudinary Unsigned Upload)",
-    "submit": "Publish Listing"
+    "submit": "Publish Listing",
+    "dealTypes": {
+      "both": "Rent & Sale",
+      "rent": "Rent Only",
+      "buy": "Sale Only"
+    },
+    "conditions": {
+      "new": "New (Pristine, unmarked)",
+      "excellent": "Excellent (Like new)",
+      "good": "Good (Intact pages)",
+      "fair": "Fair"
+    },
+    "subjects": {
+      "math": "Mathematics / Algebra",
+      "geometry": "Geometry",
+      "kyrgyzLang": "Kyrgyz Language",
+      "kyrgyzLit": "Kyrgyz Literature",
+      "ort": "ORT / JRT Exam Prep",
+      "physics": "Physics",
+      "chemistry": "Chemistry",
+      "biology": "Biology",
+      "history": "History of Kyrgyzstan",
+      "russian": "Russian Language",
+      "english": "English Language",
+      "informatics": "Informatics / IT"
+    },
+    "languages": {
+      "kg": "Kyrgyz (In Kyrgyz)",
+      "ru": "Russian",
+      "en": "English"
+    },
+    "userNoticeTitle": "Listing as a User — «б/у» (used) badge",
+    "userNoticeDesc": "Since you have already used this book for studies, it will be labeled with lowercase б/у in the catalog.",
+    "adminNoticeTitle": "Administrator Mode — New Books from Warehouse",
+    "adminNoticeDesc": "Administrator listings are published as brand new books and displayed first in the catalog."
   },
   "myListingsTitle": "My Listings",
   "addBookBtn": "Add Textbook",
@@ -61,5 +100,8 @@
   "defaultUser": "User",
   "confirmed": "Confirmed",
   "ecoSharing": "Eco-Sharing & Extra Income",
-  "deleteListingConfirm": "Are you sure you want to delete this textbook listing?"
+  "deleteListingConfirm": "Are you sure you want to delete this textbook listing?",
+  "badgeKyrgyzstan": "Kyrgyzstan • Textbooks",
+  "usedBadge": "used",
+  "newBadge": "New"
 }
