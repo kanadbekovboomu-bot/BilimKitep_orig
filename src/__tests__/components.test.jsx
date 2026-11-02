@@ -10,6 +10,7 @@ import { BurgerMenu } from '../components/layout/BurgerMenu';
 import { BookPreviewModal } from '../components/modules/BookPreviewModal';
 import { CustomDropdown } from '../components/common/CustomDropdown';
 import { ScrollProgressBar } from '../components/common/ScrollProgressBar';
+import { ScrollToTop } from '../components/common/ScrollToTop';
 import { ThemeProvider } from '../context/ThemeContext';
 import '../i18n';
 
@@ -210,5 +211,18 @@ describe('Common UI Components rendering & interaction', () => {
     fireEvent.click(bar, { clientX: 200 });
     // Should call window.scrollTo or maintain state
     expect(bar).toBeInTheDocument();
+  });
+
+  it('ScrollToTop scrolls window to (0, 0) upon route render', () => {
+    const scrollToMock = vi.fn();
+    window.scrollTo = scrollToMock;
+
+    render(
+      <MemoryRouter initialEntries={['/catalog']}>
+        <ScrollToTop />
+      </MemoryRouter>
+    );
+
+    expect(scrollToMock).toHaveBeenCalled();
   });
 });

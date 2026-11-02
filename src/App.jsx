@@ -7,6 +7,7 @@ import { CreativePageLoader } from './components/common/CreativePageLoader';
 import { KyrgyzMandalaBackground } from './components/common/KyrgyzMandalaBackground';
 import { ScrollProgressBar } from './components/common/ScrollProgressBar';
 import { GlobalCartToast } from './components/common/GlobalCartToast';
+import { ScrollToTop } from './components/common/ScrollToTop';
 
 export const App = () => {
   const [showInitialSplash, setShowInitialSplash] = useState(() => {
@@ -26,6 +27,9 @@ export const App = () => {
 
   return (
     <ErrorBoundary>
+      {/* Auto scroll to top on page navigation */}
+      <ScrollToTop />
+
       {/* Fixed Viewport Kyrgyz Reading Progress Bar Slider - Always at absolute top of window */}
       <ScrollProgressBar />
 
