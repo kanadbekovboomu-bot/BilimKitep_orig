@@ -18,11 +18,20 @@ export const SellerCard = ({ owner }) => {
           {owner.name?.charAt(0) || 'U'}
         </div>
         <div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 flex-wrap">
             <h4 className="font-bold text-sm text-gray-900 dark:text-gray-100">
               {owner.name}
             </h4>
             <ShieldCheck className="w-4 h-4 text-brand-500" title={t('seller.verified')} />
+            {owner.role === 'ADMIN' ? (
+              <span className="text-[10px] font-bold px-2 py-0.2 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-300">
+                Официальный склад • Новые книги
+              </span>
+            ) : (
+              <span className="text-[10px] font-bold lowercase px-2 py-0.2 rounded-full bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300">
+                пользователь (б/у)
+              </span>
+            )}
           </div>
           <div className="flex items-center gap-2 pt-0.5">
             <RatingStars rating={owner.rating || 4.9} size="sm" showNumber />

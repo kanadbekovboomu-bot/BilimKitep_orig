@@ -37,6 +37,7 @@ export const AddBookPage = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const isAdmin = user?.role === 'ADMIN';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,17 +60,20 @@ export const AddBookPage = () => {
         price: Number(price),
         rentPricePerMonth: Number(rentPricePerMonth),
         deposit: Number(deposit),
-        condition,
+        condition: isAdmin ? (condition || 'NEW') : (condition === 'NEW' ? 'EXCELLENT' : condition),
         year: Number(year),
         quantity: Math.max(1, Number(quantity) || 1),
         initialStock: Math.max(1, Number(quantity) || 1),
+        isAdminBook: isAdmin,
+        isUsed: !isAdmin,
         description: description.trim() || 'Good condition, intact pages.',
         images: images.length > 0 ? images : undefined,
         owner: {
-          uuid: user?.uuid || user?.id || 'a0020000-7c2a-41e9-9011-000000000002',
-          id: user?.id || user?.uuid || 'a0020000-7c2a-41e9-9011-000000000002',
-          name: user?.name || 'Айбек Нурланов',
-          phone: user?.phone || '+996 700 123 456',
+          uuid: user?.uuid || user?.id || (isAdmin ? 'a0010000-7c2a-41e9-9011-000000000001' : 'a0020000-7c2a-41e9-9011-000000000002'),
+          id: user?.id || user?.uuid || (isAdmin ? 'a0010000-7c2a-41e9-9011-000000000001' : 'a0020000-7c2a-41e9-9011-000000000002'),
+          name: user?.name || (isAdmin ? 'BilimKitep (Администрация)' : 'Айбек Нурланов'),
+          role: user?.role || (isAdmin ? 'ADMIN' : 'USER'),
+          phone: user?.phone || (isAdmin ? '+996 555 999 000' : '+996 700 123 456'),
           city: user?.city || 'Бишкек',
           rating: 5.0,
         },
@@ -116,6 +120,39 @@ export const AddBookPage = () => {
             <p className="text-xs sm:text-sm text-gray-500 mt-1">
               {t('addBookSubtitle')}
             </p>
+
+            {/* Seller Role Notice: New for Admin vs б/у for regular users */}
+            <div className="mt-4">
+              {!isAdmin ? (
+                <div className="p-4 rounded-2xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 flex items-start gap-3 text-xs">
+                  <span className="px-2 py-0.5 rounded-md font-black lowercase text-[11px] bg-amber-200/90 dark:bg-amber-900 text-amber-950 dark:text-amber-200 shrink-0 mt-0.5 border border-amber-300 dark:border-amber-700">
+                    б/у
+                  </span>
+                  <div className="space-y-0.5">
+                    <div className="font-bold text-amber-950 dark:text-amber-200">
+                      Вы выставляете книгу как пользователь — метка «б/у»
+                    </div>
+                    <p className="text-[11px] text-amber-900/80 dark:text-amber-300/80 leading-relaxed">
+                      Поскольку вы уже использовали эту книгу для учёбы, в каталоге рядом с ней будет автоматически указано маленькими буквами <span className="font-black lowercase bg-amber-200/80 dark:bg-amber-900/80 px-1.5 py-0.2 rounded border border-amber-300/60">б/у</span>.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-4 rounded-2xl bg-emerald-50/90 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 flex items-start gap-3 text-xs">
+                  <span className="px-2 py-0.5 rounded-md font-bold text-[11px] bg-emerald-200/90 dark:bg-emerald-900 text-emerald-950 dark:text-emerald-200 shrink-0 mt-0.5 border border-emerald-300 dark:border-emerald-700">
+                    Новая
+                  </span>
+                  <div className="space-y-0.5">
+                    <div className="font-bold text-emerald-950 dark:text-emerald-200">
+                      Режим Администратора — продажа новых книг
+                    </div>
+                    <p className="text-[11px] text-emerald-900/80 dark:text-emerald-300/80 leading-relaxed">
+                      Книги администрации выставляются как новые и отображаются в каталоге в первую очередь (в начале списка).
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

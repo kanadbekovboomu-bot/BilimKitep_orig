@@ -908,6 +908,35 @@ export const INITIAL_BOOKS = RAW_INITIAL_BOOKS.map((b, idx) => {
   const soldCount = b.soldCount ?? ((idx % 4) + 1);
   const quantity = b.quantity ?? Math.max(1, initialStock - soldCount);
 
+  // Admin books (New, from platform warehouse): idx % 2 === 0
+  // User books (Used / б/у, sold by students/parents): idx % 2 !== 0
+  const isAdminBook = (idx % 2 === 0);
+  const isUsed = !isAdminBook;
+
+  const adminOwner = {
+    id: 'a0010000-7c2a-41e9-9011-000000000001',
+    uuid: 'a0010000-7c2a-41e9-9011-000000000001',
+    name: 'BilimKitep (Администрация платформы)',
+    phone: '+996 555 999 000',
+    city: 'Бишкек',
+    role: 'ADMIN',
+    rating: 5.0,
+  };
+
+  const userOwner = b.owner ? {
+    ...b.owner,
+    role: 'USER',
+    uuid: `a00${(idx % 5) + 1}0000-7c2a-41e9-9011-00000000000${(idx % 5) + 1}`,
+    id: b.owner.id || `a00${(idx % 5) + 1}0000-7c2a-41e9-9011-00000000000${(idx % 5) + 1}`
+  } : {
+    id: 'u_user',
+    name: 'Айбек Нурланов',
+    role: 'USER',
+    phone: '+996 700 123 456',
+    city: 'Бишкек',
+    rating: 4.8,
+  };
+
   const sampleSales = [
     {
       orderId: `ORD-${8200 + idx}`,
@@ -932,11 +961,10 @@ export const INITIAL_BOOKS = RAW_INITIAL_BOOKS.map((b, idx) => {
     initialStock,
     soldCount,
     sales: b.sales || sampleSales,
-    owner: b.owner ? {
-      ...b.owner,
-      uuid: `a00${(idx % 5) + 1}0000-7c2a-41e9-9011-00000000000${(idx % 5) + 1}`,
-      id: b.owner.id || `a00${(idx % 5) + 1}0000-7c2a-41e9-9011-00000000000${(idx % 5) + 1}`
-    } : b.owner,
+    isAdminBook,
+    isUsed,
+    condition: isAdminBook ? 'NEW' : (b.condition === 'NEW' ? 'EXCELLENT' : (b.condition || 'GOOD')),
+    owner: isAdminBook ? adminOwner : userOwner,
     reviews: (b.reviews || []).map((r, rIdx) => ({
       ...r,
       uuid: `f00${idx + 1}0000-7c2a-41e9-9011-00000000000${rIdx + 1}`,
@@ -957,7 +985,8 @@ const getStoredBooks = () => {
     const hasOldImages = Array.isArray(parsed) && parsed.some(b => b.images?.[0]?.includes('unsplash.com'));
     const lacksUuids = Array.isArray(parsed) && parsed.some(b => !b.uuid);
     const lacksStock = Array.isArray(parsed) && parsed.some(b => b.quantity === undefined);
-    if (hasOldImages || lacksUuids || lacksStock) {
+    const lacksUsedFlag = Array.isArray(parsed) && parsed.some(b => b.isUsed === undefined);
+    if (hasOldImages || lacksUuids || lacksStock || lacksUsedFlag) {
       localStorage.setItem(STORAGE_KEY_BOOKS, JSON.stringify(INITIAL_BOOKS));
       return INITIAL_BOOKS;
     }
@@ -1044,21 +1073,32 @@ export const api = {
       books = books.filter(b => b.price <= Number(params.maxPrice));
     }
 
+    // Priority ranking: Admin books first, then User books
+    const getAdminRank = (book) => {
+      if (book.isAdminBook === true || book.owner?.role === 'ADMIN' || book.isOfficial === true) return 0;
+      return 1;
+    };
+
     // Sorting
-    if (params.sort === 'priceAsc') {
-      books.sort((a, b) => a.price - b.price);
-    } else if (params.sort === 'priceDesc') {
-      books.sort((a, b) => b.price - a.price);
-    } else if (params.sort === 'rating') {
-      books.sort((a, b) => (b.rating || 0) - (a.rating || 0) || (b.reviewsCount || 0) - (a.reviewsCount || 0));
-    } else if (params.sort === 'reviews') {
-      books.sort((a, b) => (b.reviewsCount || 0) - (a.reviewsCount || 0) || (b.rating || 0) - (a.rating || 0));
-    } else if (params.sort === 'sales' || params.sort === 'popular') {
-      books.sort((a, b) => (b.reviewsCount || 0) - (a.reviewsCount || 0));
-    } else {
-      // Newest
-      books.sort((a, b) => (b.year || 2020) - (a.year || 2020));
-    }
+    books.sort((a, b) => {
+      const rankDiff = getAdminRank(a) - getAdminRank(b);
+      if (rankDiff !== 0) return rankDiff;
+
+      if (params.sort === 'priceAsc') {
+        return a.price - b.price;
+      } else if (params.sort === 'priceDesc') {
+        return b.price - a.price;
+      } else if (params.sort === 'rating') {
+        return (b.rating || 0) - (a.rating || 0) || (b.reviewsCount || 0) - (a.reviewsCount || 0);
+      } else if (params.sort === 'reviews') {
+        return (b.reviewsCount || 0) - (a.reviewsCount || 0) || (b.rating || 0) - (a.rating || 0);
+      } else if (params.sort === 'sales' || params.sort === 'popular') {
+        return (b.soldCount || 0) - (a.soldCount || 0);
+      } else {
+        // Newest
+        return (b.year || 2020) - (a.year || 2020);
+      }
+    });
 
     const page = Number(params.page) || 1;
     const limit = Number(params.limit) || 12;
@@ -1111,6 +1151,8 @@ export const api = {
     const books = getStoredBooks();
     const uuid = bookData.uuid || generateUuid();
     const qty = Math.max(0, Number(bookData.quantity) || 1);
+    const isAdmin = bookData.isAdminBook === true || bookData.owner?.role === 'ADMIN';
+    const isUsed = bookData.isUsed !== undefined ? Boolean(bookData.isUsed) : !isAdmin;
     const newBook = {
       uuid,
       id: bookData.id || uuid,
@@ -1123,12 +1165,17 @@ export const api = {
       initialStock: Math.max(qty, Number(bookData.initialStock) || qty),
       soldCount: 0,
       sales: [],
+      isAdminBook: isAdmin,
+      isUsed: isUsed,
+      condition: isAdmin ? (bookData.condition || 'NEW') : (bookData.condition || 'GOOD'),
       images: bookData.images && bookData.images.length > 0
         ? bookData.images
         : ["/covers/geometry-8.svg"],
       ...bookData,
       uuid,
       id: bookData.id || uuid,
+      isAdminBook: isAdmin,
+      isUsed: isUsed,
       quantity: qty,
       initialStock: Math.max(qty, Number(bookData.initialStock) || qty),
       grade: Number(bookData.grade) || 8,

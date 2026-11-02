@@ -139,4 +139,48 @@ describe('Mock REST API and Data Layer tests', () => {
     const replenished = await api.updateBookStock(book.id, 10);
     expect(replenished.quantity).toBe(10);
   });
+
+  it('prioritizes Admin books before User books and assigns used flag correctly', async () => {
+    const res = await api.getBooks({ page: 1, limit: 30 });
+    const items = res.items;
+
+    // Check that admin books appear before user books
+    let seenUserBook = false;
+    for (const book of items) {
+      const isAdmin = book.isAdminBook === true || book.owner?.role === 'ADMIN';
+      if (!isAdmin) {
+        seenUserBook = true;
+      }
+      if (seenUserBook) {
+        // Once we have seen a user book, subsequent books should be user books or have lower/equal priority
+        expect(book.isUsed).toBe(true);
+      } else {
+        expect(book.isUsed).toBe(false);
+        expect(book.isAdminBook).toBe(true);
+      }
+    }
+
+    // Creating user book sets isUsed = true
+    const userBook = await api.createBook({
+      title: 'Пользовательская книга б/у',
+      author: 'Ученик',
+      subject: 'Физика',
+      grade: 9,
+      owner: { role: 'USER', name: 'Ученик' },
+    });
+    expect(userBook.isUsed).toBe(true);
+    expect(userBook.isAdminBook).toBe(false);
+
+    // Creating admin book sets isUsed = false
+    const adminBook = await api.createBook({
+      title: 'Новая книга администрации',
+      author: 'Издательство',
+      subject: 'Химия',
+      grade: 10,
+      owner: { role: 'ADMIN', name: 'BilimKitep Store' },
+      isAdminBook: true,
+    });
+    expect(adminBook.isUsed).toBe(false);
+    expect(adminBook.isAdminBook).toBe(true);
+  });
 });

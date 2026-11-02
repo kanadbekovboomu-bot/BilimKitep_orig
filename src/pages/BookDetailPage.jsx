@@ -12,7 +12,8 @@ import {
   AlertCircle,
   Truck,
   Package,
-  ShoppingBag
+  ShoppingBag,
+  Sparkles
 } from 'lucide-react';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { BookGallery } from '../components/modules/BookGallery';
@@ -67,6 +68,9 @@ export const BookDetailPage = () => {
     FAIR: t('condition.fair', { ns: 'common' }),
   };
   const localizedCondition = book ? (conditionMap[book.condition] || book.condition) : '';
+
+  const isAdminBook = book ? (book.isAdminBook === true || book.owner?.role === 'ADMIN' || book.isOfficial === true) : false;
+  const isUsed = book ? (book.isUsed !== undefined ? book.isUsed : !isAdminBook) : false;
 
   const handleRentSubmit = (months) => {
     if (!book) return;
@@ -135,6 +139,24 @@ export const BookDetailPage = () => {
           <div className="bg-white dark:bg-darkCard rounded-2xl border border-gray-100 dark:border-darkBorder p-6 space-y-6">
             <div className="space-y-3">
               <div className="flex flex-wrap items-center gap-2">
+                {/* Admin New vs User б/у Badge */}
+                {isUsed ? (
+                  <span
+                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black lowercase bg-amber-100/90 text-amber-950 dark:bg-amber-950/80 dark:text-amber-200 border border-amber-300 dark:border-amber-700 shadow-2xs"
+                    title="Книга б/у от пользователя"
+                  >
+                    б/у
+                  </span>
+                ) : (
+                  <span
+                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100/90 text-emerald-950 dark:bg-emerald-950/80 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700 shadow-2xs"
+                    title="Новая книга со склада администрации"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <span>Новая книга (Официальный склад)</span>
+                  </span>
+                )}
+
                 <DealBadge dealType={book.dealType} />
                 <Badge variant="default">{t('units.grade', { count: book.grade, ns: 'common' })}</Badge>
                 <Badge variant="primary">{localizedMedium || book.language}</Badge>

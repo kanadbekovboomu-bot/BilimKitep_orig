@@ -13,7 +13,9 @@ import {
   Globe,
   Laptop,
   BookOpen,
-  GraduationCap
+  GraduationCap,
+  Package,
+  Sparkles
 } from 'lucide-react';
 import { DealBadge } from './DealBadge';
 import { Badge } from '../common/Badge';
@@ -48,6 +50,8 @@ export const BookCard = ({
   const currency = currentLang.toLowerCase().startsWith('en') ? 'KGS' : 'сом';
 
   const isRentable = book.dealType === 'RENT' || book.dealType === 'BOTH';
+  const isAdminBook = book.isAdminBook === true || book.owner?.role === 'ADMIN' || book.isOfficial === true;
+  const isUsed = book.isUsed !== undefined ? book.isUsed : !isAdminBook;
   const coverImage = book.images && book.images.length > 0
     ? book.images[0]
     : '/covers/geometry-8.svg';
@@ -171,6 +175,24 @@ export const BookCard = ({
 
         {/* Clean Meta Badges below the image */}
         <div className="flex items-center gap-1.5 flex-wrap pb-2">
+          {/* Admin New vs User б/у Badge */}
+          {isUsed ? (
+            <span
+              className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-black lowercase bg-amber-100/90 text-amber-900 dark:bg-amber-950/80 dark:text-amber-200 border border-amber-300 dark:border-amber-700 shadow-2xs"
+              title="Книга б/у от пользователя"
+            >
+              б/у
+            </span>
+          ) : (
+            <span
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100/90 text-emerald-900 dark:bg-emerald-950/80 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700 shadow-2xs"
+              title="Новая книга со склада администрации"
+            >
+              <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+              <span>Новая</span>
+            </span>
+          )}
+
           <DealBadge dealType={book.dealType} />
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/80">
             <GraduationCap className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
@@ -179,15 +201,18 @@ export const BookCard = ({
           <Badge variant="primary" size="sm">
             {medium}
           </Badge>
+
+          {/* Remaining Stock in Catalog */}
           {(book.quantity ?? 1) <= 0 ? (
             <span className="inline-flex items-center text-[10px] font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded-full border border-rose-200/60">
               Распродано
             </span>
-          ) : (book.soldCount ?? 0) > 0 ? (
-            <span className="inline-flex items-center text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded-full border border-blue-200/60">
-              Куплено: {book.soldCount}
+          ) : (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/80">
+              <Package className="w-3 h-3 text-emerald-500" />
+              <span>Осталось: <strong className="font-black text-emerald-700 dark:text-emerald-300">{book.quantity ?? 1}</strong> шт.</span>
             </span>
-          ) : null}
+          )}
         </div>
 
         {/* Content with OnlineMektep-styled Subject Badge */}
@@ -250,6 +275,13 @@ export const BookCard = ({
               </div>
             </div>
           )}
+          {/* Stock remaining indicator under price */}
+          <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 flex items-center gap-1 mt-0.5">
+            <Package className="w-2.5 h-2.5 text-emerald-500" />
+            <span>
+              {(book.quantity ?? 1) > 0 ? `В наличии: ${book.quantity ?? 1} шт.` : 'Нет в наличии'}
+            </span>
+          </div>
         </div>
 
         <button

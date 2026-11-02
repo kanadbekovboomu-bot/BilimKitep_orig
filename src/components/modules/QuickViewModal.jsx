@@ -39,6 +39,8 @@ export const QuickViewModal = ({
 
   const isRentable = book.dealType === 'RENT' || book.dealType === 'BOTH';
   const isBuyable = book.dealType === 'BUY' || book.dealType === 'BOTH';
+  const isAdminBook = book.isAdminBook === true || book.owner?.role === 'ADMIN' || book.isOfficial === true;
+  const isUsed = book.isUsed !== undefined ? book.isUsed : !isAdminBook;
 
   const rentTotal = (Number(book.rentPricePerMonth) * selectedMonths) + Number(book.deposit || 0);
 
@@ -79,13 +81,25 @@ export const QuickViewModal = ({
               />
             )}
           </Link>
-          <div className="flex flex-wrap gap-1.5 mb-2">
+          <div className="flex flex-wrap items-center gap-1.5 mb-2">
+            {isUsed ? (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-black lowercase bg-amber-100 text-amber-900 dark:bg-amber-950/80 dark:text-amber-200 border border-amber-300 dark:border-amber-700 shadow-2xs">
+                б/у
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-900 dark:bg-emerald-950/80 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700 shadow-2xs">
+                Новая
+              </span>
+            )}
             <DealBadge dealType={book.dealType} />
             <Badge variant="default" size="sm">
               {t('units.grade', { count: book.grade, ns: 'common' })}
             </Badge>
             <Badge variant="primary" size="sm">{medium}</Badge>
             <Badge variant="default" size="sm">{localizedCondition}</Badge>
+            <span className="inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+              {(book.quantity ?? 1) > 0 ? `Осталось: ${book.quantity ?? 1} шт.` : 'Распродано'}
+            </span>
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-3">
             {desc}
