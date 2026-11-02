@@ -33,9 +33,10 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full pt-1 sm:pt-1.5 backdrop-blur-md bg-white/95 dark:bg-darkBg/95 border-b border-gray-100 dark:border-darkBorder transition-colors shadow-xs">
-      <div className="w-full max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
+    <>
+      <header className="fixed top-0 left-0 right-0 z-40 w-full pt-1 sm:pt-1.5 backdrop-blur-md bg-white/95 dark:bg-darkBg/95 border-b border-gray-100 dark:border-darkBorder transition-colors shadow-xs">
+        <div className="w-full max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
           {/* Responsive Kyrgyz Brand Logo: compact on mobile, majestic on desktop */}
           <div className="sm:hidden">
             <BrandLogo size="sm" showTagline={false} />
@@ -153,6 +154,10 @@ export const Header = () => {
         onLogout={handleLogout}
       />
     </header>
+
+    {/* Spacer to prevent content from jumping beneath the fixed pinned header */}
+    <div className="h-[68px] sm:h-[86px] w-full shrink-0 pointer-events-none" aria-hidden="true" />
+  </>
   );
 };
 
