@@ -11,6 +11,7 @@ import { BookPreviewModal } from '../components/modules/BookPreviewModal';
 import { CustomDropdown } from '../components/common/CustomDropdown';
 import { ScrollProgressBar } from '../components/common/ScrollProgressBar';
 import { ScrollToTop } from '../components/common/ScrollToTop';
+import { Pagination } from '../components/common/Pagination';
 import { ThemeProvider } from '../context/ThemeContext';
 import '../i18n';
 
@@ -224,5 +225,31 @@ describe('Common UI Components rendering & interaction', () => {
     );
 
     expect(scrollToMock).toHaveBeenCalled();
+  });
+
+  it('renders Pagination and handles page switch with auto scroll', () => {
+    const handlePageChange = vi.fn();
+    const scrollToMock = vi.fn();
+    window.scrollTo = scrollToMock;
+
+    render(
+      <Pagination
+        currentPage={1}
+        totalPages={3}
+        onPageChange={handlePageChange}
+      />
+    );
+
+    const page2Btn = screen.getByRole('button', { name: '2' });
+    expect(page2Btn).toBeInTheDocument();
+
+    fireEvent.click(page2Btn);
+    expect(handlePageChange).toHaveBeenCalledWith(2);
+    expect(scrollToMock).toHaveBeenCalled();
+
+    // Next page button
+    const nextBtn = screen.getByRole('button', { name: /Next page/i });
+    fireEvent.click(nextBtn);
+    expect(handlePageChange).toHaveBeenCalledWith(2); // 1 + 1 = 2
   });
 });

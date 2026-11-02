@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,6 +43,7 @@ export const CatalogPage = () => {
   const [toastMessage, setToastMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const booksSectionRef = useRef(null);
 
   // Sync URL search params on mount
   useEffect(() => {
@@ -78,6 +79,24 @@ export const CatalogPage = () => {
     if (key === 'search') dispatch(setSearchQuery(''));
     else if (key === 'maxPrice') dispatch(setFilterParam({ key: 'maxPrice', value: 2000 }));
     else dispatch(setFilterParam({ key, value: 'all' }));
+  };
+
+  const handlePageChange = (newPage) => {
+    dispatch(setPage(newPage));
+    if (booksSectionRef.current) {
+      const headerOffset = 90; // accounts for pinned header height
+      const elementPosition = booksSectionRef.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: 'smooth',
+      });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const sortOptions = useMemo(
@@ -225,8 +244,8 @@ export const CatalogPage = () => {
           />
         </div>
 
-        {/* Mobile Filter Toggle & Sort Header */}
-        <div className="lg:col-span-3 space-y-6">
+        {/* Mobile Filter Toggle & Sort Header & Books Section */}
+        <div ref={booksSectionRef} id="catalog-books-section" className="lg:col-span-3 space-y-6 scroll-mt-24">
           <div className="flex items-center justify-between bg-white dark:bg-darkCard p-3 rounded-2xl border border-gray-100 dark:border-darkBorder">
             <button
               type="button"
@@ -270,12 +289,13 @@ export const CatalogPage = () => {
             onResetFilters={handleResetFilters}
           />
 
-          {/* Pagination */}
+          {/* Pagination with smooth auto-scroll to top of book list */}
           <div className="pt-6">
             <Pagination
               currentPage={filterState.page}
               totalPages={totalPages}
-              onPageChange={(p) => dispatch(setPage(p))}
+              onPageChange={handlePageChange}
+              scrollToSelector="#catalog-books-section"
             />
           </div>
         </div>
