@@ -73,8 +73,6 @@ export const CustomDropdown = ({
     setIsOpen(false);
   };
 
-  const ActiveIcon = activeOption?.icon;
-
   return (
     <div
       ref={containerRef}
@@ -105,21 +103,8 @@ export const CustomDropdown = ({
             : 'bg-white dark:bg-darkCard hover:bg-gray-50 dark:hover:bg-slate-800/80 border-gray-200 dark:border-darkBorder text-gray-800 dark:text-gray-200 hover:border-slate-300 dark:hover:border-slate-600 shadow-xs'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${buttonClassName}`}
       >
-        <span className="flex items-center gap-2 truncate">
-          {ActiveIcon && (
-            <span
-              className={`shrink-0 transition-colors ${
-                isOpen
-                  ? 'text-emerald-500'
-                  : 'text-gray-500 dark:text-gray-400 group-hover:text-emerald-500'
-              }`}
-            >
-              <ActiveIcon className="w-4 h-4" />
-            </span>
-          )}
-          <span className="truncate">
-            {activeOption ? activeOption.label : placeholder}
-          </span>
+        <span className="truncate">
+          {activeOption ? activeOption.label : placeholder}
         </span>
 
         <ChevronDown
@@ -149,7 +134,6 @@ export const CustomDropdown = ({
           <div className="space-y-0.5 max-h-72 overflow-y-auto no-scrollbar">
             {options.map((opt) => {
               const isSelected = opt.value === value;
-              const OptIcon = opt.icon;
 
               return (
                 <button
@@ -164,20 +148,7 @@ export const CustomDropdown = ({
                       : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100/80 dark:hover:bg-slate-800/80 hover:text-gray-900 dark:hover:text-white border border-transparent'
                   }`}
                 >
-                  <span className="flex items-center gap-2.5 truncate">
-                    {OptIcon && (
-                      <span
-                        className={`p-1 rounded-lg shrink-0 transition-colors ${
-                          isSelected
-                            ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
-                            : 'bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400 group-hover:bg-white dark:group-hover:bg-slate-700 group-hover:text-emerald-500'
-                        }`}
-                      >
-                        <OptIcon className="w-3.5 h-3.5" />
-                      </span>
-                    )}
-                    <span className="truncate">{opt.label}</span>
-                  </span>
+                  <span className="truncate">{opt.label}</span>
 
                   {isSelected && (
                     <span className="shrink-0 p-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">

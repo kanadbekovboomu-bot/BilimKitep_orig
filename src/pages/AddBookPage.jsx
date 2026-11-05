@@ -2,27 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  BookPlus,
-  Sparkles,
-  CheckCircle2,
-  Calculator,
-  Compass,
-  BookOpen,
-  GraduationCap,
-  Zap,
-  FlaskConical,
-  Leaf,
-  Landmark,
-  Globe,
-  Laptop,
-  Layers,
-  Calendar,
-  Coins,
-  ThumbsUp,
-  Clock,
-  Package
-} from 'lucide-react';
+import { BookPlus, Sparkles } from 'lucide-react';
 import { Breadcrumbs } from '../components/layout/Breadcrumbs';
 import { Input } from '../components/common/Input';
 import { Select } from '../components/common/Select';
@@ -59,20 +39,20 @@ export const AddBookPage = () => {
   const [error, setError] = useState('');
   const isAdmin = user?.role === 'ADMIN';
 
-  // Localized Dropdown Option Lists with Site Decor Icons
+  // Localized Dropdown Option Lists
   const subjectOptions = useMemo(() => [
-    { value: 'Математика / Алгебра', label: t('bookForm.subjects.math', { defaultValue: 'Математика / Алгебра' }), icon: Calculator },
-    { value: 'Геометрия', label: t('bookForm.subjects.geometry', { defaultValue: 'Геометрия' }), icon: Compass },
-    { value: 'Кыргыз тили', label: t('bookForm.subjects.kyrgyzLang', { defaultValue: 'Кыргыз тили' }), icon: BookOpen },
-    { value: 'Кыргыз адабияты', label: t('bookForm.subjects.kyrgyzLit', { defaultValue: 'Кыргыз адабияты' }), icon: BookOpen },
-    { value: 'ОРТ / ЖРТ', label: t('bookForm.subjects.ort', { defaultValue: 'ОРТ / ЖРТ пособия' }), icon: GraduationCap },
-    { value: 'Физика', label: t('bookForm.subjects.physics', { defaultValue: 'Физика' }), icon: Zap },
-    { value: 'Химия', label: t('bookForm.subjects.chemistry', { defaultValue: 'Химия' }), icon: FlaskConical },
-    { value: 'Биология', label: t('bookForm.subjects.biology', { defaultValue: 'Биология' }), icon: Leaf },
-    { value: 'Тарых', label: t('bookForm.subjects.history', { defaultValue: 'Кыргызстан тарыхы' }), icon: Landmark },
-    { value: 'Русский язык', label: t('bookForm.subjects.russian', { defaultValue: 'Русский язык' }), icon: BookOpen },
-    { value: 'Англис тили', label: t('bookForm.subjects.english', { defaultValue: 'Английский язык' }), icon: Globe },
-    { value: 'Информатика', label: t('bookForm.subjects.informatics', { defaultValue: 'Информатика / ИКТ' }), icon: Laptop },
+    { value: 'Математика / Алгебра', label: t('bookForm.subjects.math', { defaultValue: 'Математика / Алгебра' }) },
+    { value: 'Геометрия', label: t('bookForm.subjects.geometry', { defaultValue: 'Геометрия' }) },
+    { value: 'Кыргыз тили', label: t('bookForm.subjects.kyrgyzLang', { defaultValue: 'Кыргыз тили' }) },
+    { value: 'Кыргыз адабияты', label: t('bookForm.subjects.kyrgyzLit', { defaultValue: 'Кыргыз адабияты' }) },
+    { value: 'ОРТ / ЖРТ', label: t('bookForm.subjects.ort', { defaultValue: 'ОРТ / ЖРТ пособия' }) },
+    { value: 'Физика', label: t('bookForm.subjects.physics', { defaultValue: 'Физика' }) },
+    { value: 'Химия', label: t('bookForm.subjects.chemistry', { defaultValue: 'Химия' }) },
+    { value: 'Биология', label: t('bookForm.subjects.biology', { defaultValue: 'Биология' }) },
+    { value: 'Тарых', label: t('bookForm.subjects.history', { defaultValue: 'Кыргызстан тарыхы' }) },
+    { value: 'Русский язык', label: t('bookForm.subjects.russian', { defaultValue: 'Русский язык' }) },
+    { value: 'Англис тили', label: t('bookForm.subjects.english', { defaultValue: 'Английский язык' }) },
+    { value: 'Информатика', label: t('bookForm.subjects.informatics', { defaultValue: 'Информатика / ИКТ' }) },
   ], [t, i18n.language]);
 
   const gradeOptions = useMemo(() => Array.from({ length: 11 }, (_, i) => {
@@ -82,27 +62,26 @@ export const AddBookPage = () => {
       label: g === '11'
         ? `${t('units.grade', { count: 11, ns: 'common', defaultValue: '11-класс' })} / ОРТ`
         : t('units.grade', { count: Number(g), ns: 'common', defaultValue: `${g}-класс` }),
-      icon: GraduationCap,
     };
   }), [t, i18n.language]);
 
   const languageOptions = useMemo(() => [
-    { value: 'KG', label: t('bookForm.languages.kg', { defaultValue: 'Кыргызский (Кыргыз тилинде)' }), icon: BookOpen },
-    { value: 'RU', label: t('bookForm.languages.ru', { defaultValue: 'Русский язык' }), icon: BookOpen },
-    { value: 'EN', label: t('bookForm.languages.en', { defaultValue: 'Английский язык' }), icon: Globe },
+    { value: 'KG', label: t('bookForm.languages.kg', { defaultValue: 'Кыргызский (Кыргыз тилинде)' }) },
+    { value: 'RU', label: t('bookForm.languages.ru', { defaultValue: 'Русский язык' }) },
+    { value: 'EN', label: t('bookForm.languages.en', { defaultValue: 'Английский язык' }) },
   ], [t, i18n.language]);
 
   const dealTypeOptions = useMemo(() => [
-    { value: 'BOTH', label: t('bookForm.dealTypes.both', { defaultValue: 'Ижара жана Сатуу' }), icon: Layers },
-    { value: 'RENT', label: t('bookForm.dealTypes.rent', { defaultValue: 'Ижарага гана' }), icon: Calendar },
-    { value: 'BUY', label: t('bookForm.dealTypes.buy', { defaultValue: 'Сатуу гана' }), icon: Coins },
+    { value: 'BOTH', label: t('bookForm.dealTypes.both', { defaultValue: 'Ижара жана Сатуу' }) },
+    { value: 'RENT', label: t('bookForm.dealTypes.rent', { defaultValue: 'Ижарага гана' }) },
+    { value: 'BUY', label: t('bookForm.dealTypes.buy', { defaultValue: 'Сатуу гана' }) },
   ], [t, i18n.language]);
 
   const conditionOptions = useMemo(() => [
-    { value: 'NEW', label: t('bookForm.conditions.new', { defaultValue: 'Жаңы (Таза, чийилген эмес)' }), icon: Sparkles },
-    { value: 'EXCELLENT', label: t('bookForm.conditions.excellent', { defaultValue: 'Эң жакшы (Идеалдуу)' }), icon: CheckCircle2 },
-    { value: 'GOOD', label: t('bookForm.conditions.good', { defaultValue: 'Жакшы (Барактары бүтүн)' }), icon: ThumbsUp },
-    { value: 'FAIR', label: t('bookForm.conditions.fair', { defaultValue: 'Орточо' }), icon: Clock },
+    { value: 'NEW', label: t('bookForm.conditions.new', { defaultValue: 'Жаңы (Таза, чийилген эмес)' }) },
+    { value: 'EXCELLENT', label: t('bookForm.conditions.excellent', { defaultValue: 'Эң жакшы (Идеалдуу)' }) },
+    { value: 'GOOD', label: t('bookForm.conditions.good', { defaultValue: 'Жакшы (Барактары бүтүн)' }) },
+    { value: 'FAIR', label: t('bookForm.conditions.fair', { defaultValue: 'Орточо' }) },
   ], [t, i18n.language]);
 
   const handleSubmit = async (e) => {

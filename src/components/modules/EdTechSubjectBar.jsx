@@ -76,13 +76,12 @@ export const EdTechSubjectBar = ({
               key={item.id}
               type="button"
               onClick={() => handleSubjectClick(item)}
-              className={`shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-colors duration-150 cursor-pointer ${
+              className={`shrink-0 flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-medium transition-colors duration-150 cursor-pointer ${
                 isSelected
                   ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
                   : 'bg-white dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border-slate-200/90 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300'
               }`}
             >
-              <Icon className="w-3.5 h-3.5 shrink-0 text-current" />
               <span className="whitespace-nowrap">
                 {itemLabel}
               </span>

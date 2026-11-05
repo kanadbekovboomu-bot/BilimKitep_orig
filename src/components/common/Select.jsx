@@ -62,8 +62,6 @@ export const Select = forwardRef(({
     }
   };
 
-  const ActiveIcon = activeOption?.icon || FieldIcon;
-
   return (
     <div ref={containerRef} className={`w-full space-y-1.5 relative select-none ${className}`}>
       {label && (
@@ -93,7 +91,7 @@ export const Select = forwardRef(({
         ))}
       </select>
 
-      {/* Custom Decorated Trigger Button */}
+      {/* Custom Clean Trigger Button */}
       <button
         type="button"
         disabled={disabled}
@@ -109,40 +107,29 @@ export const Select = forwardRef(({
             : 'border-gray-200 dark:border-darkBorder hover:border-slate-300 dark:hover:border-slate-600 text-gray-900 dark:text-gray-100 hover:bg-gray-50/70 dark:hover:bg-slate-800/50'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
-        <span className="flex items-center gap-2 truncate">
-          {ActiveIcon && (
-            <span className="shrink-0 w-4 h-4 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-              <ActiveIcon className="w-4 h-4" />
-            </span>
-          )}
-          <span className="truncate font-semibold">
-            {activeOption ? activeOption.label : placeholder}
-          </span>
+        <span className="truncate font-medium text-gray-900 dark:text-gray-100">
+          {activeOption ? activeOption.label : placeholder}
         </span>
 
         <ChevronDown
           className={`w-4 h-4 shrink-0 transition-transform duration-200 ${
             isOpen
-              ? 'rotate-180 text-emerald-500'
+              ? 'rotate-180 text-emerald-600 dark:text-emerald-400'
               : 'text-gray-400 dark:text-gray-500'
           }`}
         />
       </button>
 
-      {/* Popover Dropdown Menu with Site Decor */}
+      {/* Popover Dropdown Menu */}
       {isOpen && (
         <div
           role="listbox"
           tabIndex={-1}
-          className="absolute left-0 right-0 top-full mt-1.5 z-[9999] rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-gray-200/90 dark:border-slate-700/80 shadow-2xl shadow-slate-900/15 dark:shadow-black/70 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-150 focus:outline-none"
+          className="absolute left-0 right-0 top-full mt-1.5 z-[9999] rounded-xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 shadow-lg shadow-slate-900/10 dark:shadow-black/50 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-150 focus:outline-none"
         >
-          {/* Subtle National Accent Ribbon on top */}
-          <div className="w-full h-1 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
-
-          <div className="p-1.5 max-h-60 overflow-y-auto space-y-0.5 custom-scrollbar">
+          <div className="p-1 max-h-60 overflow-y-auto space-y-0.5 custom-scrollbar">
             {options.map((opt) => {
               const isSelected = String(opt.value) === String(value);
-              const OptIcon = opt.icon;
 
               return (
                 <button
@@ -151,31 +138,16 @@ export const Select = forwardRef(({
                   role="option"
                   aria-selected={isSelected}
                   onClick={() => handleSelect(opt)}
-                  className={`w-full flex items-center justify-between gap-2.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-left cursor-pointer ${
+                  className={`w-full flex items-center justify-between gap-2.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors text-left cursor-pointer ${
                     isSelected
-                      ? 'bg-emerald-50 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-200/70 dark:border-emerald-500/30 shadow-xs'
-                      : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100/80 dark:hover:bg-slate-800/80 hover:text-gray-900 dark:hover:text-white border border-transparent'
+                      ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-semibold'
+                      : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100/80 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'
                   }`}
                 >
-                  <span className="flex items-center gap-2.5 truncate">
-                    {OptIcon && (
-                      <span
-                        className={`p-1 rounded-lg shrink-0 transition-colors ${
-                          isSelected
-                            ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
-                            : 'bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400'
-                        }`}
-                      >
-                        <OptIcon className="w-3.5 h-3.5" />
-                      </span>
-                    )}
-                    <span className="truncate">{opt.label}</span>
-                  </span>
+                  <span className="truncate">{opt.label}</span>
 
                   {isSelected && (
-                    <span className="shrink-0 p-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                      <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                    </span>
+                    <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 stroke-[2.5]" />
                   )}
                 </button>
               );

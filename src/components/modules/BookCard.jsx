@@ -162,25 +162,23 @@ export const BookCard = ({
           {/* Admin New vs User б/у Badge */}
           {isUsed ? (
             <span
-              className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-black lowercase bg-amber-100/90 text-amber-900 dark:bg-amber-950/80 dark:text-amber-200 border border-amber-300 dark:border-amber-700 shadow-2xs"
+              className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold lowercase bg-amber-100/90 text-amber-900 dark:bg-amber-950/80 dark:text-amber-200 border border-amber-300 dark:border-amber-700 shadow-2xs"
               title="Книга б/у от пользователя"
             >
               б/у
             </span>
           ) : (
             <span
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100/90 text-emerald-900 dark:bg-emerald-950/80 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700 shadow-2xs"
+              className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100/90 text-emerald-900 dark:bg-emerald-950/80 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700 shadow-2xs"
               title="Новая книга со склада администрации"
             >
-              <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-              <span>Новая</span>
+              Новая
             </span>
           )}
 
           <DealBadge dealType={book.dealType} />
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/80">
-            <GraduationCap className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-            <span>{t('units.grade', { count: book.grade })}</span>
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/80">
+            {t('units.grade', { count: book.grade })}
           </span>
           <Badge variant="primary" size="sm">
             {medium}
@@ -192,18 +190,16 @@ export const BookCard = ({
               Распродано
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/80">
-              <Package className="w-3 h-3 text-emerald-500" />
-              <span>Осталось: <strong className="font-black text-emerald-700 dark:text-emerald-300">{book.quantity ?? 1}</strong> шт.</span>
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/80">
+              Осталось: <strong className="font-bold text-emerald-700 dark:text-emerald-300 ml-1">{book.quantity ?? 1}</strong> шт.
             </span>
           )}
         </div>
 
-        {/* Content with OnlineMektep-styled Subject Badge */}
+        {/* Content with Subject Badge */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between text-xs gap-2">
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border shrink-0 ${subjectStyle.bg} ${subjectStyle.text} ${subjectStyle.border}`}>
-              <SubjectIcon className="w-3 h-3 shrink-0" />
+            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border shrink-0 ${subjectStyle.bg} ${subjectStyle.text} ${subjectStyle.border}`}>
               <span className="whitespace-nowrap">{subject}</span>
             </span>
             <RatingStars rating={book.rating || 5} showNumber />
@@ -260,8 +256,7 @@ export const BookCard = ({
             </div>
           )}
           {/* Stock remaining indicator under price */}
-          <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 flex items-center gap-1 mt-0.5">
-            <Package className="w-2.5 h-2.5 text-emerald-500" />
+          <div className="text-[10px] font-semibold text-gray-500 dark:text-gray-400 mt-0.5">
             <span>
               {(book.quantity ?? 1) > 0 ? `В наличии: ${book.quantity ?? 1} шт.` : 'Нет в наличии'}
             </span>

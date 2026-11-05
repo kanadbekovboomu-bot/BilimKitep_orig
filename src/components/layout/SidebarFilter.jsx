@@ -98,36 +98,24 @@ export const SidebarFilter = ({
           <div className="grid grid-cols-1 gap-2">
             {dealTypes.map((type) => {
               const isSelected = filters.dealType === type.value;
-              const Icon = type.icon;
               return (
                 <button
                   key={type.value}
                   type="button"
                   onClick={() => onChange('dealType', type.value)}
-                  className={`flex items-center justify-between p-2.5 rounded-2xl text-xs font-semibold transition-all text-left cursor-pointer border ${
+                  className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-medium transition-colors text-left cursor-pointer border ${
                     isSelected
-                      ? 'bg-emerald-50 dark:bg-emerald-950/60 text-brand-800 dark:text-brand-200 border-brand-400 dark:border-brand-700 shadow-xs ring-2 ring-brand-500/10'
+                      ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 border-emerald-400 dark:border-emerald-700 shadow-xs'
                       : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-darkBorder/40 border-gray-100 dark:border-darkBorder'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <div
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
-                        isSelected
-                          ? 'bg-brand-600 text-white'
-                          : 'bg-gray-100 dark:bg-darkBorder text-gray-500'
-                      }`}
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-xs">{type.label}</div>
-                      <div className="text-[10px] text-gray-400 font-normal">{type.desc}</div>
-                    </div>
+                  <div>
+                    <div className="font-semibold text-xs">{type.label}</div>
+                    <div className="text-[10px] text-gray-400 font-normal">{type.desc}</div>
                   </div>
 
                   {isSelected && (
-                    <div className="w-5 h-5 rounded-full bg-brand-600 text-white flex items-center justify-center shrink-0">
+                    <div className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </div>
                   )}
@@ -201,24 +189,15 @@ export const SidebarFilter = ({
                   key={langItem.value}
                   type="button"
                   onClick={() => onChange('language', langItem.value)}
-                  className={`w-full flex items-center justify-between p-2.5 rounded-2xl text-xs transition-all text-left cursor-pointer border ${
+                  className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs transition-colors text-left cursor-pointer border ${
                     isSelected
                       ? 'bg-blue-50 dark:bg-blue-950/50 text-blue-900 dark:text-blue-200 border-blue-400 dark:border-blue-700 shadow-xs'
                       : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-darkBorder/40 border-gray-100 dark:border-darkBorder'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-                      {langItem.value === 'KG' ? (
-                        <TyndykEmblem size={16} className="text-amber-500" />
-                      ) : (
-                        <langItem.Icon className="w-3.5 h-3.5" />
-                      )}
-                    </div>
-                    <div>
-                      <div className="font-bold text-xs">{langItem.label}</div>
-                      <div className="text-[10px] text-gray-400">{langItem.sub}</div>
-                    </div>
+                  <div>
+                    <div className="font-semibold text-xs">{langItem.label}</div>
+                    <div className="text-[10px] text-gray-400">{langItem.sub}</div>
                   </div>
 
                   {isSelected && (
