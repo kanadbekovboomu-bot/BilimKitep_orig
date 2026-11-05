@@ -104,46 +104,30 @@ export const BookCard = ({
           navigate(`/books/${book.id}`);
         }
       }}
-      className="group relative bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl border border-slate-200/90 dark:border-slate-800/80 p-4 sm:p-4.5 flex flex-col justify-between hover:shadow-[0_24px_48px_-12px_rgba(16,185,129,0.26)] hover:-translate-y-2 hover:rotate-[0.3deg] hover:border-emerald-400/90 dark:hover:border-emerald-500/90 transition-all duration-300 ease-out cursor-pointer text-left overflow-hidden before:absolute before:left-0 before:top-6 before:bottom-6 before:w-1.5 before:rounded-r-full before:bg-gradient-to-b before:from-amber-400 before:via-emerald-500 before:to-teal-600 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
+      className="group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 flex flex-col justify-between hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 hover:-translate-y-1 transition-all duration-200 cursor-pointer text-left overflow-hidden"
     >
-      {/* Subtle Ethnic Vector Watermark Accent (matching background ornament) */}
-      <div className="absolute -top-7 -right-7 w-28 h-28 text-emerald-600/7 dark:text-emerald-400/7 pointer-events-none group-hover:text-emerald-600/16 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500">
-        <svg viewBox="0 0 100 100" fill="currentColor" className="w-full h-full">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3"/>
-          <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" strokeWidth="1.2"/>
-          <path d="M 50,15 C 40,25 40,35 50,45 C 60,35 60,25 50,15 Z" fill="currentColor" opacity="0.6"/>
-          <path d="M 50,85 C 40,75 40,65 50,55 C 60,65 60,75 50,85 Z" fill="currentColor" opacity="0.6"/>
-          <path d="M 15,50 C 25,40 35,40 45,50 C 35,60 25,60 15,50 Z" fill="currentColor" opacity="0.6"/>
-          <path d="M 85,50 C 75,40 65,40 55,50 C 65,60 75,60 85,50 Z" fill="currentColor" opacity="0.6"/>
-        </svg>
-      </div>
-
       <div>
-        {/* 3D Textbook Cover Frame with Physical Book Spine & Page Edges */}
-        <div className="relative w-full h-52 sm:h-56 bg-gradient-to-b from-slate-100/90 via-slate-50 to-slate-100/60 dark:from-slate-800/60 dark:via-darkBorder/40 dark:to-slate-800/30 rounded-2xl overflow-hidden mb-3.5 flex items-center justify-center p-3 border border-slate-200/70 dark:border-slate-700/60 shadow-[2px_3px_0px_rgba(0,0,0,0.04),4px_5px_0px_rgba(0,0,0,0.02)] dark:shadow-[2px_3px_0px_rgba(255,255,255,0.03)] group-hover:shadow-[4px_6px_0px_rgba(16,185,129,0.12)] transition-shadow">
-          {/* Left Embossed Book Spine Edge */}
-          <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-r from-black/15 via-white/10 to-transparent pointer-events-none border-r border-black/5" />
-
+        {/* Textbook Cover Frame */}
+        <div className="relative w-full h-52 sm:h-56 bg-slate-50/90 dark:bg-slate-800/40 rounded-xl overflow-hidden mb-3 flex items-center justify-center p-3 border border-slate-100 dark:border-slate-800/80">
           {/* Official Kyrgyz School Standard Seal Badge */}
-          <div className="absolute top-2.5 left-2.5 z-10 bg-slate-900/85 dark:bg-black/85 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1.5 backdrop-blur-md border border-amber-400/30">
+          <div className="absolute top-2.5 left-2.5 z-10 bg-slate-900/80 dark:bg-black/70 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1.5 backdrop-blur-xs border border-amber-400/20">
             <TyndykEmblem size={11} className="text-amber-400" />
-            <span className="text-amber-300 font-bold">{t('card.krStandard', { defaultValue: 'КР Стандарты' })}</span>
+            <span className="text-amber-300 font-semibold">{t('card.krStandard', { defaultValue: 'КР Стандарты' })}</span>
           </div>
 
           {hasImgError ? (
-            <div className="w-full h-full rounded-xl bg-gradient-to-br from-violet-700 via-indigo-800 to-slate-900 p-4 text-white flex flex-col justify-between items-center text-center shadow-inner relative overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#c4b5fd25,transparent_70%)] pointer-events-none" />
-              <div className="w-full text-[9px] font-bold uppercase tracking-widest text-violet-200/90 pt-4 truncate">
+            <div className="w-full h-full rounded-lg bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 p-4 text-white flex flex-col justify-between items-center text-center relative overflow-hidden">
+              <div className="w-full text-[9px] font-semibold uppercase tracking-widest text-slate-300 pt-3 truncate">
                 {subject}
               </div>
-              <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg my-auto group-hover:scale-110 transition-transform">
-                <SubjectIcon className="w-8 h-8 text-amber-300" />
+              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center my-auto">
+                <SubjectIcon className="w-6 h-6 text-amber-300" />
               </div>
               <div className="w-full space-y-1">
-                <div className="text-xs font-black line-clamp-2 leading-tight text-white drop-shadow-sm">
+                <div className="text-xs font-bold line-clamp-2 leading-tight text-white">
                   {title}
                 </div>
-                <div className="text-[10px] text-violet-200 font-semibold">
+                <div className="text-[10px] text-slate-300 font-medium">
                   {t('units.grade', { count: book.grade })}
                 </div>
               </div>
@@ -154,7 +138,7 @@ export const BookCard = ({
               alt={title}
               loading="lazy"
               onError={() => setHasImgError(true)}
-              className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-contain group-hover:scale-[1.02] transition-transform duration-200"
             />
           )}
 
@@ -165,10 +149,10 @@ export const BookCard = ({
               e.stopPropagation();
               onQuickView && onQuickView(book);
             }}
-            className="absolute bottom-2.5 right-2.5 z-10 bg-white/95 dark:bg-slate-900/95 hover:bg-white dark:hover:bg-slate-800 text-gray-800 dark:text-gray-100 p-2 rounded-xl opacity-0 group-hover:opacity-100 hover:brightness-110 hover:shadow-md transition-all cursor-pointer flex items-center gap-1 text-xs font-semibold border border-slate-200/70 dark:border-slate-700/70"
+            className="absolute bottom-2.5 right-2.5 z-10 bg-white/95 dark:bg-slate-800/95 hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 p-2 rounded-lg opacity-0 group-hover:opacity-100 shadow-sm border border-slate-200/80 dark:border-slate-700 transition-all cursor-pointer flex items-center gap-1 text-xs font-medium"
             title={t('actions.quickView')}
           >
-            <Eye className="w-3.5 h-3.5 text-brand-600" />
+            <Eye className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
             <span className="hidden sm:inline">{t('actions.quickView')}</span>
           </button>
         </div>
@@ -250,8 +234,8 @@ export const BookCard = ({
         </div>
       </div>
 
-      {/* MBANK Fintech Pricing & Actions Pod */}
-      <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 bg-gradient-to-r from-slate-50/90 to-emerald-50/30 dark:from-slate-800/60 dark:to-emerald-950/20 p-2.5 rounded-2xl border border-slate-200/60 dark:border-slate-700/50 group-hover:border-emerald-300/80 dark:group-hover:border-emerald-600/60 transition-all duration-300">
+      {/* Pricing & Actions Pod */}
+      <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2 bg-slate-50/80 dark:bg-slate-800/50 p-2.5 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
         <div>
           {isRentable ? (
             <div>
@@ -292,10 +276,10 @@ export const BookCard = ({
             if ((book.quantity ?? 1) <= 0) return;
             onAddToCart && onAddToCart(book, isRentable ? 'RENT' : 'BUY', 9);
           }}
-          className={`p-2.5 rounded-xl transition-all duration-200 cursor-pointer shadow-md shrink-0 ${
+          className={`p-2.5 rounded-xl transition-colors duration-150 cursor-pointer shadow-xs shrink-0 ${
             (book.quantity ?? 1) <= 0
               ? 'bg-gray-200 dark:bg-slate-700 text-gray-400 cursor-not-allowed'
-              : 'bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 text-white hover:brightness-120 hover:shadow-[0_0_20px_rgba(16,185,129,0.7)] hover:scale-110 active:scale-95 shadow-emerald-500/30'
+              : 'bg-emerald-600 hover:bg-emerald-700 text-white hover:shadow-sm'
           }`}
           title={(book.quantity ?? 1) <= 0 ? 'Нет в наличии' : t('actions.addToCart')}
         >

@@ -15,7 +15,7 @@ export const BrandLogoIcon = ({ size = 42, className = '' }) => {
       viewBox="0 0 80 80"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-md ${className}`}
+      className={`shrink-0 ${className}`}
       aria-label="BilimKitep Mascot Logo"
     >
       <defs>
@@ -203,21 +203,17 @@ export const BrandLogo = ({
   const currentSize = sizeMap[size] || sizeMap.md;
 
   const content = (
-    <div className={`flex items-center gap-3 shrink-0 group ${className}`}>
-      {/* Lively Mascot Icon Mark */}
-      <div className="relative">
-        <BrandLogoIcon size={currentSize.icon} />
-        {/* Dynamic aura pulse on hover */}
-        <div className="absolute inset-0 rounded-full bg-emerald-400 opacity-0 group-hover:opacity-30 blur-lg transition-opacity pointer-events-none" />
-      </div>
+    <div className={`flex items-center gap-2.5 shrink-0 ${className}`}>
+      {/* Brand Mascot Icon Mark */}
+      <BrandLogoIcon size={currentSize.icon} />
 
       {/* Brand Typography */}
       <div className="flex flex-col">
         <div className="flex items-center gap-1.5 leading-none">
           <span className={`font-black tracking-tight text-gray-900 dark:text-gray-100 ${currentSize.text}`}>
-            Bilim<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-400 dark:to-teal-300">Kitep</span>
+            Bilim<span className="text-emerald-600 dark:text-emerald-400">Kitep</span>
           </span>
-          <span className={`font-black rounded-md bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-xs tracking-wider ${currentSize.badge}`}>
+          <span className={`font-bold rounded-md bg-rose-600 text-white tracking-wider ${currentSize.badge}`}>
             KG
           </span>
         </div>

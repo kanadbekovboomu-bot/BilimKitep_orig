@@ -48,12 +48,12 @@ export const Pagination = ({
 
   return (
     <nav className={`flex items-center justify-center ${className}`} aria-label="Pagination">
-      <div className="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-white/90 dark:bg-darkCard/90 backdrop-blur-md border border-gray-200/90 dark:border-slate-800/90 shadow-lg shadow-slate-900/5 dark:shadow-black/40">
+      <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 shadow-xs">
         <button
           type="button"
           disabled={currentPage <= 1}
           onClick={() => handlePageClick(currentPage - 1)}
-          className="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/80 dark:hover:bg-slate-800/80 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer select-none active:scale-95"
+          className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700/80 disabled:opacity-25 disabled:pointer-events-none transition-colors cursor-pointer select-none"
           aria-label="Previous page"
         >
           <ChevronLeft className="w-4 h-4" />
@@ -67,10 +67,10 @@ export const Pagination = ({
                 key={p}
                 type="button"
                 onClick={() => handlePageClick(p)}
-                className={`w-9 h-9 rounded-xl text-sm font-semibold transition-all cursor-pointer select-none flex items-center justify-center ${
+                className={`w-8 h-8 rounded-lg text-xs font-semibold transition-colors cursor-pointer select-none flex items-center justify-center ${
                   isActive
-                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md shadow-emerald-500/30 font-bold scale-105 ring-2 ring-emerald-400/40'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/70 dark:hover:bg-slate-800/70 border border-transparent hover:border-emerald-500/20 active:scale-95'
+                    ? 'bg-emerald-600 text-white font-bold shadow-xs'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/80'
                 }`}
               >
                 {p}
@@ -83,7 +83,7 @@ export const Pagination = ({
           type="button"
           disabled={currentPage >= totalPages}
           onClick={() => handlePageClick(currentPage + 1)}
-          className="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/80 dark:hover:bg-slate-800/80 disabled:opacity-25 disabled:pointer-events-none transition-all cursor-pointer select-none active:scale-95"
+          className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700/80 disabled:opacity-25 disabled:pointer-events-none transition-colors cursor-pointer select-none"
           aria-label="Next page"
         >
           <ChevronRight className="w-4 h-4" />

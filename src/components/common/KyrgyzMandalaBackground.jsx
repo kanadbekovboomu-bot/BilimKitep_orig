@@ -9,10 +9,10 @@ import React from 'react';
 export const KyrgyzMandalaBackground = () => {
   return (
     <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none" aria-hidden="true">
-      {/* 1. Ambient Lighting Aura (Emerald & Solar Gold) */}
-      <div className="absolute -top-40 -right-40 w-[38rem] h-[38rem] rounded-full bg-gradient-to-br from-emerald-500/12 to-teal-500/5 blur-3xl" />
-      <div className="absolute top-1/3 -left-48 w-[34rem] h-[34rem] rounded-full bg-gradient-to-tr from-amber-500/8 via-emerald-500/6 to-transparent blur-3xl" />
-      <div className="absolute -bottom-48 right-1/4 w-[42rem] h-[42rem] rounded-full bg-gradient-to-t from-emerald-500/10 via-cyan-500/5 to-transparent blur-3xl" />
+      {/* 1. Subtle Warm Ambient Lighting */}
+      <div className="absolute -top-40 -right-40 w-[32rem] h-[32rem] rounded-full bg-emerald-500/4 blur-3xl" />
+      <div className="absolute top-1/3 -left-48 w-[30rem] h-[30rem] rounded-full bg-amber-500/3 blur-3xl" />
+      <div className="absolute -bottom-48 right-1/4 w-[36rem] h-[36rem] rounded-full bg-emerald-500/3 blur-3xl" />
 
       {/* 2. Top-Right Luxury Ornamental Mandala Watermark */}
       <svg

@@ -230,9 +230,9 @@ export const BookDetailPage = () => {
             <button
               type="button"
               onClick={() => setIsPreviewModalOpen(true)}
-              className="w-full flex items-center justify-center gap-2.5 px-4 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-600 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 transition-all cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0"
+              className="w-full flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-xs transition-colors cursor-pointer"
             >
-              <BookOpen className="w-5 h-5 text-white" />
+              <BookOpen className="w-4 h-4 text-white" />
               <span>{t('preview.btn', { defaultValue: '📖 Ознакомиться с книгой (5 страниц онлайн)' })}</span>
             </button>
 

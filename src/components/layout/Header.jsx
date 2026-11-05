@@ -46,27 +46,22 @@ export const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-3 flex-shrink-0">
-            {/* Catalog Button Pill */}
+          <nav className="hidden lg:flex items-center gap-2.5 flex-shrink-0">
+            {/* Catalog Button */}
             <Link
               to="/catalog"
-              className="group relative px-4 py-2 rounded-2xl text-xs xl:text-sm font-bold text-gray-800 dark:text-gray-100 bg-slate-100/90 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-700 dark:hover:text-emerald-300 border border-slate-200/90 dark:border-slate-700/80 hover:border-emerald-400/80 shadow-xs hover:shadow-[0_4px_16px_rgba(16,185,129,0.18)] transition-all duration-200 flex items-center gap-2.5 whitespace-nowrap flex-shrink-0 backdrop-blur-md"
+              className="px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold text-slate-700 dark:text-slate-200 bg-slate-100/90 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700 transition-colors flex items-center gap-2 whitespace-nowrap shrink-0"
             >
-              <span className="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-[-6deg] transition-transform">
-                <BookOpen className="w-3.5 h-3.5" />
-              </span>
+              <BookOpen className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>{t('nav.catalog')}</span>
             </Link>
 
-            {/* Add Book CTA Pill (M-Bank FinTech Aesthetic) */}
+            {/* Add Book CTA */}
             <Link
               to="/add-book"
-              className="group relative px-4 py-2 rounded-2xl text-xs xl:text-sm font-bold text-white bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:via-emerald-500 hover:to-teal-500 shadow-md shadow-emerald-600/25 hover:shadow-[0_6px_22px_rgba(16,185,129,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 flex items-center gap-2.5 whitespace-nowrap flex-shrink-0 overflow-hidden"
+              className="px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 shadow-xs hover:shadow-sm transition-colors flex items-center gap-2 whitespace-nowrap shrink-0"
             >
-              <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.22)_50%,transparent_75%)] bg-[length:250%_250%] opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity pointer-events-none" />
-              <span className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center shrink-0 group-hover:rotate-90 transition-transform duration-300">
-                <PlusCircle className="w-4 h-4 text-white" />
-              </span>
+              <PlusCircle className="w-4 h-4 text-white" />
               <span>{t('nav.addBook')}</span>
             </Link>
           </nav>
@@ -84,7 +79,7 @@ export const Header = () => {
             >
               <ShoppingBag className="w-5 h-5" />
               {totalCartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-brand-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm animate-pulse">
+                <span className="absolute -top-1.5 -right-1.5 bg-emerald-600 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-xs">
                   {totalCartCount}
                 </span>
               )}

@@ -62,12 +62,10 @@
 
 @keyframes pulseGlow {
   0%, 100% {
-    opacity: 0.4;
-    transform: scale(1);
+    opacity: 0.6;
   }
   50% {
-    opacity: 0.8;
-    transform: scale(1.05);
+    opacity: 0.9;
   }
 }
 
@@ -76,39 +74,24 @@
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes shimmerSweep {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
+    transform: translateY(-3px);
   }
 }
 
 .animate-entrance {
-  animation: pageFadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: pageFadeInUp 0.35s ease-out forwards;
 }
 
 .animate-scale-in {
-  animation: entranceScaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: entranceScaleIn 0.25s ease-out forwards;
 }
 
 .animate-float-slow {
-  animation: floatSlow 4s ease-in-out infinite;
+  animation: floatSlow 6s ease-in-out infinite;
 }
 
 .animate-glow-pulse {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-
-.shimmer-badge {
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
-  background-size: 200% 100%;
-  animation: shimmerSweep 3.5s infinite;
+  animation: pulseGlow 6s ease-in-out infinite;
 }
 
 /* Hide scrollbar for clean horizontal tracks like subject pills */
@@ -120,47 +103,51 @@
   scrollbar-width: none;
 }
 
-/* 3D Card Hover Perspective */
+/* Pleasant Book Card Subtle Hover (Gentle elevation, no rotation or neon cast) */
 .edtech-card-hover {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .edtech-card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 32px -8px rgba(16, 185, 129, 0.15), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.08);
 }
 
-/* MBANK Digital Fintech Card & Button Glow Utilities */
+/* Clean, Pleasant Card & Button Utilities */
 .mbank-card {
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  background-color: rgba(255, 255, 255, 0.90);
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  border-radius: 1.5rem;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 1.25rem;
+  transition: all 0.2s ease;
 }
 
 .dark .mbank-card {
-  background-color: rgba(15, 23, 42, 0.85);
-  border-color: rgba(30, 41, 59, 0.85);
+  background-color: rgba(30, 41, 59, 0.85);
+  border-color: rgba(51, 65, 85, 0.85);
 }
 
 .mbank-card:hover {
-  border-color: rgba(16, 185, 129, 0.6);
-  box-shadow: 0 16px 36px -4px rgba(16, 185, 129, 0.18), 0 0 20px 0 rgba(16, 185, 129, 0.12);
-  transform: translateY(-4px);
+  border-color: rgba(203, 213, 225, 1);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+  transform: translateY(-2px);
+}
+
+.dark .mbank-card:hover {
+  border-color: rgba(71, 85, 105, 1);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
 }
 
 .mbank-btn-glow {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .mbank-btn-glow:hover {
-  filter: brightness(1.25);
-  box-shadow: 0 0 22px rgba(16, 185, 129, 0.55);
-  transform: scale(1.02);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -2px rgba(16, 185, 129, 0.2);
 }
 
 .mbank-btn-glow:active {
-  transform: scale(0.98);
+  transform: translateY(0);
 }
 

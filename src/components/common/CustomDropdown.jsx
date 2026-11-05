@@ -99,10 +99,10 @@ export const CustomDropdown = ({
             ? `${label}: ${activeOption?.label || placeholder}`
             : activeOption?.label || placeholder)
         }
-        className={`group inline-flex items-center justify-between gap-2 px-3.5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 select-none cursor-pointer border ${
+        className={`group inline-flex items-center justify-between gap-2 px-3.5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-150 select-none cursor-pointer border ${
           isOpen
-            ? 'bg-white dark:bg-slate-900 border-emerald-500 ring-2 ring-emerald-500/25 text-emerald-600 dark:text-emerald-400 shadow-md shadow-emerald-500/10'
-            : 'bg-white dark:bg-darkCard hover:bg-gray-50 dark:hover:bg-slate-800/80 border-gray-200 dark:border-darkBorder text-gray-800 dark:text-gray-200 hover:border-emerald-500/60 dark:hover:border-emerald-500/60 shadow-xs'
+            ? 'bg-white dark:bg-slate-900 border-emerald-600 ring-1 ring-emerald-600/30 text-emerald-700 dark:text-emerald-400 shadow-xs'
+            : 'bg-white dark:bg-darkCard hover:bg-gray-50 dark:hover:bg-slate-800/80 border-gray-200 dark:border-darkBorder text-gray-800 dark:text-gray-200 hover:border-slate-300 dark:hover:border-slate-600 shadow-xs'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${buttonClassName}`}
       >
         <span className="flex items-center gap-2 truncate">

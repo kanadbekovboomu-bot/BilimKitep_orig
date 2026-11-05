@@ -618,7 +618,7 @@ export const CourierDeliveryMap = ({
             <button
               type="button"
               onClick={handleCenterCourier}
-              className="bg-white/95 dark:bg-darkCard/95 hover:bg-white text-gray-800 dark:text-gray-100 text-xs font-bold px-3 py-2 rounded-xl shadow-md border border-gray-100 dark:border-darkBorder flex items-center gap-1.5 cursor-pointer transition-all hover:border-emerald-400 hover:shadow-[0_0_15px_rgba(16,185,129,0.25)]"
+              className="bg-white/95 dark:bg-darkCard/95 hover:bg-white text-gray-800 dark:text-gray-100 text-xs font-semibold px-3 py-2 rounded-xl shadow-xs border border-gray-100 dark:border-darkBorder flex items-center gap-1.5 cursor-pointer transition-colors hover:border-slate-300"
             >
               <Truck className="w-3.5 h-3.5 text-emerald-500" />
               <span>{t('map.whereCourier')}</span>

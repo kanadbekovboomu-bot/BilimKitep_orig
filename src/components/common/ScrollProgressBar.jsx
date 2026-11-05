@@ -149,11 +149,11 @@ export const ScrollProgressBar = ({ className = '' }) => {
         width: '100%',
         zIndex: 99999,
       }}
-      className={`fixed top-0 left-0 right-0 w-full h-1 sm:h-1.5 bg-slate-200/50 dark:bg-slate-800/60 backdrop-blur-md cursor-pointer select-none transition-all duration-150 shadow-xs ${className}`}
+      className={`fixed top-0 left-0 right-0 w-full h-0.5 sm:h-1 bg-slate-200/60 dark:bg-slate-800/70 backdrop-blur-xs cursor-pointer select-none transition-all duration-150 ${className}`}
     >
       {/* Active filled Kyrgyz Ribbon (Red -> Amber -> Emerald) */}
       <div
-        className="h-full bg-gradient-to-r from-red-600 via-amber-400 to-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] transition-[width] duration-75 ease-out"
+        className="h-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600 transition-[width] duration-75 ease-out"
         style={{ width: `${progress}%` }}
       />
     </aside>

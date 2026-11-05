@@ -78,16 +78,13 @@ export const HomePage = () => {
   return (
     <div className="w-full max-w-full overflow-x-hidden space-y-16 pb-16">
       {/* Hero Section with Kyrgyz Cultural & Store Highlights */}
-      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-16 bg-gradient-to-b from-emerald-50/60 via-amber-50/30 to-transparent dark:from-emerald-950/20 dark:via-darkBg dark:to-transparent border-b border-gray-100 dark:border-darkBorder">
-        {/* Ambient Entrance Glow Orbs */}
-        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[34rem] h-96 bg-gradient-to-tr from-emerald-500/15 via-teal-500/10 to-amber-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
-
+      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-16 bg-gradient-to-b from-slate-50/90 via-emerald-50/20 to-transparent dark:from-slate-900/40 dark:to-transparent border-b border-slate-100 dark:border-slate-800">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-6 animate-entrance">
             <div className="flex flex-wrap items-center justify-center gap-2">
               <KyrgyzCultureBadge text={t('cultureBadge', { ns: 'common', defaultValue: 'Кыргызстандын окуу китептер дүкөнү • 7 облус' })} />
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/80 dark:bg-emerald-950/60 text-brand-800 dark:text-brand-300 text-xs font-bold shadow-xs">
-                <Sparkles className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 text-xs font-semibold border border-emerald-200/60 dark:border-emerald-800/40 shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 <span>{t('hero.badge')}</span>
               </div>
             </div>
@@ -106,7 +103,7 @@ export const HomePage = () => {
                 size="lg"
                 icon={Search}
                 onClick={() => navigate('/catalog')}
-                className="w-full sm:w-auto shadow-lg shadow-brand-500/25"
+                className="w-full sm:w-auto"
               >
                 {t('hero.ctaCatalog')}
               </Button>
@@ -153,46 +150,46 @@ export const HomePage = () => {
         </div>
       </section>
 
-      {/* OnlineMektep-inspired Gamified Impact & Trust Stats */}
+      {/* Platform Impact & Trust Stats */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-200/50 dark:border-blue-900/30 flex items-center gap-3.5 hover:scale-102 hover:shadow-lg hover:shadow-blue-500/15 transition-all shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-blue-500 text-white flex items-center justify-center font-black shadow-md shadow-blue-500/25">
-              <GraduationCap className="w-6 h-6" />
+          <div className="p-4.5 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 flex items-center gap-3.5 shadow-xs hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+            <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
+              <GraduationCap className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">{t('impactStats.studentsCount', { defaultValue: '85 000+' })}</div>
-              <div className="text-xs text-gray-500 font-semibold">{t('impactStats.studentsLabel', { defaultValue: 'Окуучулар колдонууда' })}</div>
+              <div className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">{t('impactStats.studentsCount', { defaultValue: '85 000+' })}</div>
+              <div className="text-xs text-gray-500 font-medium">{t('impactStats.studentsLabel', { defaultValue: 'Окуучулар колдонууда' })}</div>
             </div>
           </div>
 
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border border-emerald-200/50 dark:border-emerald-900/30 flex items-center gap-3.5 hover:scale-102 hover:shadow-lg hover:shadow-emerald-500/15 transition-all shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-black shadow-md shadow-emerald-500/25">
-              <BookOpen className="w-6 h-6" />
+          <div className="p-4.5 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 flex items-center gap-3.5 shadow-xs hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+            <div className="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+              <BookOpen className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">{t('impactStats.booksCount', { defaultValue: '12 400+' })}</div>
-              <div className="text-xs text-gray-500 font-semibold">{t('impactStats.booksLabel', { defaultValue: 'Текшерилген окуу китептер' })}</div>
+              <div className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">{t('impactStats.booksCount', { defaultValue: '12 400+' })}</div>
+              <div className="text-xs text-gray-500 font-medium">{t('impactStats.booksLabel', { defaultValue: 'Текшерилген окуу китептер' })}</div>
             </div>
           </div>
 
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-amber-500/10 to-yellow-500/5 border border-amber-200/50 dark:border-amber-900/30 flex items-center gap-3.5 hover:scale-102 hover:shadow-lg hover:shadow-amber-500/15 transition-all shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-black shadow-md shadow-amber-500/25">
-              <Coins className="w-6 h-6" />
+          <div className="p-4.5 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 flex items-center gap-3.5 shadow-xs hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+            <div className="w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
+              <Coins className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">{t('impactStats.savedAmount', { defaultValue: '4.8 млн сом' })}</div>
-              <div className="text-xs text-gray-500 font-semibold">{t('impactStats.savedLabel', { defaultValue: 'Бюджет үнөмдөлдү' })}</div>
+              <div className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">{t('impactStats.savedAmount', { defaultValue: '4.8 млн сом' })}</div>
+              <div className="text-xs text-gray-500 font-medium">{t('impactStats.savedLabel', { defaultValue: 'Бюджет үнөмдөлдү' })}</div>
             </div>
           </div>
 
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-rose-500/10 to-red-500/5 border border-rose-200/50 dark:border-rose-900/30 flex items-center gap-3.5 hover:scale-102 hover:shadow-lg hover:shadow-rose-500/15 transition-all shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center font-black shadow-md shadow-rose-500/25">
-              <Truck className="w-6 h-6" />
+          <div className="p-4.5 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 flex items-center gap-3.5 shadow-xs hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+            <div className="w-11 h-11 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold">
+              <Truck className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-black text-gray-900 dark:text-gray-100">{t('impactStats.regionsCount', { defaultValue: '7 Облус' })}</div>
-              <div className="text-xs text-gray-500 font-semibold">{t('impactStats.regionsLabel', { defaultValue: 'Бүт Кыргызстан' })}</div>
+              <div className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">{t('impactStats.regionsCount', { defaultValue: '7 Облус' })}</div>
+              <div className="text-xs text-gray-500 font-medium">{t('impactStats.regionsLabel', { defaultValue: 'Бүт Кыргызстан' })}</div>
             </div>
           </div>
         </div>

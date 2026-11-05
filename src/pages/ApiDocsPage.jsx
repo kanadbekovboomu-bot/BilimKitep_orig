@@ -600,7 +600,7 @@ export const ApiDocsPage = () => {
                 <div>
                   <div className="text-[10px] text-slate-400 uppercase font-medium">Сервер Vite REST</div>
                   <div className="font-bold text-emerald-300 flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
                     ONLINE (22+ API)
                   </div>
                 </div>

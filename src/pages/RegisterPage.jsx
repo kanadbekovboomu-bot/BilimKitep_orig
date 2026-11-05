@@ -110,11 +110,7 @@ export const RegisterPage = () => {
 
   return (
     <div className="relative min-h-[75vh] flex items-center justify-center px-4 py-12 overflow-hidden">
-      {/* Background Ambient Glow Orbs */}
-      <div className="absolute top-1/4 -left-16 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
-      <div className="absolute bottom-1/4 -right-16 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
-
-      <div className="relative z-10 w-full max-w-md bg-white/95 dark:bg-darkCard/95 backdrop-blur-md rounded-3xl border border-gray-100 dark:border-darkBorder shadow-2xl space-y-6 overflow-hidden animate-scale-in">
+      <div className="relative z-10 w-full max-w-md bg-white dark:bg-darkCard rounded-3xl border border-gray-100 dark:border-darkBorder shadow-lg space-y-6 overflow-hidden animate-scale-in">
         {/* Kyrgyz National Tricolor Ribbon */}
         <div className="h-2 w-full bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
 

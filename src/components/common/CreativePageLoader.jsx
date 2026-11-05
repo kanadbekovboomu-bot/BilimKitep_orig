@@ -57,43 +57,32 @@ export const CreativePageLoader = ({
 
   return (
     <div className={containerClasses}>
-      {/* Ambient background glows */}
-      <div className="absolute w-80 h-80 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none animate-pulse" />
-      <div className="absolute w-64 h-64 rounded-full bg-amber-500/10 blur-3xl pointer-events-none animate-pulse" style={{ animationDelay: '1s' }} />
+      {/* Ambient background tones */}
+      <div className="absolute w-72 h-72 rounded-full bg-emerald-500/5 blur-3xl pointer-events-none" />
+      <div className="absolute w-56 h-56 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 max-w-sm w-full text-center space-y-6">
-        {/* Animated 3D Book & Rising Tündük */}
-        <div className="relative mx-auto w-24 h-24 flex items-center justify-center">
-          {/* Pulsing golden halo */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-amber-400/30 to-emerald-400/30 blur-xl animate-ping" style={{ animationDuration: '2.5s' }} />
-
-          {/* Lively Central Logo Mark */}
-          <div className="relative animate-bounce" style={{ animationDuration: '2s' }}>
-            <BrandLogoIcon size={84} />
-          </div>
-
-          {/* Floating magical sparkles with Lucide Icons */}
-          <Sparkles className="absolute -top-2 -right-2 w-4 h-4 text-amber-400 animate-pulse" />
-          <Star className="absolute -bottom-1 -left-2 w-3.5 h-3.5 text-emerald-500 fill-emerald-500/30 animate-pulse" style={{ animationDelay: '0.6s' }} />
-          <Sparkles className="absolute top-1/2 -left-4 w-3 h-3 text-amber-500 animate-ping" style={{ animationDelay: '1.2s' }} />
+      <div className="relative z-10 max-w-sm w-full text-center space-y-5">
+        {/* Brand Logo Mark */}
+        <div className="relative mx-auto w-16 h-16 flex items-center justify-center">
+          <BrandLogoIcon size={56} />
         </div>
 
         {/* Progress Bar & Percentage */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs font-black text-gray-700 dark:text-gray-300 px-1">
-            <span className="flex items-center gap-1.5 text-brand-600 dark:text-brand-400">
-              <span className="w-2 h-2 rounded-full bg-brand-500 animate-ping inline-block" />
+          <div className="flex items-center justify-between text-xs font-semibold text-gray-700 dark:text-gray-300 px-1">
+            <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 inline-block" />
               <span>{t('actions.loading', { defaultValue: 'Жүктөлүүдө...' })}</span>
             </span>
-            <span className="font-mono text-emerald-600 dark:text-emerald-400 text-sm font-black">
+            <span className="font-mono text-emerald-600 dark:text-emerald-400 text-xs font-bold">
               {progress}%
             </span>
           </div>
 
           {/* Track and Animated Bar */}
-          <div className="w-full h-2.5 bg-gray-100 dark:bg-darkBorder/60 rounded-full overflow-hidden p-0.5 shadow-inner">
+          <div className="w-full h-1.5 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-600 transition-all duration-100 ease-out shadow-sm"
+              className="h-full rounded-full bg-emerald-600 transition-all duration-100 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>

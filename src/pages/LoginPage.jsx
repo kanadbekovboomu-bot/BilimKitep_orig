@@ -166,24 +166,15 @@ export const LoginPage = () => {
 
   return (
     <div className="relative min-h-[75vh] flex items-center justify-center px-4 py-12 overflow-hidden">
-      {/* Background Ambient Glowing Orbs for Entry Atmospheric Effect */}
-      <div className="absolute top-1/4 -left-16 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
-      <div className="absolute bottom-1/4 -right-16 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none animate-glow-pulse" />
-
       {/* Celebratory Login Entrance Overlay Effect */}
       {isEntering && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-entrance">
-          <div className="relative w-full max-w-sm p-8 bg-white dark:bg-darkCard rounded-3xl border border-brand-300 dark:border-brand-700 text-center space-y-5 shadow-2xl animate-scale-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-entrance">
+          <div className="relative w-full max-w-sm p-8 bg-white dark:bg-darkCard rounded-3xl border border-slate-200 dark:border-slate-700 text-center space-y-5 shadow-xl animate-scale-in">
             {/* National Tricolor Top Ribbon */}
             <div className="h-1.5 w-full -mt-8 -mx-8 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600 rounded-t-3xl" style={{ width: 'calc(100% + 4rem)' }} />
 
-            <div className="relative mx-auto w-20 h-20 flex items-center justify-center">
-              <div className="absolute inset-0 rounded-3xl bg-emerald-500/20 blur-xl animate-ping" />
-              <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-amber-500 p-0.5 shadow-xl">
-                <div className="w-full h-full bg-white dark:bg-darkCard rounded-2xl flex items-center justify-center">
-                  <BrandLogoIcon size={38} />
-                </div>
-              </div>
+            <div className="relative mx-auto w-16 h-16 flex items-center justify-center">
+              <BrandLogoIcon size={48} />
             </div>
 
             <div className="space-y-1.5">
@@ -202,8 +193,8 @@ export const LoginPage = () => {
             </div>
 
             {/* Progress line */}
-            <div className="w-full bg-gray-100 dark:bg-darkBorder h-2 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-red-500 w-full animate-pulse rounded-full" />
+            <div className="w-full bg-gray-100 dark:bg-darkBorder h-1.5 rounded-full overflow-hidden">
+              <div className="h-full bg-emerald-600 w-full rounded-full" />
             </div>
 
             <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold italic">

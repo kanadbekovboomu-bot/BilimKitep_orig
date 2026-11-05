@@ -101,12 +101,12 @@ export const Select = forwardRef(({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-labelledby={`${selectId}-label`}
-        className={`w-full rounded-2xl border transition-all duration-200 text-xs sm:text-sm py-2.5 px-3.5 bg-white dark:bg-darkCard text-left flex items-center justify-between gap-2.5 cursor-pointer shadow-xs ${
+        className={`w-full rounded-xl border transition-colors duration-150 text-xs sm:text-sm py-2.5 px-3.5 bg-white dark:bg-darkCard text-left flex items-center justify-between gap-2.5 cursor-pointer shadow-xs ${
           isOpen
-            ? 'border-emerald-500 ring-2 ring-emerald-500/20 text-gray-900 dark:text-gray-100 shadow-md shadow-emerald-500/10'
+            ? 'border-emerald-600 ring-1 ring-emerald-600/30 text-gray-900 dark:text-gray-100 shadow-xs'
             : error
             ? 'border-red-400 dark:border-red-500/70 text-gray-900 dark:text-gray-100'
-            : 'border-gray-200 dark:border-darkBorder hover:border-emerald-500/50 text-gray-900 dark:text-gray-100 hover:bg-gray-50/70 dark:hover:bg-slate-800/50'
+            : 'border-gray-200 dark:border-darkBorder hover:border-slate-300 dark:hover:border-slate-600 text-gray-900 dark:text-gray-100 hover:bg-gray-50/70 dark:hover:bg-slate-800/50'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         <span className="flex items-center gap-2 truncate">
