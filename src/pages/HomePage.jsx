@@ -78,7 +78,7 @@ export const HomePage = () => {
   return (
     <div className="w-full max-w-full overflow-x-hidden space-y-16 pb-16">
       {/* Hero Section with Kyrgyz Cultural & Store Highlights */}
-      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-16 bg-gradient-to-b from-slate-50/90 via-emerald-50/20 to-transparent dark:from-slate-900/40 dark:to-transparent border-b border-slate-100 dark:border-slate-800">
+      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-14 sm:pb-16 bg-gradient-to-b from-emerald-50/25 via-slate-50/10 to-transparent dark:from-slate-900/60 dark:to-transparent border-b border-slate-200/60 dark:border-slate-800">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-6 animate-entrance">
             <div className="flex flex-wrap items-center justify-center gap-2">
@@ -138,7 +138,7 @@ export const HomePage = () => {
         </div>
 
         {/* Kyrgyz National Ornament Runner */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 opacity-25">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 opacity-35">
           <KochkorMuyuzPattern className="h-4 text-emerald-600 dark:text-emerald-400" />
         </div>
       </section>

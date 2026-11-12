@@ -14,7 +14,7 @@ export const Footer = () => {
       <div className="w-full h-1.5 bg-gradient-to-r from-red-600 via-amber-500 to-emerald-600" />
 
       {/* Subtle Kyrgyz Kochkor-Muyuz pattern */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 opacity-30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 opacity-40">
         <KochkorMuyuzPattern className="h-4 text-emerald-600 dark:text-emerald-400" />
       </div>
 

@@ -1,98 +1,87 @@
 import React from 'react';
 
 /**
- * Minimalist Luxury Ethnic Mandala & Shyrdak Background Pattern
- * Inspired by Kyrgyz ornamental mandalas and modern MBANK fintech aesthetics.
- * Ultra-crisp vector watermark with delicate lines, radial gradient mask,
- * and ambient atmospheric depth.
+ * Calm, Minimalist & Eye-Comfortable Kyrgyz National Background
+ * Engineered for maximum reading comfort and zero visual noise:
+ * - NO distracting repeating grids or flickering patterns
+ * - Solid, calm background canvas
+ * - Two delicate, whisper-soft vector watermarks in distant corners (only 5-7% opacity)
+ * - Soft, natural ambient aura without glaring brightness
  */
 export const KyrgyzMandalaBackground = () => {
   return (
-    <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none" aria-hidden="true">
-      {/* 1. Subtle Warm Ambient Lighting */}
-      <div className="absolute -top-40 -right-40 w-[32rem] h-[32rem] rounded-full bg-emerald-500/4 blur-3xl" />
-      <div className="absolute top-1/3 -left-48 w-[30rem] h-[30rem] rounded-full bg-amber-500/3 blur-3xl" />
-      <div className="absolute -bottom-48 right-1/4 w-[36rem] h-[36rem] rounded-full bg-emerald-500/3 blur-3xl" />
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none" aria-hidden="true">
+      {/* 0. Solid, calm base canvas */}
+      <div className="absolute inset-0 bg-[#f8fafc] dark:bg-[#0f172a] transition-colors duration-200" />
 
-      {/* 2. Top-Right Luxury Ornamental Mandala Watermark */}
+      {/* 1. Very gentle, calm ambient lighting (soft and soothing to the eyes) */}
+      <div className="absolute -top-40 -right-40 w-[36rem] h-[36rem] rounded-full bg-emerald-500/4 dark:bg-emerald-500/5 blur-3xl" />
+      <div className="absolute top-1/2 -left-48 w-[32rem] h-[32rem] rounded-full bg-amber-500/3 dark:bg-amber-500/4 blur-3xl" />
+      <div className="absolute -bottom-48 right-1/4 w-[38rem] h-[38rem] rounded-full bg-emerald-500/4 dark:bg-emerald-500/5 blur-3xl" />
+
+      {/* 2. Distant Top-Right Sacred Tyndyk Mandala Watermark (whisper-soft 6% opacity) */}
       <svg
-        className="absolute -top-32 -right-32 w-[600px] h-[600px] text-emerald-800/6 dark:text-emerald-400/8 transition-opacity duration-700"
+        className="absolute -top-32 -right-32 w-[560px] h-[560px] text-emerald-800/[0.06] dark:text-emerald-300/[0.07] transition-opacity duration-500"
         viewBox="0 0 400 400"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g stroke="currentColor" strokeWidth="1.2">
-          {/* Concentric Mandala Rings */}
-          <circle cx="200" cy="200" r="190" strokeDasharray="3,4" />
-          <circle cx="200" cy="200" r="170" strokeWidth="1.5" />
+        <g stroke="currentColor" strokeWidth="1">
+          {/* Concentric rings */}
+          <circle cx="200" cy="200" r="190" strokeDasharray="4,4" />
+          <circle cx="200" cy="200" r="170" strokeWidth="1.2" />
           <circle cx="200" cy="200" r="145" strokeDasharray="5,3" />
-          <circle cx="200" cy="200" r="120" strokeWidth="1.5" />
-          <circle cx="200" cy="200" r="90" strokeDasharray="2,3" />
-          <circle cx="200" cy="200" r="60" strokeWidth="1.8" />
-          <circle cx="200" cy="200" r="30" strokeWidth="2" />
+          <circle cx="200" cy="200" r="120" strokeWidth="1.2" />
+          <circle cx="200" cy="200" r="90" strokeDasharray="3,3" />
+          <circle cx="200" cy="200" r="60" strokeWidth="1.4" />
+          <circle cx="200" cy="200" r="30" strokeWidth="1.6" />
 
-          {/* 16 Ornamental Petals / Horn Motifs */}
+          {/* 16 delicate petals */}
           {Array.from({ length: 16 }).map((_, i) => {
             const angle = (i * 360) / 16;
             return (
               <g key={i} transform={`rotate(${angle} 200 200)`}>
-                {/* Petal Arc */}
-                <path d="M 200 80 Q 215 120 200 145 Q 185 120 200 80 Z" fill="currentColor" fillOpacity="0.15" />
-                {/* Central Ray */}
-                <line x1="200" y1="30" x2="200" y2="60" strokeWidth="1.5" />
-                {/* Outer Horn Hook */}
-                <path d="M 200 170 Q 210 180 215 170" strokeWidth="1.2" strokeLinecap="round" />
-                <path d="M 200 170 Q 190 180 185 170" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M 200 80 Q 212 115 200 140 Q 188 115 200 80 Z" fill="currentColor" fillOpacity="0.08" />
+                <line x1="200" y1="30" x2="200" y2="60" strokeWidth="1.2" />
               </g>
             );
           })}
 
-          {/* Central Tyndyk Crossbars */}
-          <path d="M 180 190 Q 200 205 220 190" strokeWidth="1.5" />
-          <path d="M 180 210 Q 200 225 220 210" strokeWidth="1.5" />
-          <path d="M 190 180 Q 205 200 190 220" strokeWidth="1.5" />
-          <path d="M 210 180 Q 225 200 210 220" strokeWidth="1.5" />
+          {/* Tyndyk crossbars */}
+          <path d="M 180 190 Q 200 205 220 190" strokeWidth="1.4" />
+          <path d="M 180 210 Q 200 225 220 210" strokeWidth="1.4" />
+          <path d="M 190 180 Q 205 200 190 220" strokeWidth="1.4" />
+          <path d="M 210 180 Q 225 200 210 220" strokeWidth="1.4" />
         </g>
       </svg>
 
-      {/* 3. Bottom-Left Luxury Ornamental Mandala Watermark */}
+      {/* 3. Distant Bottom-Left Sun & Horn Mandala Watermark (whisper-soft 5% opacity) */}
       <svg
-        className="absolute -bottom-36 -left-36 w-[650px] h-[650px] text-amber-700/5 dark:text-amber-400/6 transition-opacity duration-700"
+        className="absolute -bottom-36 -left-36 w-[580px] h-[580px] text-amber-700/[0.05] dark:text-amber-300/[0.06] transition-opacity duration-500"
         viewBox="0 0 400 400"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g stroke="currentColor" strokeWidth="1.2">
-          {/* Concentric Rings */}
+        <g stroke="currentColor" strokeWidth="1">
           <circle cx="200" cy="200" r="185" strokeDasharray="4,4" />
-          <circle cx="200" cy="200" r="160" strokeWidth="1.4" />
-          <circle cx="200" cy="200" r="130" strokeDasharray="6,3" />
-          <circle cx="200" cy="200" r="100" strokeWidth="1.6" />
+          <circle cx="200" cy="200" r="160" strokeWidth="1.2" />
+          <circle cx="200" cy="200" r="130" strokeDasharray="5,3" />
+          <circle cx="200" cy="200" r="100" strokeWidth="1.4" />
           <circle cx="200" cy="200" r="70" />
-          <circle cx="200" cy="200" r="40" strokeWidth="2" />
+          <circle cx="200" cy="200" r="40" strokeWidth="1.6" />
 
-          {/* 12 Sun Petals */}
+          {/* 12 sun rays */}
           {Array.from({ length: 12 }).map((_, i) => {
             const angle = (i * 360) / 12;
             return (
               <g key={i} transform={`rotate(${angle} 200 200)`}>
-                <path d="M 200 70 Q 220 100 200 130 Q 180 100 200 70 Z" fill="currentColor" fillOpacity="0.12" />
-                <line x1="200" y1="40" x2="200" y2="70" strokeWidth="1.8" />
-                <circle cx="200" cy="55" r="2.5" fill="currentColor" fillOpacity="0.4" />
+                <path d="M 200 70 Q 215 95 200 125 Q 185 95 200 70 Z" fill="currentColor" fillOpacity="0.06" />
+                <line x1="200" y1="40" x2="200" y2="70" strokeWidth="1.4" />
               </g>
             );
           })}
         </g>
       </svg>
-
-      {/* 4. Delicate Micro Geometric Pattern Grid */}
-      <div
-        className="absolute inset-0 opacity-[0.035] dark:opacity-[0.05]"
-        style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
-          backgroundSize: '32px 32px',
-        }}
-      />
     </div>
   );
 };

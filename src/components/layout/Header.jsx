@@ -34,7 +34,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 w-full pt-1 sm:pt-1.5 backdrop-blur-md bg-white/95 dark:bg-darkBg/95 border-b border-gray-100 dark:border-darkBorder transition-colors shadow-xs">
+      <header className="fixed top-0 left-0 right-0 z-40 w-full pt-1 sm:pt-1.5 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors shadow-xs">
         <div className="w-full max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
           {/* Responsive Kyrgyz Brand Logo: compact on mobile, majestic on desktop */}

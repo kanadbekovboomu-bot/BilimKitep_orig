@@ -44,15 +44,17 @@ export const App = () => {
         />
       )}
 
-      <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-clip flex flex-col bg-gray-50/70 text-gray-900 dark:bg-darkBg dark:text-gray-100 transition-colors duration-200">
+      <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-clip flex flex-col bg-transparent text-gray-900 dark:text-gray-100 transition-colors duration-200">
         {/* Luxury Ethnic Mandala & Shyrdak Background Pattern */}
         <KyrgyzMandalaBackground />
 
-        <Header />
+        <div className="relative z-10 flex flex-col flex-1 w-full max-w-full">
+          <Header />
         <main className="flex-1 w-full max-w-full overflow-x-clip">
           <AppRoutes />
         </main>
         <Footer />
+        </div>
       </div>
     </ErrorBoundary>
   );

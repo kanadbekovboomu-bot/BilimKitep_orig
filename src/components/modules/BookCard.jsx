@@ -104,7 +104,7 @@ export const BookCard = ({
           navigate(`/books/${book.id}`);
         }
       }}
-      className="group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 p-4 flex flex-col justify-between hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 hover:-translate-y-1 transition-all duration-200 cursor-pointer text-left overflow-hidden"
+      className="group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between shadow-xs hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 hover:-translate-y-1 transition-all duration-200 cursor-pointer text-left overflow-hidden"
     >
       <div>
         {/* Textbook Cover Frame */}
